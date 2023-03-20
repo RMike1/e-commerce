@@ -34,7 +34,6 @@ class HomeController extends Controller
                 $slide_products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
                 return view('user.index',compact('slide_products'));
             }
-
         }
         else
         {
@@ -44,7 +43,6 @@ class HomeController extends Controller
     }
     public function Product_Category()
     {
-        
         $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
         return view('user.category',compact('products'));
     }
@@ -80,15 +78,30 @@ class HomeController extends Controller
             'quantity'=>'required'
         ]);
 
-        $product_id=$req->product_id;
-        $product_data=Product::find($product_id);
-        $user_id=Auth::user()->id;
-        $cart=new Cart;
-        $cart->product_id=$product_id;
-        $cart->user_id=$user_id;
-        $cart->quantity=$req->quantity;
-        $cart->tot_amount=$req->quantity*$product_data->product_price;
-        $cart->save();
-        return redirect()->back()->with('success','product has been added to cart!!');
+            $product_id=$req->product_id;
+            $product_data=Product::find($product_id);
+            $user_id=Auth::user()->id;
+            $product_exist=Cart::where('product_id','=',$product_id)->get('id')->first();
+            // dd($product_exist);
+            if($product_exist)
+            {
+                $cart=Cart::find($product_exist)->first();
+                    // $cart->product_id=$product_id;
+                $quantity=$cart->quantity;
+                $cart->quantity=$quantity+$req->quantity;
+                $tot=$cart->tot_amount;
+                $cart->tot_amount=$tot+($req->quantity*$product_data->product_price);
+                $cart->save();
+                return redirect()->back()->with('success','product has been added to cart!!');
+            }
+            else{
+                $cart_data=new Cart;
+                $cart_data->product_id=$req->product_id;
+                $cart_data->user_id=$user_id;
+                $cart_data->quantity=$req->quantity;
+                $cart_data->tot_amount=$req->quantity*$product_data->product_price;
+                $cart_data->save();
+                return redirect()->back()->with('success','product has been added to cart!!');
+            }
     }
 }

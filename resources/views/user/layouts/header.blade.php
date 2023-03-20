@@ -311,39 +311,43 @@
                         <div class="dropdown-cart-products">
                        @auth
                            
-                            @foreach (App\Models\Cart::where('user_id',Auth::user()->id)->latest()->take(3)->get() as $cart)
-                            <div class="product">
-                                <div class="product-cart-details">
-                                    <h4 class="product-title">
-                                        <a href="{{route('user.product',$cart->product->id)}}">{{$cart->product->product_name}}</a>
-                                    </h4>
-                                    <span class="cart-product-info">
-                                        <span class="cart-product-qty">{{$cart->quantity}}</span>
-                                        x ${{number_format($cart->product->product_price)}}
-                                    </span>
-                                </div><!-- End .product-cart-details -->
+                            @forelse (App\Models\Cart::where('user_id',Auth::user()->id)->latest()->take(3)->get() as $cart)
+                                <div class="product">
+                                    <div class="product-cart-details">
+                                        <h4 class="product-title">
+                                            <a href="{{route('user.product',$cart->product->id)}}">{{$cart->product->product_name}}</a>
+                                        </h4>
+                                        <span class="cart-product-info">
+                                            <span class="cart-product-qty">{{$cart->quantity}}</span>
+                                            x ${{number_format($cart->product->product_price)}}
+                                        </span>
+                                    </div><!-- End .product-cart-details -->
 
-                                <figure class="product-image-container">
-                                    <a href="{{route('user.product',$cart->product->id)}}" class="product-image">
-                                        <img src="{{asset($cart->product->product_image)}}" alt="product">
-                                    </a>
-                                </figure>
-                                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                            </div><!-- End .product -->
-                        @endforeach
+                                    <figure class="product-image-container">
+                                        <a href="{{route('user.product',$cart->product->id)}}" class="product-image">
+                                            <img src="{{asset($cart->product->product_image)}}" alt="product">
+                                        </a>
+                                    </figure>
+                                    <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                                </div><!-- End .product -->
+                                @empty
+                                <div class="product">
+                                    <div class="product-cart-details">
+                                        <span class="cart-product-info">
+                                                no pendings in your cart..
+                                        </span>
+                                    </div><!-- End .product-cart-details -->
+                                </div><!-- End .product -->
+                            @endforelse
                        @endauth
-
-
                         </div><!-- End .cart-product -->
 
-                        @php
-                            $total_amount=App\Models\Cart::sum('tot_amount');
-                        @endphp
+                        @auth
                         <div class="dropdown-cart-total">
                             <span>Total</span>
-
-                            <span class="cart-total-price">${{number_format($total_amount)}}</span>
+                            <span class="cart-total-price">${{number_format(App\Models\Cart::where('user_id',Auth::user()->id)->sum('tot_amount'))}}</span>
                         </div><!-- End .dropdown-cart-total -->
+                        @endauth
 
                         <div class="dropdown-cart-action">
                             <a href="{{route('cart')}}" class="btn btn-primary">View Cart</a>

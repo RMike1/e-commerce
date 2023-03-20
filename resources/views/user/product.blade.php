@@ -33,25 +33,19 @@
                                     <div class="row">
                                         <figure class="product-main-image">
                                             <img id="product-zoom" src="{{asset($product->product_image)}}" data-zoom-image="{{asset($product->product_image)}}" alt="product image">
-
                                             <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                                 <i class="icon-arrows"></i>
                                             </a>
                                         </figure><!-- End .product-main-image -->
 
                                         <div id="product-zoom-gallery" class="product-image-gallery">
-                                            <a class="product-gallery-item active" href="#" data-image="{{asset($product->product_image)}}" data-zoom-image="{{asset($product->product_image)}}">
-                                                <img src="{{asset($product->product_image)}}" alt="product side">
-                                            </a>
-                                            <a class="product-gallery-item active" href="#" data-image="{{asset($product->product_image)}}" data-zoom-image="{{asset($product->product_image)}}">
-                                                <img src="{{asset($product->product_image)}}" alt="product side">
-                                            </a>
-                                            <a class="product-gallery-item active" href="#" data-image="{{asset($product->product_image)}}" data-zoom-image="{{asset($product->product_image)}}">
-                                                <img src="{{asset($product->product_image)}}" alt="product side">
-                                            </a>
-                                            <a class="product-gallery-item active" href="#" data-image="{{asset($product->product_image)}}" data-zoom-image="{{asset($product->product_image)}}">
-                                                <img src="{{asset($product->product_image)}}" alt="product side">
-                                            </a>
+                                            @if ($product->productimage)
+                                                @foreach ($product->productimage as $imagepro)
+                                                <a class="product-gallery-item active" href="#" data-image="{{asset($imagepro->image)}}" data-zoom-image="{{asset($imagepro->image)}}">
+                                                    <img src="{{asset($imagepro->image)}}" alt="product side">
+                                                </a>
+                                                @endforeach
+                                            @endif
                                         </div><!-- End .product-image-gallery -->
                                     </div><!-- End .row -->
                                 </div><!-- End .product-gallery -->
@@ -323,15 +317,6 @@
                                     </div><!-- End .ratings -->
                                     <span class="ratings-text">( 2 Reviews )</span>
                                 </div><!-- End .rating-container -->
-                                <div class="product-nav product-nav-thumbs">
-                                    @if ($related_products->productimage)
-                                    @foreach ($related_products->productimage as $imagesproduct)
-                                    <a href="#" class="active">
-                                        <img src="{{asset($imagesproduct->image)}}" style="" alt="product desc">
-                                    </a>
-                                    @endforeach
-                                    @endif
-                                </div><!-- End .product-nav -->
                             </div><!-- End .product-body -->
                         </div><!-- End .product -->
                             
@@ -389,4 +374,4 @@
     <script src="{{asset('user/assets/js/jquery.elevateZoom.min.js')}}"></script>
     <script src="{{asset('user/assets/js/jquery.magnific-popup.min.js')}}"></script>
     <!-- Main JS File -->
-    @e
+    @endsection

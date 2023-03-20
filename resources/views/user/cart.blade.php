@@ -58,7 +58,11 @@
                                     <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
                                 </tr>
                                 @empty
-                                    
+                                    <tr>
+                                        <td colspan="4" class="text-center">
+                                                <p>there is no pending product!!</p>
+                                        </td>
+                                    </tr>
                                 @endforelse
                             </tbody>
                         </table><!-- End .table table-wishlist -->
@@ -129,7 +133,7 @@
 
                                     <tr class="summary-total">
                                         <td>Total:</td>
-                                        <td>${{number_format(App\Models\Cart::sum('tot_amount'),2)}}</td>
+                                        <td>${{number_format(App\Models\Cart::where('user_id',Auth::user()->id)->sum('tot_amount'),2)}}</td>
                                     </tr><!-- End .summary-total -->
                                 </tbody>
                             </table><!-- End .table table-summary -->

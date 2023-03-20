@@ -78,7 +78,7 @@
                             </div>
     
                             <div class="table-responsive">
-                                <table class="table table-centered w-100 dt-responsive nowrap" id="products-datatable">
+                                <table class="table table-hover table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                     <thead class="table-light">
                                         <tr>
                                             <th class="all" style="width: 20px;">
@@ -110,7 +110,7 @@
                                             <td>
                                                 <img src="{{asset($product->product_image)}}" alt="contact-img" title="product-img" class="rounded me-3" height="48">
                                                 <p class="m-0 d-inline-block align-middle font-16">
-                                                    <a href="apps-ecommerce-products-details.html" class="text-body">{{$product->product_name}}</a>
+                                                    <a href="{{route('view.product',$product->id)}}" class="text-body">{{$product->product_name}}</a>
                                                 </p>
                                             </td>
                                             <td>
@@ -126,7 +126,7 @@
                                                 <script>document.write(new Date().getDate())</script>-<script>document.write(new Date().getMonth()+1)</script>-<script>document.write(new Date().getFullYear())</script>
                                             </td>
                                             @endif
-                                            <td class="bg-info">
+                                            <td>
                                                 ${{number_format($product->product_price,2)}}
                                             </td>
         
