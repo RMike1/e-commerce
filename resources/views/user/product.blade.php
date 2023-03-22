@@ -10,6 +10,8 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{asset('user/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('user/assets/css/plugins/nouislider/nouislider.css')}}">
+    <link rel="stylesheet" href="{{asset('user/assets/vendor/css/toastr.css')}}">
+
     @endsection
 
         <main class="main">
@@ -100,17 +102,15 @@
                                     <div class="details-filter-row details-row-size">
                                         <label for="qty">Qty:</label>
                                         <div class="product-details-quantity">
-                                            <form action="{{route('add.cart')}}" id="add_cart1" method="post">
-                                                @csrf
-                                            <input type="hidden" name="product_id" id="qty" class="form-control" value="{{$product->id}}" min="1" max="10" step="1" data-decimals="0" required>
-                                            <input type="number" name="quantity" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-
-                                            </form>
+                                            <input type="number" name="quantity" id="product_qty" class="form-control" value="1" min="1" step="1" data-decimals="0" required>
                                         </div><!-- End .product-details-quantity -->
                                     </div><!-- End .details-filter-row -->
                                     <div class="product-details-action">
-                                        <a href="{{route('add.cart')}}" type="submit" onclick="document.getElementById('add_cart1').submit();event.preventDefault()" class="btn-product btn-cart"><span>add to cart</span></a>
-                                        
+
+                                        <a href="#" type="button" class="btn-product btn-cart" id="add-to-cart" data-ProductQty="{{$product->id}}" onclick="productId(this);event.preventDefault();" ><span class="btn-product-info">add to cart</span></a>
+                                        <button id="prod_id_btn" value="{{$product->id}}" type="button" class="d-none"></button>
+
+
                                         <div class="details-action-wrapper">
                                             <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
                                             <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
@@ -122,9 +122,9 @@
                                             <span>Category:</span>
                                             <a href="#">{{$product->Category->name}}</a>
                                         </div><!-- End .product-cat -->
-
                                         <div class="social-icons social-icons-sm">
                                             <span class="social-label">Share:</span>
+                                            
                                             <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
                                             <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
                                             <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
@@ -247,81 +247,82 @@
 
                     <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
 
-                    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
-                        data-owl-options='{
-                            "nav": false, 
-                            "dots": true,
-                            "margin": 20,
-                            "loop": false,
-                            "responsive": {
-                                "0": {
-                                    "items":1
-                                },
-                                "480": {
-                                    "items":2
-                                },
-                                "768": {
-                                    "items":3
-                                },
-                                "992": {
-                                    "items":4
-                                },
-                                "1200": {
-                                    "items":4,
-                                    "nav": true,
-                                    "dots": false
-                                }
-                            }
-                        }'>
-                        @foreach ($related_products_data as $related_products)
-                        <div class="product product-7 text-center">
-                            <figure class="product-media">
-                                @if ($related_products->product_status=='0')
-                                <span class="product-label label-out">Out of Stock</span>
-                                @elseif ($related_products->product_status=='1')
-                                <span class="product-label label-new">New</span>
-                                @elseif ($related_products->product_status=='2')
-                                <span class="product-label label-top">Top</span>
-                                @else
-                                @endif
-                                <a href="{{route('user.product',$related_products->id)}}">
-                                    <img src="{{asset($related_products->product_image)}}" alt="Product image" class="product-image">
+                  <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                    data-owl-options='{
+                    "nav": false, 
+                    "dots": true,
+                    "margin": 20,
+                    "loop": false,
+                    "responsive": {
+                        "0": {
+                            "items":1
+                        },
+                        "480": {
+                            "items":2
+                        },
+                        "768": {
+                            "items":3
+                        },
+                        "992": {
+                            "items":4
+                        },
+                        "1200": {
+                            "items":4,
+                            "nav": true,
+                            "dots": false
+                        }
+                    }
+                    }'
+                    >
+                    @foreach ($related_products_data as $related_products)
+                    <div class="product product-7 text-center">
+                        <figure class="product-media">
+                            @if ($related_products->product_status=='0')
+                            <span class="product-label label-out">Out of Stock</span>
+                            @elseif ($related_products->product_status=='1')
+                            <span class="product-label label-new">New</span>
+                            @elseif ($related_products->product_status=='2')
+                            <span class="product-label label-top">Top</span>
+                            @else
+                            @endif
+                            <a href="{{route('user.product',$related_products->id)}}">
+                                <img src="{{asset($related_products->product_image)}}" alt="Product image" class="product-image">
+                            </a>
+
+                            <div class="product-action-vertical">
+                                <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                                <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                            </div><!-- End .product-action-vertical -->
+                            <div class="product-action">
+                                <button type="button" value="{{$related_products->id}}" class="btn-product btn-cart btn-product-data border-0"><span class="btn-product-info">add to cart</span></button>
+                            </div><!-- End .product-action -->
+                        </figure><!-- End .product-media -->
+                        <div class="product-body">
+                            <div class="product-cat">
+                                <a href="#">{{$related_products->category->name}}</a>
+                            </div><!-- End .product-cat -->
+                            <h3 class="product-title"><a href="{{route('user.product',$product->id)}}">{{$related_products->product_name}}</h3><!-- End .product-title -->
+                            <div class="product-price">
+                                ${{number_format($related_products->product_price,2)}}
+                            </div><!-- End .product-price -->
+                            <div class="ratings-container">
+                                <div class="ratings">
+                                    <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
+                                </div><!-- End .ratings -->
+                                <span class="ratings-text">( 2 Reviews )</span>
+                            </div><!-- End .rating-container -->
+                            <div class="product-nav product-nav-thumbs">
+                                <a href="#" class="d-none">
+                                    <img src="assets/images/products/product-4-thumb.jpg" alt="product desc">
                                 </a>
-
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
-
-                                <form action="{{route('add.cart')}}" method="post">
-                                    @csrf
-                                <div class="product-action">
-                                    <input type="hidden" value="{{$related_products->id}}" name="product_id">
-                                    <input type="hidden" value="1" name="quantity">
-                                    <button type="submit" class="btn-product btn-cart"><span>add to cart</span></button>
-                                </div><!-- End .product-action -->
-                            </form>
-                            </figure><!-- End .product-media -->
-                            <div class="product-body">
-                                <div class="product-cat">
-                                    <a href="#">{{$related_products->category->name}}</a>
-                                </div><!-- End .product-cat -->
-                                <h3 class="product-title"><a href="{{route('user.product',$product->id)}}">{{$related_products->product_name}}</h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    ${{number_format($related_products->product_price,2)}}
-                                </div><!-- End .product-price -->
-                                <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 2 Reviews )</span>
-                                </div><!-- End .rating-container -->
-                            </div><!-- End .product-body -->
-                        </div><!-- End .product -->
-                            
-                        @endforeach
+                            </div><!-- End .product-nav -->
+                        </div><!-- End .product-body -->
+                    </div><!-- End .product -->
+                        
+                    @endforeach
                     </div><!-- End .owl-carousel -->
+                
                 </div><!-- End .container -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
@@ -343,16 +344,16 @@
                     <div class="product-price">
                         ${{number_format($product->product_price,2)}}
                     </div><!-- End .product-price -->
-                    <form action="{{route('add.cart')}}" method="post" id="add_cart2">
-                        @csrf
                     <div class="product-details-quantity">
-                        <input type="hidden" name="product_id" id="sticky-cart-qty" class="form-control" value="{{$product->id}}">
-                        <input type="number" name="quantity" id="sticky-cart-qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                    </form>
+
+                        <input type="number" name="quantity_product" id="product_qty2" class="form-control" value="1" min="1" step="1" data-decimals="0" required>
 
                     </div><!-- End .product-details-quantity -->
                     <div class="product-details-action">
-                        <a href="{{route('add.cart')}}" type="submit" onclick="document.getElementById('add_cart2').submit();event.preventDefault()" class="btn-product btn-cart"><span>add to cart</span></a>
+
+                        <a href="#" type="button" class="btn-product btn-cart" id="add-to-cart" data-ProductQty2="{{$product->id}}" onclick="productId2(this);event.preventDefault();" ><span class="btn-product-info2">add to cart</span></a>
+                        <button id="prod_id_btn2" value="{{$product->id}}" type="button" class="d-none"></button>
+
                         <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
                     </div><!-- End .product-details-action -->
                 </div><!-- End .col-6 -->
@@ -373,5 +374,196 @@
     <script src="{{asset('user/assets/js/bootstrap-input-spinner.js')}}"></script>
     <script src="{{asset('user/assets/js/jquery.elevateZoom.min.js')}}"></script>
     <script src="{{asset('user/assets/js/jquery.magnific-popup.min.js')}}"></script>
-    <!-- Main JS File -->
+    <script src="{{asset('user/assets/js/toastr-plugin.js')}}"></script>
+    <script src="{{asset('user/assets/vendor/js/toastr.js')}}"></script>
+
+    <script>
+
+        $(document).ready(function(){
+            $(document).on('click', '.btn-product-data',function(e){
+                e.preventDefault();
+                var product_id=$(this).val();
+                // alert(product_id)
+                var quantity=1;
+                $(this).find('.btn-product-info').text('adding..');
+                $('.login-auth').html("");
+
+                
+                $.ajaxSetup({
+                    headers:{
+                        "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                data:{ product_id:product_id, quantity:quantity},
+                url:"{{route('add.cart')}}",
+                type:"post",
+                dataType:"json",
+                success:function(response)
+                {
+                    // console.log(response);
+                    // alert('success!!')
+                    $("#append-category-data").html(response.view);
+                    $("#appendCartHeader").html(response.header);
+                    $('.btn-product-info').text('add to cart')
+                   
+                    toastr.success(response.message, "Success", {
+                        positionClass: "toast-top-right",
+                        timeOut: 3e3,
+                        closeButton: !0,
+                        debug: !1,
+                        newestOnTop: !0,
+                        progressBar: !0,
+                        preventDuplicates: !0,
+                        onclick: null,
+                        showDuration: "300",
+                        hideDuration: "1000",
+                        extendedTimeOut: "1000",
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                        tapToDismiss: !1
+                    })
+    
+                },
+                error:function(error)
+                {
+
+                    $('#signin-modal').modal('show');
+                    $('.btn-product-info').text("add to cart");
+                    $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="icon-close"></i></span>
+                                </button>
+                            </div>`);
+                }
+            });
+        });
+        })
+    </script>
+    <script>
+    
+   function productId(caller){
+
+            var product_id=document.getElementById('prod_id_btn').value=$(caller).attr('data-ProductQty');
+            var quantity=$('#product_qty').val();
+            // alert(quantity);
+            
+            $('.btn-product-info').text('adding..');
+            $('.login-auth').html("");
+            
+         $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            data:{ product_id:product_id, quantity:quantity},
+            url:"{{route('add.cart')}}",
+            type:"post",
+            dataType:"json",
+            success:function(response)
+            {
+                // console.log(response);
+                // alert('success!!')
+                $("#append-category-data").html(response.view);
+                $("#appendCartHeader").html(response.header);
+                $('.btn-product-info').text('add to cart')
+                $('#product_qty').val(1)
+               
+                toastr.success(response.message, "Success", {
+                    positionClass: "toast-top-right",
+                    timeOut: 3e3,
+                    closeButton: !0,
+                    debug: !1,
+                    newestOnTop: !0,
+                    progressBar: !0,
+                    preventDuplicates: !0,
+                    onclick: null,
+                    showDuration: "300",
+                    hideDuration: "1000",
+                    extendedTimeOut: "1000",
+                    showEasing: "swing",
+                    hideEasing: "linear",
+                    showMethod: "fadeIn",
+                    hideMethod: "fadeOut",
+                    tapToDismiss: !1
+                })
+
+            },
+            error:function(error)
+            {
+                $('#signin-modal').modal('show');
+                $('.btn-product-info').text("add to cart");
+                $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="icon-close"></i></span>
+                            </button>
+                        </div>`);
+            }
+        });
+    }
+   function productId2(caller2){
+
+            var product_id=document.getElementById('prod_id_btn2').value=$(caller2).attr('data-ProductQty2');
+            var quantity=$('#product_qty2').val();
+            // alert(quantity);
+            
+            $('.btn-product-info2').text('adding..');
+            $('.login-auth').html("");
+            
+         $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            data:{ product_id:product_id, quantity:quantity},
+            url:"{{route('add.cart')}}",
+            type:"post",
+            dataType:"json",
+            success:function(response)
+            {
+                // console.log(response);
+                // alert('success!!')
+                $("#append-category-data").html(response.view);
+                $("#appendCartHeader").html(response.header);
+                $('.btn-product-info2').text('add to cart')
+                $('#product_qty2').val(1)
+               
+                toastr.success(response.message, "Success", {
+                    positionClass: "toast-top-right",
+                    timeOut: 3e3,
+                    closeButton: !0,
+                    debug: !1,
+                    newestOnTop: !0,
+                    progressBar: !0,
+                    preventDuplicates: !0,
+                    onclick: null,
+                    showDuration: "300",
+                    hideDuration: "1000",
+                    extendedTimeOut: "1000",
+                    showEasing: "swing",
+                    hideEasing: "linear",
+                    showMethod: "fadeIn",
+                    hideMethod: "fadeOut",
+                    tapToDismiss: !1
+                })
+
+            },
+            error:function(error)
+            {
+                $('#signin-modal').modal('show');
+                $('.btn-product-info').text("add to cart");
+                $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="icon-close"></i></span>
+                            </button>
+                        </div>`);
+            }
+        });
+    }
+    </script>
     @endsection
+    

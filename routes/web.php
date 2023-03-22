@@ -13,7 +13,7 @@ Route::get('/', function () {
 Auth::routes();
 
 
-//=====================================useer Routes============================================
+//=====================================user Routes============================================
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -24,6 +24,11 @@ Route::get('product/{id}', [HomeController::class, 'Check_Product'])->name('user
 Route::get('cart',[HomeController::class,'ProductCart'])->name('cart')->middleware('auth');
 
 Route::post('add/cart',[HomeController::class,'Add_Cart'])->name('add.cart')->middleware('auth');
+
+Route::post('update/cart',[HomeController::class,'Update_Cart'])->name('update.cart')->middleware('auth');
+
+Route::get('cart/data',[HomeController::class,'Cart_Data'])->name('alldata.cart')->middleware('auth');
+
 
 
 //=====================================Agent Routes============================================

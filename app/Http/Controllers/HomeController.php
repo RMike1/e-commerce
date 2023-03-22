@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Cart_Product;
@@ -41,11 +42,7 @@ class HomeController extends Controller
             return view('user.index',compact('slide_products'));
         }
     }
-    public function Product_Category()
-    {
-        $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
-        return view('user.category',compact('products'));
-    }
+
 
     public function Check_Product($id)
     {
@@ -65,43 +62,108 @@ class HomeController extends Controller
         }
     }
 
+   
     public function ProductCart()
     {
+        $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
         $carts=Cart::where('user_id',Auth::user()->id)->get();
         
-        return view('user.cart',compact('carts'));
+        return view('user.cart',compact('carts','subtotcart'));
+    }
+
+
+    public function Update_Cart(Request $req)
+    {
+
+        $cart_id=$req->id;
+        $cart=Cart::find($cart_id);
+        $cart->quantity=$req->quantity;
+        $cart->tot_amount=$req->quantity*$cart->product->product_price;
+        $cart->update();
+
+        $carts=Cart::where('user_id',Auth::user()->id)->get();
+        $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+
+        return response()->json([
+            'message'=>'product updated successfully',
+            'status'=>200,
+            'view'=>(String)View::make('user.includes.cartItems',compact('carts','subtotcart')),
+            'header'=>(String)View::make('user.includes.cartheader',compact('carts','subtotcart')),
+            
+        ]);
+    }
+
+
+    public function Product_Category()
+    {
+        $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
+        return view('user.category',compact('products'));
     }
 
     public function Add_Cart(Request $req)
     {
-        $req->validate([
-            'quantity'=>'required'
-        ]);
+        
+if(Auth::check())
+{
+    $req->validate([
+        'quantity'=>'required'
+    ]);
 
-            $product_id=$req->product_id;
-            $product_data=Product::find($product_id);
-            $user_id=Auth::user()->id;
-            $product_exist=Cart::where('product_id','=',$product_id)->get('id')->first();
-            // dd($product_exist);
-            if($product_exist)
-            {
-                $cart=Cart::find($product_exist)->first();
-                    // $cart->product_id=$product_id;
-                $quantity=$cart->quantity;
-                $cart->quantity=$quantity+$req->quantity;
-                $tot=$cart->tot_amount;
-                $cart->tot_amount=$tot+($req->quantity*$product_data->product_price);
-                $cart->save();
-                return redirect()->back()->with('success','product has been added to cart!!');
-            }
-            else{
-                $cart_data=new Cart;
-                $cart_data->product_id=$req->product_id;
-                $cart_data->user_id=$user_id;
-                $cart_data->quantity=$req->quantity;
-                $cart_data->tot_amount=$req->quantity*$product_data->product_price;
-                $cart_data->save();
-                return redirect()->back()->with('success','product has been added to cart!!');
-            }
+        $product_id=$req->product_id;
+        $product_data=Product::find($product_id);
+        $user_id=Auth::user()->id;
+        $product_exist=Cart::where('product_id','=',$product_id)->where('user_id',$user_id)->get('id')->first();
+        if($product_exist)
+        {
+            $cart=Cart::find($product_exist)->first();
+            $quantity=$cart->quantity;
+            $cart->quantity=$quantity+$req->quantity;
+            $tot=$cart->tot_amount;
+            $cart->tot_amount=$tot+($req->quantity*$product_data->product_price);
+            $cart->save();
+
+            $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
+            $carts=Cart::where('user_id',Auth::user()->id)->get();
+            $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+
+            return response()->json([
+                'status'=>200,
+                'message'=>'product has been added to one already in cart!!',
+                'view'=>(String)View::make('user.includes.category-products',compact('products')),
+                'header'=>(String)View::make('user.includes.cartheader',compact('carts','subtotcart')),
+
+            ]);
+        }
+        else{
+            $cart_data=new Cart;
+            $cart_data->product_id=$req->product_id;
+            $cart_data->user_id=$user_id;
+            $cart_data->quantity=$req->quantity;
+            $cart_data->tot_amount=$req->quantity*$product_data->product_price;
+            $cart_data->save(); 
+
+            $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
+            $carts=Cart::where('user_id',Auth::user()->id)->get();
+            $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+
+            return response()->json([
+                'status'=>200,
+                'message'=>'product has been added to cart!!',
+                'view'=>(String)View::make('user.includes.category-products',compact('products')),
+                'header'=>(String)View::make('user.includes.cartheader',compact('carts','subtotcart')),
+            ]);
+        }
+}
+else{
+
+    return response()->json([
+        'status'=>401,
+        'message'=>'first login to continue!!',
+    ]);
+}
+       
+       
     }
+
+
 }
