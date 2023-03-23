@@ -27,6 +27,9 @@
     <link rel="stylesheet" href="{{asset('user/assets/css/plugins/magnific-popup/magnific-popup.css')}}">
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{asset('user/assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('user/assets/vendor/css/toastr.css')}}">
+
+
 @yield('styles')
 </head>
 
@@ -64,6 +67,11 @@
     <!-- Main JS File -->
     <script src="{{asset('user/assets/js/main.js')}}"></script>
     @yield('scripts')
+    <script src="{{asset('user/assets/js/toastr-plugin.js')}}"></script>
+    <script src="{{asset('user/assets/vendor/js/toastr.js')}}"></script>
+    @yield('script-header')
+
+
 </body>
 
 

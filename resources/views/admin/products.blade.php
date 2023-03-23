@@ -42,6 +42,18 @@
                 {{Session::get('warning')}}
             </div>
             @endif
+            @if($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                @foreach ($errors->all() as $error)
+                    <ul>
+                        <li>
+                            {{$error}}
+                        </li>
+                    </ul>
+                @endforeach
+            </div>
+            @endif
     
 
             <!-- end page title --> 

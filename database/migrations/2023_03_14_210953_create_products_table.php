@@ -21,7 +21,7 @@ class CreateProductsTable extends Migration
             $table->text('product_description')->nullable();
             $table->string('product_image')->nullable();
             $table->string('product_publish')->default('0');
-            $table->enum('product_status',['0','1','2','3'])->default('3');
+            $table->string('product_status')->default('3');
             $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });

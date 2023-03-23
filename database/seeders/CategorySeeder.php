@@ -18,9 +18,11 @@ class CategorySeeder extends Seeder
         DB::table('categories')->insert([
             [
             'name'=>'Back-end',
+            'slug'=>'Back-end',
             ],
             [
             'name'=>'Front-end',
+            'slug'=>'Front-end',
             ],
         ]);
     }

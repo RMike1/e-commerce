@@ -298,7 +298,7 @@
                         </div>
                     </div><!-- End .dropdown-menu -->
                 </div><!-- End .compare-dropdown -->
-                   <div id="appendCartHeader">
+                   <div class="appendCartHeader">
                         @include('user.includes.cartheader')
                    </div>
                 </div><!-- End .cart-dropdown -->

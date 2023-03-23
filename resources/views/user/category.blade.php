@@ -23,8 +23,10 @@
     </nav><!-- End .breadcrumb-nav -->
 
     <div class="page-content">
-        <div class="container" id="append-category-data">
-            @include('user.includes.category-products')
+        <div class="container">
+            <div class="append-category-data">
+                @include('user.includes.category-products')
+            </div>
         </div><!-- End .container -->
     </div><!-- End .page-content -->
 </main><!-- End .main -->
@@ -63,8 +65,8 @@
             {
                 // console.log(response);
                 // alert('success!!')
-                $("#append-category-data").html(response.view);
-                $("#appendCartHeader").html(response.header);
+                $(".append-sort-category-product").html(response.view);
+                $(".appendCartHeader").html(response.header);
                 $('.btn-product-info').text('add to cart')
                
                 toastr.success(response.message, "Success", {
@@ -100,5 +102,125 @@
         });
     });
     })
+
+    
+    //========================remove items from cart header===============================
+
+
+    $(document).ready(function(){
+        $(document).on('click', '.remove-cart-btn', function(e){
+            e.preventDefault();
+            var cart_id=$(this).val();
+            // alert(cart_id);
+            $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+            }
+            });
+            $.ajax({
+                data:{cart_id:cart_id},
+                url:"{{route('remove.cart')}}",
+                type:"GET",
+                dataType:"json",
+                success:function(response)
+                {
+                    // console.log(response);
+                    // alert('success!!')
+                    
+                    $(".appendCartHeader").html(response.header);
+                
+                    toastr.warning(response.warning, "Warning", {
+                        positionClass: "toast-top-right",
+                        timeOut: 3e3,
+                        closeButton: !0,
+                        debug: !1,
+                        newestOnTop: !0,
+                        progressBar: !0,
+                        preventDuplicates: !0,
+                        onclick: null,
+                        showDuration: "300",
+                        hideDuration: "1000",
+                        extendedTimeOut: "1000",
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                        tapToDismiss: !1
+                    })
+
+                },
+                error:function(error)
+                {
+                    // alert('oops!!')
+                    console.log(error);
+                }
+            });
+
+        });
+        
+    //========================sort items by categories===============================
+
+        $(document).on('click','.checkbox-category', function(e){
+            e.preventDefault();
+            var cat_val=$(this).val();
+            if(cat_val=='all')
+            {
+                $.ajaxSetup({
+                    headers:{
+                        "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    data:{category_val:cat_val},
+                    url:"{{route('reset.sort_by_category')}}",
+                    type:"get",
+                    dataType:"json",
+                    success:function(response)
+                    {
+                        console.log(response);
+                        $(".append-sort-category-product").html(response.view);
+                },
+            });
+
+            }
+            else
+            {
+
+                $.ajaxSetup({
+                    headers:{
+                        "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    data:{category_val:cat_val},
+                    url:"{{route('sort.category')}}",
+                    type:"get",
+                    dataType:"json",
+                    success:function(response)
+                    {
+                        console.log(response);
+                        $(".append-sort-category-product").html(response.view);
+                },
+                error:function(error)
+                {
+                    // console.log(error);
+                    // $('#signin-modal').modal('show');
+                    // $('.btn-product-info').text("add to cart");
+                    // $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
+                    //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    //             <span aria-hidden="true"><i class="icon-close"></i></span>
+                    //             </button>
+                    //         </div>`);
+                }
+            });
+            }
+                // alert(cat_val);
+
+            
+        });
+
+        
+});
+
 </script>
 @endsection

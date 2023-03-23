@@ -167,10 +167,13 @@ $(document).ready(function () {
 
 		// Check if #price-slider elem is exists if not return
 		// to prevent error logs
+        
 		if (priceSlider == null) return;
 
+        // alert(priceSlider);
+
 		noUiSlider.create(priceSlider, {
-			start: [ 0, 750 ],
+			start: [ 0, 950 ],
 			connect: true,
 			step: 50,
 			margin: 200,

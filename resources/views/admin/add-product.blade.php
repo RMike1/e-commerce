@@ -123,7 +123,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="productquantity" class="form-label">Product Quantity</label>
-                                                <input type="number" min="0" name="product_quantity" value="{{old('product_quantity')}}" id="productquantity" class="form-control @error('product_quantity')  is-invalid @enderror" placeholder="Enter post title" required>
+                                                <input type="number" min="0" name="product_quantity" value="{{old('product_quantity')}}" id="productquantity" class="form-control @error('product_quantity')  is-invalid @enderror" placeholder="Available quantity" required>
                                                 @error('product_quantity')
                                                 <span class="invalid-feedback">
                                                     <strong>{{$message}}</strong>

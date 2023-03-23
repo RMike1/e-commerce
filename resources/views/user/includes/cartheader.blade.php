@@ -25,7 +25,7 @@
                         <img src="{{asset($cart->product->product_image)}}" alt="product">
                     </a>
                 </figure>
-                <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                <button href="#" type="button" onclick="return confirm('remove this item from cart?')" value="{{$cart->id}}" class="btn-remove remove-cart-btn" title="Remove Product"><i class="icon-close"></i></button>
             </div><!-- End .product -->
             @empty
             <div class="product">

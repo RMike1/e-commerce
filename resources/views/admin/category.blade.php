@@ -42,6 +42,21 @@
         {{Session::get('warning')}}
     </div>
     @endif
+    
+    @if($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        @foreach ($errors->all() as $error)
+            <ul>
+                <li>
+                    {{$error}}
+                </li>
+            </ul>
+        @endforeach
+    </div>
+    @endif
+    
+
 
     <div class="row">
         <div class="col-12">
@@ -79,6 +94,7 @@
                                         {{$category->name}}
                                     </td>
                                     <td>
+                                        {{$category->product->count()}}
                                     </td>
 
                                     <td class="table-action">
@@ -176,11 +192,13 @@
             $(document).on('click', '#cat_id', function(e){
                 e.preventDefault();
                 var category_data= $(this).val();
+                // alert(category_data);
                 $('#edit-category-modal').modal('show');
                 $('#category_id').val(category_data);
                 $('#category_name').val("...");
                 $.ajax({
-                    url:'/edit-category/'+category_data,
+                    url:"{{route('edit.category')}}",
+                    data:{category_id:category_data},
                     dataType:"json",
                     type:"GET",
                     success: function(response)

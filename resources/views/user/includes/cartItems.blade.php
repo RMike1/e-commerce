@@ -6,6 +6,7 @@
                     <table class="table table-cart table-mobile">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Product</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
@@ -16,8 +17,12 @@
                         </thead>
                     
                         <tbody>
+                            @php
+                            $i=1;
+                            @endphp
                             @forelse ($carts as $cart)
                             <tr>
+                                <td>{{$i++}}.</td>
                                 <td class="product-col">
                                     <div class="product">
                                         <figure class="product-media">
@@ -41,12 +46,12 @@
                                 <td class="total-col" id="tot_amount_data">
                                     ${{number_format($cart->tot_amount,2)}}
                                 </td>
-                                <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+                                <td class="remove-col"><button class="btn-remove" onclick="return confirm('remove this item from cart?')" value="{{$cart->id}}" id="cart-remove-btn"><i class="icon-close"></i></button></td>
                             </tr>
                             </form>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center">
+                                    <td colspan="6" class="text-center">
                                         <p>there is no pending product!!</p>
                                     </td>
                                 </tr>

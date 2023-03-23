@@ -7,13 +7,19 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
+
+    //=========================Index =========================
+
     public function index()
     {
         return view('admin.index');
     }
+
+    //=========================Category Page =========================
 
     public function category()
     {
@@ -21,16 +27,23 @@ class AdminController extends Controller
         return view('admin.category',compact('category'));
     }
 
+    //=========================Store Category =========================
+
+
     public function Store_Category(Request $req)
     {
         $req->validate([
-            'name'=>'required'
+            'name'=>'required|unique:categories'
         ]);
         $category=new Category;
         $category->name=$req->name;
+        $category->slug=Str::slug($req->name,'-');
         $category->save();
         return redirect()->back()->with('success','category has been added successfully!!');
     }
+
+
+    //=========================Delete Category =========================
     
     public function Delete_Category($req)
     {
@@ -38,32 +51,63 @@ class AdminController extends Controller
         $category->delete();
         return redirect()->back()->with('warning','category has been deleted successfully!!');
     }
-    public function edit_category($req)
+
+    
+    //=========================Edit Category =========================
+
+    public function edit_category(Request $req)
     {
-        $category=Category::find($req);
+   
+
+        $category_id=$req->category_id;
+
+        $category=Category::find($category_id);
         return response()->json(
             [
                 'category'=>$category,
             ],200
         );
     }
+
+
+
+    //=========================Update Category =========================
+
+
     public function Update_Category(Request $req)
     {
         $req->validate([
-            'name'=>'required'
+            'name'=>'required|unique:categories,name,'.$req->category_id,
         ]);
+
+
         $category_id=$req->category_id;
         $category=Category::find($category_id);
         $category->name=$req->name;
+        $category->slug=Str::slug($req->name,'-');
         $category->save();
         return redirect()->back()->with('success','category has been updated successfully!!');
     }
 
-    public function products()
+
+    //=========================Products Page=========================
+
+
+    public function products(Request $req)
     {
-        $products=Product::all();
-        return view('admin.products',compact('products'));
+        if($req->category)
+        {
+            $products=Category::where('name',$req->category)->first()->product()->get();
+            return view('admin.products',compact('products'));
+
+        }
+        else{
+            $products=Product::all();
+            return view('admin.products',compact('products'));
+        }
     }
+
+    //=========================Add Products page=========================
 
 
     public function Add_Products()
@@ -71,6 +115,10 @@ class AdminController extends Controller
         $categories=Category::all();
         return view('admin.add-product',compact('categories'));
     }
+
+
+    //=========================Add Products CKeditor Text Editor=========================
+
 
     public function ProductDescription(Request $request)
     {
@@ -94,6 +142,9 @@ class AdminController extends Controller
         echo $re;
         }
     }
+
+    //=========================Store Products=========================
+
 
     public function Store_Product(Request $req)
     {
@@ -141,6 +192,9 @@ class AdminController extends Controller
         return redirect()->back()->with('success','product has been added successfully!!');
     }
 
+    //=========================Edit Product=========================
+
+
     public function Edit_Product($id)
     {
         $product=Product::find($id);
@@ -156,6 +210,9 @@ class AdminController extends Controller
         }
     }
 
+    //=========================Update Products=========================
+
+
     public function Update_Product(Request $req)
     {
         $req->validate([
@@ -169,6 +226,8 @@ class AdminController extends Controller
 
         $product_id=$req->product_id;
         $product=Product::find($product_id);
+
+      
 
         $product->product_name=$req->product_name;
         $product->product_price=$req->product_price;
@@ -204,6 +263,9 @@ class AdminController extends Controller
         
     }
 
+    //=========================View Single Product Admin panel=========================
+
+
     public function View_Product($id)
     {
         $product_name=Product::where('id',$id)->first()->product_name;
@@ -216,6 +278,9 @@ class AdminController extends Controller
             return redirect()->back()->with('warning','product not found!!');
         }
     }
+
+    //=========================Delete Products=========================
+
     public function Delete_Product($id)
     {
         $product=Product::find($id);
@@ -227,6 +292,11 @@ class AdminController extends Controller
             return redirect()->back()->with('warning','product not found!!');
         }
     }
+
+
+    //=========================Delete Related Product's Images=========================
+
+
     public function Delete_Related_image($id)
     {
         $related_image=ProductImage::findOrfail($id);

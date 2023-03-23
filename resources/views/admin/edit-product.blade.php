@@ -116,7 +116,7 @@
 
                                             <div class="mb-3 mt-3 mt-xl-0">
                                                 <label for="projectname" class="mb-1">Related Images</label><br>
-                                                <input type="file" name="image[]" multiple id="" class="form-control @error('image')  is-invalid @enderror" required>
+                                                <input type="file" name="image[]" multiple id="" class="form-control @error('image')  is-invalid @enderror">
                                                 @error('image')
                                                 <span class="invalid-feedback">
                                                     <strong>{{$message}}</strong>
@@ -135,11 +135,9 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                         
-                                            
                                             <div class="mb-3">
                                                 <label for="productquantity" class="form-label">Product Quantity</label>
-                                                <input type="number" min="0" name="product_quantity" value="{{$product->product_quantity}}" id="productquantity" class="form-control @error('product_quantity')  is-invalid @enderror" placeholder="Enter post title" required>
+                                                <input type="number" min="0" name="product_quantity" value="{{$product->product_quantity}}" id="productquantity" class="form-control @error('product_quantity')  is-invalid @enderror" placeholder="Available Quantity" required>
                                                 @error('product_quantity')
                                                 <span class="invalid-feedback">
                                                     <strong>{{$message}}</strong>

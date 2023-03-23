@@ -1,7 +1,12 @@
 @section('title','E-shop Cart')
 @extends('user.layouts.master')
+@section('styles')
+<link rel="stylesheet" href="{{asset('user/assets/vendor/css/toastr.css')}}">
+@endsection
 @section('content')
+
 @include('user.layouts.header')
+
 <main class="main">
     <div class="page-header text-center" style="background-image: url('{{asset('user/assets/images/page-header-bg.jpg')}}">
         <div class="container">
@@ -17,13 +22,18 @@
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
-<div id="appendCart">
+<div class="appendCart">
     @include('user.includes.cartItems')
 </div>
 </main><!-- End .main -->
 @include('user.layouts.sign-in')
 @endsection
 @section('scripts')
+<script src="{{asset('user/assets/js/toastr-plugin.js')}}"></script>
+<script src="{{asset('user/assets/vendor/js/toastr.js')}}"></script>
+
+<!-- update cart -->
+
 <script>
     
     function cartId(cart_id){
@@ -43,8 +53,8 @@
             success:function(response)
             {
                 console.log(response);
-                $("#appendCart").html(response.view);
-                $("#appendCartHeader").html(response.header);
+                $(".appendCart").html(response.view);
+                $(".appendCartHeader").html(response.header);
             },
             
             // error:function(error)
@@ -53,5 +63,118 @@
             // }
         });
         }
+
+        //========================remove items from cart ===============================
+
+        $(document).ready(function(){
+        $(document).on('click', '#cart-remove-btn', function(e){
+            
+            e.preventDefault();
+            var cart_id=$(this).val();
+            // alert(cart_id);
+            $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+            }
+            });
+            $.ajax({
+                data:{cart_id:cart_id},
+                url:"{{route('remove.cart')}}",
+                type:"GET",
+                dataType:"json",
+                success:function(response)
+                {
+                    
+                    $(".appendCart").html(response.view);
+                    $(".appendCartHeader").html(response.header);
+                
+                    toastr.warning(response.warning, "Warning", {
+                        positionClass: "toast-top-right",
+                        timeOut: 3e3,
+                        closeButton: !0,
+                        debug: !1,
+                        newestOnTop: !0,
+                        progressBar: !0,
+                        preventDuplicates: !0,
+                        onclick: null,
+                        showDuration: "300",
+                        hideDuration: "1000",
+                        extendedTimeOut: "1000",
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                        tapToDismiss: !1
+                    })
+
+                },
+                error:function(error)
+                {
+                    // alert('oops!!')
+                    console.log(error);
+                }
+            });
+
+        });
+  
+    });
+
+
+    //========================remove items from cart header===============================
+
+
+    $(document).ready(function(){
+        $(document).on('click', '.remove-cart-btn', function(e){
+            e.preventDefault();
+            var cart_id=$(this).val();
+            // alert(cart_id);
+            $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+            }
+            });
+            $.ajax({
+                data:{cart_id:cart_id},
+                url:"{{route('remove.cart')}}",
+                type:"GET",
+                dataType:"json",
+                success:function(response)
+                {
+                    // console.log(response);
+                    // alert('success!!')
+                    $(".appendCart").html(response.view);
+                    $(".appendCartHeader").html(response.header);
+                
+                    toastr.warning(response.warning, "Warning", {
+                        positionClass: "toast-top-right",
+                        timeOut: 3e3,
+                        closeButton: !0,
+                        debug: !1,
+                        newestOnTop: !0,
+                        progressBar: !0,
+                        preventDuplicates: !0,
+                        onclick: null,
+                        showDuration: "300",
+                        hideDuration: "1000",
+                        extendedTimeOut: "1000",
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                        tapToDismiss: !1
+                    })
+
+                },
+                error:function(error)
+                {
+                    // alert('oops!!')
+                    console.log(error);
+                }
+            });
+
+        });
+  
+    });
 </script>
+
 @endsection

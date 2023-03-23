@@ -44,15 +44,13 @@
                                 </a>
 
                                 <div class="d-lg-flex d-none justify-content-center">
+                                    @if ($product->ProductImage)
+                                    @foreach ($product->ProductImage as $related_image)
                                     <a href="javascript: void(0);">
-                                        <img src="{{asset('admin/assets/images/products/product-1.jpg')}}" class="img-fluid img-thumbnail p-2" style="max-width: 75px;" alt="Product-img">
+                                        <img src="{{asset($related_image->image)}}" class="img-fluid img-thumbnail p-2" style="max-width: 75px;" alt="Product-img">
                                     </a>
-                                    <a href="javascript: void(0);" class="ms-2">
-                                        <img src="{{asset('admin/assets/images/products/product-6.jpg')}}" class="img-fluid img-thumbnail p-2" style="max-width: 75px;" alt="Product-img">
-                                    </a>
-                                    <a href="javascript: void(0);" class="ms-2">
-                                        <img src="{{asset('admin/assets/images/products/product-3.jpg')}}" class="img-fluid img-thumbnail p-2" style="max-width: 75px;" alt="Product-img">
-                                    </a>
+                                    @endforeach
+                                    @endif
                                 </div>
                             </div> <!-- end col -->
                             <div class="col-lg-7">

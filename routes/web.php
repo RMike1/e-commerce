@@ -29,6 +29,16 @@ Route::post('update/cart',[HomeController::class,'Update_Cart'])->name('update.c
 
 Route::get('cart/data',[HomeController::class,'Cart_Data'])->name('alldata.cart')->middleware('auth');
 
+Route::get('remove/cart',[HomeController::class,'Remove_Cart'])->name('remove.cart')->middleware('auth');
+
+Route::get('load/more',[HomeController::class,'Load_More_Products'])->name('load.more');
+
+Route::get('less/product',[HomeController::class,'Less_Products'])->name('less.product');
+
+Route::get('sort/category',[HomeController::class,'Sort_By_Category'])->name('sort.category');
+
+Route::get('reset_sort/category',[HomeController::class,'Reset_Sort_By_Category'])->name('reset.sort_by_category');
+
 
 
 //=====================================Agent Routes============================================
@@ -54,7 +64,7 @@ Route::post('udpate/category', [AdminController::class, 'Update_Category'])->nam
 
 Route::get('delete/{id}/category', [AdminController::class, 'Delete_Category'])->name('delete.category');
 
-Route::get('edit-category/{id}', [AdminController::class, 'Edit_Category'])->name('edit.category');
+Route::get('edit-category', [AdminController::class, 'Edit_Category'])->name('edit.category');
 
 Route::get('add-product', [AdminController::class, 'Add_Products'])->name('add.product');
 
