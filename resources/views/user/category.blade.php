@@ -163,6 +163,7 @@
         $(document).on('click','.checkbox-category', function(e){
             e.preventDefault();
             var cat_val=$(this).val();
+            // $(this).css('background')
             if(cat_val=='all')
             {
                 $.ajaxSetup({

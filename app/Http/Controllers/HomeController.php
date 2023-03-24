@@ -113,7 +113,7 @@ class HomeController extends Controller
 
     public function Product_Category()
     {
-        $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
+        $products=Product::where('product_publish','1')->with('ProductImage')->latest()->paginate(8);
         return view('user.category',compact('products'));
     }
 
