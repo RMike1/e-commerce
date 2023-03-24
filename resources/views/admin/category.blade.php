@@ -113,7 +113,6 @@
                                         -
                                     </td>
                                     @endif
-
                                     <td class="table-action">
                                          <button id="cat_id" value="{{$category->id}}" class="action-icon bg-transparent" style="border: none"> <i class="mdi mdi-square-edit-outline"></i>
                                         </button>

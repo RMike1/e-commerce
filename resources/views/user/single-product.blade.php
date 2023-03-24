@@ -43,7 +43,7 @@
                                     <div id="product-zoom-gallery" class="product-image-gallery">
                                         @if ($product->productimage)
                                             @foreach ($product->productimage as $imagepro)
-                                            <a class="product-gallery-item active" href="#" data-image="{{asset($imagepro->image)}}" data-zoom-image="{{asset($imagepro->image)}}">
+                                            <a class="product-gallery-item" href="#" data-image="{{asset($imagepro->image)}}" data-zoom-image="{{asset($imagepro->image)}}">
                                                 <img src="{{asset($imagepro->image)}}" alt="product side">
                                             </a>
                                             @endforeach

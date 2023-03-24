@@ -72,8 +72,8 @@
                     <i class="icon-bars"></i>
                 </button>
 
-                <a href="{{route('home')}}" class="logo">
-                    <img src="{{asset('user/assets/images/logo.png')}}" alt="Molla Logo" width="105" height="25">
+                <a href="{{route('home')}}" class="logo mt-3" >
+                    <h3 class="font-weight-bold text-muted">MK <span style="color:#c96;">Store</span></h3>
                 </a>
 
                 <nav class="main-nav">
