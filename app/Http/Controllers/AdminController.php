@@ -33,11 +33,19 @@ class AdminController extends Controller
     public function Store_Category(Request $req)
     {
         $req->validate([
-            'name'=>'required|unique:categories'
+            'name'=>'required|unique:categories',
+            'category_image'=>'required|mimes:png,jpg',
+            'category_status'=>'nullable',
+            'category_position'=>'nullable|unique:categories',
+
         ]);
         $category=new Category;
-        $category->name=$req->name;
         $category->slug=Str::slug($req->name,'-');
+        $category->name=$req->name;
+        $category->category_position=$req->category_position;
+        $category->category_status=$req->category_status==true ? '1':'0';
+        $category->category_image="storage/".$req->file('category_image')->store('category_images','public');
+        
         $category->save();
         return redirect()->back()->with('success','category has been added successfully!!');
     }
@@ -78,14 +86,26 @@ class AdminController extends Controller
     {
         $req->validate([
             'name'=>'required|unique:categories,name,'.$req->category_id,
+            'category_image'=>'mimes:png,jpg',
+            'category_status'=>'nullable',
+            'category_position'=>'nullable|unique:categories,category_position,'.$req->category_id,
         ]);
 
 
         $category_id=$req->category_id;
         $category=Category::find($category_id);
         $category->name=$req->name;
+        $category->category_position=$req->category_position;
         $category->slug=Str::slug($req->name,'-');
+        $category->category_status=$req->category_status==true ? '1':'0';
+
+        // dd($req->category_position);
+        if($req->category_image)
+        {
+            $category->category_image="storage/".$req->file('category_image')->store('category_images','public');
+        }
         $category->save();
+        
         return redirect()->back()->with('success','category has been updated successfully!!');
     }
 

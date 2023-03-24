@@ -17,7 +17,7 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('products', [HomeController::class, 'Product_Category'])->name('product.category');
+Route::post('products', [HomeController::class, 'Product_Category'])->name('product.category');
 
 Route::get('product/{id}', [HomeController::class, 'Check_Product'])->name('user.product');
 

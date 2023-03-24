@@ -6,7 +6,7 @@
             <a class="nav-link active" id="top-all-link" data-toggle="tab" href="#top-all-tab" role="tab" aria-controls="top-all-tab" aria-selected="true">All</a>
         </li>
             
-        @foreach ($categories as $category)
+        @foreach ($categories->where('category_status','1') as $category)
         <li class="nav-item">
             <a class="nav-link" id="{{$category->slug}}-link" data-toggle="tab" href="#{{$category->slug}}" role="tab" aria-controls="{{$category->slug}}" aria-selected="false">{{$category->name}}</a>
         </li>

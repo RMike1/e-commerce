@@ -76,7 +76,10 @@
                                         #
                                     </th>
                                     <th>Category</th>
-                                    <th>Posts Number</th>
+                                    <th>Category Image</th>
+                                    <th>Posts N<sup>o</sup> </th>
+                                    <th>Status</th>
+                                    <th>Position[for homepage]</th>
                                     <th style="width: 85px;">Action</th>
                                 </tr>
                             </thead>
@@ -86,16 +89,30 @@
                                 @endphp
                                 @foreach ($category as $category)
                                 <tr>
-
-                                    <td>
+                                     <td>
                                        {{$count++}} 
                                     </td>
                                     <td>
                                         {{$category->name}}
                                     </td>
                                     <td>
+                                        <img src="{{asset($category->category_image)}}" style="width: 50px; height:auto" alt="">
+                                    </td>
+                                    <td>
                                         {{$category->product->count()}}
                                     </td>
+                                    <td>
+                                        {{$category->category_status== 1 ? 'Published': 'Pending..'}}
+                                    </td>
+                                    @if($category->category_position)
+                                    <td>
+                                        {{$category->category_position}}
+                                    </td>
+                                    @else
+                                    <td>
+                                        -
+                                    </td>
+                                    @endif
 
                                     <td class="table-action">
                                          <button id="cat_id" value="{{$category->id}}" class="action-icon bg-transparent" style="border: none"> <i class="mdi mdi-square-edit-outline"></i>
@@ -116,28 +133,47 @@
        <!------------------adding category modal------------------->
 
        <div id="create-category-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="standard-modalLabel">Create Category</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                </div>
-                <form action="{{route('store.category')}}" method="post">
-                @csrf
-                    <div class="modal-body">
-                        <div class="mb-3">
-                                <label for="category-title">Category Name</label>
-                                <input type="text" class="form-control form-control-light" name="name" id="category-title" placeholder="Enter name">
-                            </div>
-                        </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-dark">Save</button>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="standard-modalLabel">Create Category</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </div>
-                </form>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+                    <form action="{{route('store.category')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                    <label for="category-title">Category Name*</label>
+                                    <input type="text" class="form-control form-control-light" value="{{old('name')}}" name="name" id="category-title" placeholder="Enter name">
+                                </div>
+                            <div class="mb-3">
+                                    <label for="category-image">Category Image</label>
+                                    <input type="file" class="form-control form-control-light" name="category_image" id="category-image">
+                                </div>
+
+                            <div class="mb-3">
+                                <label for="category-pos">Category Postion for Homepage</label>
+                                <select type="text" id="category-pos" name="category_position" class="form-control form-control-light">
+                                    <option value="" selected disabled>--select--</option>
+                                    <option value="right">Right</option>
+                                    <option value="left">Left</option>
+                                    <option value="up">Up</option>
+                                    <option value="down">Down</option>
+                                </select>
+                                </div>
+                            <div class="mb-3 form-check form-checkbox-secondary">
+                                    <label class="form-check-label" for="category-status">Publish?</label>
+                                    <input type="checkbox" class="form-check-input" name="category_status" id="category-status">
+                                </div>
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-dark">Save</button>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+       </div><!-- /.modal -->
 
         <!------------------edit category modal------------------->
 
@@ -149,13 +185,32 @@
                     <h4 class="modal-title" id="standard-modalLabel">Update Category</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div>
-                <form action="{{route('update.category')}}" method="post">
-                @csrf
+                <form action="{{route('update.category')}}" method="post" enctype="multipart/form-data">
+                    @csrf
                     <div class="modal-body">
                         <div class="mb-3">
                                 <label for="category-title">Category Name</label>
                                 <input type="hidden" class="form-control" name="category_id" id="category_id">
                                 <input type="text" class="form-control form-control-light" name="name" id="category_name" placeholder="Enter name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="category_image" id="image_category">Category Image</label>
+                                
+                                <input type="file" class="form-control form-control" name="category_image" id="category_image">
+                            </div>
+                            <div class="mb-3">
+                                <label for="category-pos">Category Postion for Homepage</label>
+                                <select type="text" id="select_cat_position" name="category_position" class="form-control form-control-light">
+                                    {{-- <option value="" selected id="select_cat_position"></option> --}}
+                                    <option value="right">Right</option>
+                                    <option value="left">Left</option>
+                                    <option value="up">Up</option>
+                                    <option value="down">Down</option>
+                                </select>
+                                </div>
+                        <div class="mb-3 form-check form-checkbox-secondary">
+                                <label class="form-check-label category_status2" for="category_status">Publish?</label>
+                                <input type="checkbox" class="form-check-input" name="category_status" id="category_status">
                             </div>
                         </div>
                     <div class="modal-footer">
@@ -165,7 +220,7 @@
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+       </div><!-- /.modal -->
 
     
     </div>
@@ -196,20 +251,35 @@
                 $('#edit-category-modal').modal('show');
                 $('#category_id').val(category_data);
                 $('#category_name').val("...");
+                $('#select_cat_position').val("");
+                $('#image_category').html('');
+                $('.category_status2').append(`<input type="checkbox" class="form-check-input" name="category_status" id="category_status">`)
+
                 $.ajax({
                     url:"{{route('edit.category')}}",
                     data:{category_id:category_data},
                     dataType:"json",
                     type:"GET",
                     success: function(response)
+
                     {
+                        
+                        $('#select_cat_position').val(response.category.category_position);
                         $('#category_name').val(response.category.name);
+                        // $('#image_category').append('<img src="{{asset('+response.category.category_image+')}}" style="width:100%; height:50%" id="category_image" alt="">');
+
+                        if(response.category.category_status=='1')
+                        {
+                            $('.category_status2').append(`<input type="checkbox" class="form-check-input" name="category_status" checked id="category_status">`);
+                        }
+                        else{
+                            $('.category_status2').append(`<input type="checkbox" class="form-check-input" name="category_status" id="category_status">`);
+                        }
                     },
                     error: function(error){
                         console.log(error);
                     }
                 });
-
             })
         })
       </script>

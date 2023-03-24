@@ -32,7 +32,7 @@
                                             <h3 class="intro-subtitle">{{$product->Category->name}}</h3><!-- End .h3 intro-subtitle -->
                                             <h1 class="intro-title">{{$product->product_name}}</h1><!-- End .intro-title -->
 
-                                            <a href="{{route('product.category')}}" class="btn btn-outline-white">
+                                            <a href="{{route('user.product',$product->id)}}" class="btn btn-outline-white">
                                                 <span>SHOP NOW</span>
                                                 <i class="icon-long-arrow-right"></i>
                                             </a>
@@ -93,53 +93,74 @@
         		<h2 class="title-lg text-center mb-4">Shop by Categories</h2><!-- End .title-lg text-center -->
 
         		<div class="row">
+                    @foreach (App\Models\Category::where('category_position','left')->where('category_status','1')->get() as $left_category)
         			<div class="col-6 col-lg-4">
         				<div class="banner banner-display banner-link-anim">
                 			<a href="#">
-                				<img src="{{asset('user/assets/images/banners/home/banner-1.jpg')}}" alt="Banner">
+                				<img src="{{asset($left_category->category_image)}}" alt="Banner">
                 			</a>
-
                 			<div class="banner-content banner-content-center">
-                				<h3 class="banner-title text-white"><a href="#">Outdoor</a></h3><!-- End .banner-title -->
-                				<a href="#" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                				<h3 class="banner-title text-white"><a href="#">{{$left_category->name}}</a></h3><!-- End .banner-title -->
+                				<a href="#" onclick="event.preventDefault();document.getElementById('left_cat').submit()" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                                <form action="{{route('product.category')}}" id="left_cat" method="post" class="d-none">
+                                    @csrf
+                                    <input type="hidden" name="category_val" value="{{$left_category->name}}">
+                                </form>
                 			</div><!-- End .banner-content -->
             			</div><!-- End .banner -->
         			</div><!-- End .col-sm-6 col-lg-3 -->
+                    @endforeach
+                    @foreach (App\Models\Category::where('category_position','right')->where('category_status','1')->get() as $right_category)
         			<div class="col-6 col-lg-4 order-lg-last">
         				<div class="banner banner-display banner-link-anim">
                 			<a href="#">
-                				<img src="{{asset('user/assets/images/banners/home/banner-4.jpg')}}" alt="Banner">
+                				<img src="{{asset($right_category->category_image)}}" alt="Banner">
                 			</a>
-
                 			<div class="banner-content banner-content-center">
-                				<h3 class="banner-title text-white"><a href="#">Lighting</a></h3><!-- End .banner-title -->
-                				<a href="#" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                				<h3 class="banner-title text-white"><a href="#">{{$right_category->name}}</a></h3><!-- End .banner-title -->
+                				<a href="#" onclick="event.preventDefault();document.getElementById('right_cat').submit()" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                                <form action="{{route('product.category')}}" id="right_cat" method="post" class="d-none">
+                                    @csrf
+                                    <input type="hidden" name="category_val" value="{{$right_category->name}}">
+                                </form>
                 			</div><!-- End .banner-content -->
             			</div><!-- End .banner -->
         			</div><!-- End .col-sm-6 col-lg-3 -->
+                    @endforeach
+                    @foreach (App\Models\Category::where('category_position','up')->where('category_status','1')->get() as $up_category)
         			<div class="col-sm-12 col-lg-4 banners-sm">
                         <div class="row">
             				<div class="banner banner-display banner-link-anim col-lg-12 col-6">
                     			<a href="#">
-                    				<img src="{{asset('user/assets/images/banners/home/banner-2.jpg')}}" alt="Banner">
+                    				<img src="{{asset($up_category->category_image)}}" alt="Banner">
                     			</a>
 
                     			<div class="banner-content banner-content-center">
-                    				<h3 class="banner-title text-white"><a href="#">Furniture and Design</a></h3><!-- End .banner-title -->
-                    				<a href="#" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                    				<h3 class="banner-title text-white"><a href="#">{{$up_category->name}}</a></h3><!-- End .banner-title -->
+                    				<a href="#" onclick="event.preventDefault();document.getElementById('up_cat').submit()" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                                    <form action="{{route('product.category')}}" id="up_cat" method="post" class="d-none">
+                                        @csrf
+                                        <input type="hidden" name="category_val" value="{{$up_category->name}}">
+                                    </form>
                     			</div><!-- End .banner-content -->
                 			</div><!-- End .banner -->
-
+                            @endforeach
+                            @foreach (App\Models\Category::where('category_position','down')->where('category_status','1')->get() as $down_category)
                 			<div class="banner banner-display banner-link-anim col-lg-12 col-6">
                     			<a href="#">
-                    				<img src="{{asset('user/assets/images/banners/home/banner-3.jpg')}}" alt="Banner">
+                    				<img src="{{asset($down_category->category_image)}}" alt="Banner">
                     			</a>
 
                     			<div class="banner-content banner-content-center">
-                    				<h3 class="banner-title text-white"><a href="#">Kitchen & Utensil</a></h3><!-- End .banner-title -->
-                    				<a href="#" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                    				<h3 class="banner-title text-white"><a href="#">{{$down_category->name}}</a></h3><!-- End .banner-title -->
+                    				<a href="#" onclick="event.preventDefault();document.getElementById('down_cat').submit()" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                                    <form action="{{route('product.category')}}" id="down_cat" method="post" class="d-none">
+                                        @csrf
+                                        <input type="hidden" name="category_val" value="{{$down_category->name}}">
+                                    </form>
                     			</div><!-- End .banner-content -->
                 			</div><!-- End .banner -->
+                            @endforeach
                         </div>
         			</div><!-- End .col-sm-6 col-lg-3 -->
         		</div><!-- End .row -->

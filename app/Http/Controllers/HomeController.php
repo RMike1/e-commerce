@@ -38,7 +38,7 @@ class HomeController extends Controller
             {
                     $slide_products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
                     $products=Product::where('product_publish','1')->with('ProductImage')->latest()->take(3)->get();
-                    $categories=Category::latest()->take(3)->get();
+                    $categories=Category::latest()->where('category_status','1')->take(3)->get();
                     return view('user.index',compact('slide_products','categories','products'));
             }
         }
@@ -46,7 +46,7 @@ class HomeController extends Controller
         {
             $slide_products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
             $products=Product::where('product_publish','1')->with('ProductImage')->latest()->take(3)->get();
-            $categories=Category::latest()->take(3)->get();
+            $categories=Category::latest()->where('category_status','1')->take(3)->get();
             return view('user.index',compact('slide_products','categories','products'));
         }
     }
@@ -111,10 +111,19 @@ class HomeController extends Controller
 //=========================Page Category =========================
 
 
-    public function Product_Category()
+    public function Product_Category(Request $req)
     {
-        $products=Product::where('product_publish','1')->with('ProductImage')->latest()->paginate(8);
-        return view('user.category',compact('products'));
+        if($req->category_val)
+        {
+
+            $products=Category::where('name','like','%'.$req->category_val.'%')->first()->product()->paginate(8);
+            return view('user.category',compact('products'));
+
+        }
+        else{
+            $products=Product::where('product_publish','1')->with('ProductImage')->latest()->paginate(8);
+            return view('user.category',compact('products'));
+        }
     }
 
 //=========================Add to Cart =========================
@@ -210,7 +219,7 @@ public function Remove_Cart(Request $req)
 
     public function Load_More_Products(){
 
-        $categories=Category::latest()->take(3)->get();
+        $categories=Category::latest()->where('category_status','1')->take(3)->get();
         $slide_products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
         $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
 
@@ -223,7 +232,7 @@ public function Remove_Cart(Request $req)
     
     public function Less_Products(){
 
-        $categories=Category::latest()->take(3)->get();
+        $categories=Category::latest()->where('category_status','1')->take(3)->get();
         $slide_products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
         $products=Product::where('product_publish','1')->with('ProductImage')->latest()->take(3)->get();
         
@@ -264,10 +273,14 @@ public function Remove_Cart(Request $req)
         
     }
 
+    //=========================Search Products=========================
+
     public function Search_Product(Request $req)
     {
         $products=Product::where('product_name','like','%'.$req->product.'%')->where('product_publish','1')->with('ProductImage')->latest()->paginate(8);
         return view('user.category',compact('products'));
     }
+
+    
 
 }
