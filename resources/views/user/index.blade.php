@@ -202,6 +202,7 @@
 
                 <div class="mb-2"></div><!-- End .mb-2 -->
             </div><!-- End .container -->
+            @guest
             <div class="cta cta-display bg-image pt-4 pb-4" style="background-image: url({{asset('user/assets/images/backgrounds/cta/bg-6.jpg')}});">
                 <div class="container">
                     <div class="row justify-content-center">
@@ -213,14 +214,15 @@
                                 </div><!-- End .col -->
 
                                 <div class="col-auto">
-                                    <a href="login.html" class="btn btn-outline-white"><span>SIGN UP</span><i class="icon-long-arrow-right"></i></a>
+                                    <a href="{{route('register')}}" class="btn btn-outline-white"><span>SIGN UP</span><i class="icon-long-arrow-right"></i></a>
                                 </div><!-- End .col-auto -->
                             </div><!-- End .row no-gutters -->
                         </div><!-- End .col-md-10 col-lg-9 -->
                     </div><!-- End .row -->
                 </div><!-- End .container -->
             </div><!-- End .cta -->
- </main><!-- End .main -->
+            @endguest
+        </main><!-- End .main -->
 
 @include('user.layouts.sign-in')
 

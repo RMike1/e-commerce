@@ -148,7 +148,7 @@ if(Auth::check())
 
             return response()->json([
                 'status'=>200,
-                'message'=>'added!! but product has already in cart!',
+                'message'=>'already added in your cart!!',
                 'view'=>(String)View::make('user.includes.sort-category',compact('products')),
                 'header'=>(String)View::make('user.includes.cartheader',compact('carts','subtotcart')),
 
@@ -262,6 +262,12 @@ public function Remove_Cart(Request $req)
                 'view'=>(String)View::make('user.includes.sort-category',compact('products')),
             ]);   
         
+    }
+
+    public function Search_Product(Request $req)
+    {
+        $products=Product::where('product_name','like','%'.$req->product.'%')->where('product_publish','1')->with('ProductImage')->latest()->paginate(8);
+        return view('user.category',compact('products'));
     }
 
 }

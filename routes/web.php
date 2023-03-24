@@ -39,6 +39,8 @@ Route::get('sort/category',[HomeController::class,'Sort_By_Category'])->name('so
 
 Route::get('reset_sort/category',[HomeController::class,'Reset_Sort_By_Category'])->name('reset.sort_by_category');
 
+Route::get('search',[HomeController::class,'Search_Product'])->name('search.product');
+
 
 
 //=====================================Agent Routes============================================

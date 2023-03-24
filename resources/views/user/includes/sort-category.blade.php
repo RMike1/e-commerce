@@ -1,4 +1,5 @@
-@foreach ($products as $product)
+@forelse ($products as $product)
+    
                     
 <div class="col-6 col-md-4 col-lg-4">
     <div class="product product-7 text-center">
@@ -51,4 +52,13 @@
     </div><!-- End .product -->
 </div><!-- End .col-sm-6 col-lg-4 -->
 
-@endforeach
+@empty
+<div class="col-6 col-md-4 col-lg-4">
+    <div class="product product-7 text-center">
+<h4 class="text-muted">
+    no product found!!
+</h4>
+</div>
+</div>
+
+@endforelse 

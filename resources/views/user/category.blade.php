@@ -65,7 +65,6 @@
             {
                 // console.log(response);
                 // alert('success!!')
-                $(".append-sort-category-product").html(response.view);
                 $(".appendCartHeader").html(response.header);
                 $('.btn-product-info').text('add to cart')
                
@@ -178,9 +177,20 @@
                     dataType:"json",
                     success:function(response)
                     {
-                        console.log(response);
+                        // console.log(response);
                         $(".append-sort-category-product").html(response.view);
-                },
+                    },
+                    error:function(error)
+                {
+                    console.log(error);
+                    $('#signin-modal').modal('show');
+                    $('.btn-product-info').text("add to cart");
+                    $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="icon-close"></i></span>
+                                </button>
+                            </div>`);
+                }
             });
 
             }
@@ -199,19 +209,19 @@
                     dataType:"json",
                     success:function(response)
                     {
-                        console.log(response);
+                        // console.log(response);
                         $(".append-sort-category-product").html(response.view);
                 },
                 error:function(error)
                 {
-                    // console.log(error);
-                    // $('#signin-modal').modal('show');
-                    // $('.btn-product-info').text("add to cart");
-                    // $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
-                    //             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    //             <span aria-hidden="true"><i class="icon-close"></i></span>
-                    //             </button>
-                    //         </div>`);
+                    console.log(error);
+                    $('#signin-modal').modal('show');
+                    $('.btn-product-info').text("add to cart");
+                    $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="icon-close"></i></span>
+                                </button>
+                            </div>`);
                 }
             });
             }
