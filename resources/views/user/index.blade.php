@@ -53,33 +53,44 @@
                         <div class="col-lg-4">
                             <div class="intro-banners">
                                 <div class="row row-sm">
+                                    @foreach (App\Models\Product::where('product_publish','1')->where('product_status','2')->latest()->take(1)->get() as $best_product)
                                     <div class="col-md-6 col-lg-12">
                                         <div class="banner banner-display">
                                             <a href="#">
-                                                <img src="{{asset('user/assets/images/banners/home/intro/banner-1.jpg')}}" alt="Banner">
+                                                <img src="{{asset($best_product->product_image)}}" alt="Banner">
                                             </a>
 
                                             <div class="banner-content">
                                                 <h4 class="banner-subtitle text-darkwhite"><a href="#">Clearence</a></h4><!-- End .banner-subtitle -->
-                                                <h3 class="banner-title text-white"><a href="#">Chairs & Chaises <br>Up to 40% off</a></h3><!-- End .banner-title -->
-                                                <a href="#" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
+                                                <h3 class="banner-title text-white"><a href="#"> {{$best_product->product_name}} <br>Up to 40% off</a></h3><!-- End .banner-title -->
+                                                <a href="{{route('user.product',$best_product->id)}}" class="btn btn-outline-white banner-link">Shop Now<i class="icon-long-arrow-right"></i></a>
                                             </div><!-- End .banner-content -->
                                         </div><!-- End .banner -->
                                     </div><!-- End .col-md-6 col-lg-12 -->
+                                    @endforeach
 
-                                    <div class="col-md-6 col-lg-12">
-                                        <div class="banner banner-display mb-0">
+                                    @foreach (App\Models\Category::where('category_status','1')->latest()->take(1)->get() as $best_category)
+                                        {{-- {{dump($best_category)}} --}}
+                                        <div class="col-md-6 col-lg-12">
+                                            <div class="banner banner-display mb-0">
                                             <a href="#">
-                                                <img src="{{asset('user/assets/images/banners/home/intro/banner-2.jpg')}}" alt="Banner">
+                                                <img src="{{asset($best_category->category_image)}}" alt="Banner">
                                             </a>
 
                                             <div class="banner-content">
                                                 <h4 class="banner-subtitle text-darkwhite"><a href="#">New in</a></h4><!-- End .banner-subtitle -->
-                                                <h3 class="banner-title text-white"><a href="#">Best Lighting <br>Collection</a></h3><!-- End .banner-title -->
-                                                <a href="#" class="btn btn-outline-white banner-link">Discover Now<i class="icon-long-arrow-right"></i></a>
+                                                <h3 class="banner-title text-white"><a href="#">Best {{$best_category->name}} <br>Collection</a></h3><!-- End .banner-title -->
+                                                <a href="#" onclick="event.preventDefault();document.getElementById('best_cat').submit()" class="btn btn-outline-white banner-link">Discover Now<i class="icon-long-arrow-right"></i></a>
+                                             
+                                                <form action="{{route('product.category')}}" id="best_cat" method="post" class="d-none">
+                                                    @csrf
+                                                    <input type="hidden" name="category_val" value="{{$best_category->name}}">
+                                                </form>
+
                                             </div><!-- End .banner-content -->
                                         </div><!-- End .banner -->
                                     </div><!-- End .col-md-6 col-lg-12 -->
+                                    @endforeach
                                 </div><!-- End .row row-sm -->
                             </div><!-- End .intro-banners -->
                         </div><!-- End .col-lg-4 -->

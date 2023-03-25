@@ -247,8 +247,6 @@ class AdminController extends Controller
         $product_id=$req->product_id;
         $product=Product::find($product_id);
 
-      
-
         $product->product_name=$req->product_name;
         $product->product_price=$req->product_price;
         $product->product_quantity=$req->product_quantity;

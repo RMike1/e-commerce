@@ -160,7 +160,7 @@
                                             </td>
                                             @else
                                             <td>
-                                                <span class="badge badge-success-lighten">Avialble</span>
+                                                <span class="badge badge-success-lighten">Available</span>
                                             </td>
                                             @endif
                                             @if ($product->product_publish=='1')

@@ -147,16 +147,16 @@
 
                                             <div class="mb-3">
                                                 <label for="productstatus" class="form-label">Status</label>
-                                                <select type="text" id="productstatus"  name="product_status" class="form-control select @error('product_status')  is-invalid @enderror" required>
+                                                <select type="text" value="{{$product->id}}" id="productstatus"  name="product_status" class="form-control select @error('product_status')  is-invalid @enderror" required>
                                                     <option value="" disabled>--select--</option>
                                                     @if ($product->product_status=='0')
-                                                    <option value="{{$product->id}}" selected hidden>Out of Stock</option>
+                                                    <option value="{{$product->product_status}}" selected hidden>Out of Stock</option>
                                                     @elseif ($product->product_status=='1')
-                                                    <option value="{{$product->id}}" selected hidden>New</option>
+                                                    <option value="{{$product->product_status}}" selected hidden>New</option>
                                                     @elseif ($product->product_status=='2')
-                                                    <option value="{{$product->id}}" selected hidden>Top</option>
+                                                    <option value="{{$product->product_status}}" selected hidden>Top</option>
                                                     @else
-                                                    <option value="{{$product->id}}" selected hidden>Available</option>
+                                                    <option value="{{$product->product_status}}" selected hidden>Available</option>
                                                     @endif
                                                     <option value="0">Out of Stock</option>
                                                     <option value="1">New</option>

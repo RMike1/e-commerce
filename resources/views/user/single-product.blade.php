@@ -300,11 +300,7 @@
                     </figure><!-- End .product-media -->
                     <div class="product-body">
                         <div class="product-cat">
-                            <a href="#" onclick="event.preventDefault();document.getElementById('single_cat_val').submit()">{{$related_products->category->name}}</a>
-                            <form action="{{route('product.category')}}" id="single_cat_val" method="post" class="d">
-                                @csrf
-                                <input type="text" name="category_val" value="{{$related_products->category->name}}">
-                            </form>
+                            <span>{{$related_products->category->name}}</span>
                         </div><!-- End .product-cat -->
                         <h3 class="product-title"><a href="{{route('user.product',$product->id)}}">{{$related_products->product_name}}</h3><!-- End .product-title -->
                         <div class="product-price">

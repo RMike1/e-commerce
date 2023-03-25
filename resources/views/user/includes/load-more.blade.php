@@ -30,7 +30,7 @@
                             <span class="product-label label-out">Out of Stcok</span>
                             @else
                             @endif
-                            <a href="product.html">
+                            <a href="{{route('user.product',$product->id)}}">
                                 <img src="{{asset($product->product_image)}}" alt="Product image" class="product-image">
                                 @if ($product->ProductImage)
                                 @foreach ($product->ProductImage as $product_related_image)
@@ -45,7 +45,7 @@
                         </figure><!-- End .product-media -->
 
                         <div class="product-body">
-                            <h3 class="product-title"><a href="product.html">{{$product->product_name}}</a></h3><!-- End .product-title -->
+                            <h3 class="product-title"><a href="{{route('user.product',$product->id)}}">{{$product->product_name}}</a></h3><!-- End .product-title -->
                             <div class="product-price">
                                 ${{number_format($product->product_price,2)}}
                             </div><!-- End .product-price -->
