@@ -3,5 +3,4 @@
 @section('content')
 @include('user.layouts.header')
 
-
 @endsection

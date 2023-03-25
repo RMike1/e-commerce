@@ -33,9 +33,16 @@
 
         <div class="product-body">
             <div class="product-cat">
-                <a href="#">{{$product->Category->name}}</a>
+                {{-- <a href="{{route('product.category',$product->Category->id)}}">{{$product->Category->name}}</a> --}}
+
+                <a href="#" onclick="event.preventDefault();document.getElementById('cat_val').submit()">{{$product->Category->name}}</a>
+                <form action="{{route('product.category')}}" id="cat_val" method="post" class="d-none">
+                    @csrf
+                    <input type="hidden" name="category_val" value="{{$product->Category->name}}">
+                </form>
+
             </div><!-- End .product-cat -->
-            <h3 class="product-title"><a href="product.html">{{$product->product_name}}</a></h3><!-- End .product-title -->
+            <h3 class="product-title"><a href="{{route('user.product',$product->id)}}">{{$product->product_name}}</a></h3><!-- End .product-title -->
             <div class="product-price">
                 ${{number_format($product->product_price,2)}}
             </div><!-- End .product-price -->

@@ -260,3 +260,22 @@
         </div><!-- End .container -->
     </div><!-- End .header-middle -->
 </header><!-- End .header -->
+@if (Session::has('success'))
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="alert alert-success  text-center" role="alert">
+            {{Session::get('success')}}
+            <button type="button" class="close mt-1" data-dismiss="alert">&times;</button>
+        </div>
+    </div>
+</div>
+@elseif(Session::has('warning'))
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="alert alert-danger  text-center" role="alert">
+            <button type="button" class="close mt-1" data-dismiss="alert">&times;</button>
+            {{Session::get('warning')}}
+        </div>
+    </div>
+</div>
+@endif

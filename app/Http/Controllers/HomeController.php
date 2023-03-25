@@ -113,15 +113,16 @@ class HomeController extends Controller
 
     public function Product_Category(Request $req)
     {
+
+        dd($req->category_val);
         if($req->category_val)
         {
-
-            $products=Category::where('name','like','%'.$req->category_val.'%')->first()->product()->paginate(8);
+            $products=Category::where('name',$req->category_val)->first()->product()->where('product_publish','1')->paginate(8);
+            // dd($products);
             return view('user.category',compact('products'));
-
         }
         else{
-            $products=Product::where('product_publish','1')->with('ProductImage')->latest()->paginate(8);
+            $products=Product::where('product_publish','1')->latest()->paginate(8);
             return view('user.category',compact('products'));
         }
     }

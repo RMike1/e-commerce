@@ -72,8 +72,8 @@
                     <i class="icon-bars"></i>
                 </button>
 
-                <a href="{{route('home')}}" class="logo mt-3" >
-                    <h3 class="font-weight-bold text-muted">MK <span style="color:#c96;">Store</span></h3>
+                <a href="{{route('home')}}" class="logo " >
+                    <h3 class="font-weight-bold text-muted h2" style="font-family:Arial, Helvetica, sans-serif">MK <span style="color:#c96;">Store</span></h3>
                 </a>
 
                 <nav class="main-nav">
@@ -306,3 +306,13 @@
         </div><!-- End .container -->
     </div><!-- End .header-middle -->
 </header><!-- End .header -->
+@if(Session::has('warning'))
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="alert alert-danger  text-center" role="alert">
+            <button type="button" class="close mt-1" data-dismiss="alert">&times;</button>
+            {{Session::get('warning')}}
+        </div>
+    </div>
+</div>
+@endif

@@ -44,14 +44,16 @@ Route::get('search',[HomeController::class,'Search_Product'])->name('search.prod
 
 //=====================================Agent Routes============================================
 
+Route::middleware(['auth','Agent'])->group(function () {
+    
 Route::get('agent/create',[AgentController::class,'create']);
 
 Route::get('agent-dashboard', [AgentController::class, 'index'])->name('agent-dashboard');
 
+});
 //=====================================Admin Routes============================================
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-
+Route::prefix('admin')->middleware(['auth','Admin'])->group(function () {
 
 Route::get('admin-dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
 

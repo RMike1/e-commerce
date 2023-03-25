@@ -166,7 +166,7 @@
                     <img src="{{asset('admin/assets/images/users/avatar-1.jpg')}}" alt="user-image" class="rounded-circle">
                 </span>
                 <span>
-                    <span class="account-user-name">Soeng Souy</span>
+                    <span class="account-user-name">{{Auth::user()->name}}</span>
                     <span class="account-position">Founder</span>
                 </span>
             </a>

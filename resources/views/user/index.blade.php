@@ -3,9 +3,13 @@
 @section('content')
 
 @include('user.layouts.header')
+
  <main class="main">
-            <div class="intro-section bg-lighter pt-5 pb-6">
+
+    <div class="intro-section bg-lighter pt-5 pb-6">
+                
                 <div class="container">
+                    
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="intro-slider-container slider-container-ratio slider-container-1 mb-2 mb-lg-0">

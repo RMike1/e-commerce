@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-sm-6 col-lg-3">
                     <div class="widget widget-about">
-                        <img src="{{asset('user/assets/images/logo-footer.png')}}" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                    <h3 class="font-weight-bold text-muted text-light">MK <span style="color:#c96;">Store</span></h3>
                         <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
 
                         <div class="social-icons">

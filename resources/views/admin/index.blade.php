@@ -12,6 +12,8 @@
 
 <div class="container-fluid">
 
+    
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -37,6 +39,30 @@
         </div>
     </div>
     <!-- end page title -->
+
+    @if (Session::has('success'))
+    <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {{Session::get('success')}}
+    </div>
+    @elseif(Session::has('warning'))
+    <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {{Session::get('warning')}}
+    </div>
+    @endif
+    @if($errors->any())
+    <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        @foreach ($errors->all() as $error)
+            <ul>
+                <li>
+                    {{$error}}
+                </li>
+            </ul>
+        @endforeach
+    </div>
+    @endif
 
     <div class="row">
         <div class="col-xl-5 col-lg-6">
