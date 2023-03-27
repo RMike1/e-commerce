@@ -19,6 +19,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::post('products', [HomeController::class, 'Product_Category'])->name('product.category');
 
+Route::get('products', [HomeController::class, 'Product_Category'])->name('product.category');
+
 Route::get('product/{id}', [HomeController::class, 'Check_Product'])->name('user.product');
 
 Route::get('cart',[HomeController::class,'ProductCart'])->name('cart')->middleware('auth');
@@ -41,11 +43,15 @@ Route::get('reset_sort/category',[HomeController::class,'Reset_Sort_By_Category'
 
 Route::get('search',[HomeController::class,'Search_Product'])->name('search.product');
 
+Route::get('checkout',[HomeController::class,'Checkout'])->name('checkout');
+
+Route::post('shipping',[HomeController::class,'Shipping'])->name('shipping');
+
 
 //=====================================Agent Routes============================================
 
-Route::middleware(['auth','Agent'])->group(function () {
-    
+Route::prefix('agent')->middleware(['auth','Agent'])->group(function () {
+
 Route::get('agent/create',[AgentController::class,'create']);
 
 Route::get('agent-dashboard', [AgentController::class, 'index'])->name('agent-dashboard');

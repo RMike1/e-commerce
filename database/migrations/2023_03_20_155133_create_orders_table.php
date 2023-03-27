@@ -15,9 +15,19 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('first_name');
+            $table->string('second_name');
+            $table->string('company')->nullable();
+            $table->string('country');
+            $table->string('town');
+            $table->string('street');
+            $table->string('phone');
+            $table->string('email');
+            $table->string('note')->nullable();
             $table->foreignId('cart_id')->references('id')->on('carts')->onDelete('cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('shipping_id')->references('id')->on('shippings')->onDelete('cascade');
             $table->timestamps();
         });
     }

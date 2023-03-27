@@ -35,7 +35,7 @@
 <!-- update cart -->
 
 <script>
-    
+
     function cartId(cart_id){
         var cart_quantity=document.getElementById('cart_quantity').value=$(cart_id).val();
         var cart_id=document.getElementById('cart_id').value=$(cart_id).attr('data-CartId');
@@ -56,7 +56,7 @@
                 $(".appendCart").html(response.view);
                 $(".appendCartHeader").html(response.header);
             },
-            
+
             // error:function(error)
             // {
             //     console.log(error);
@@ -64,11 +64,11 @@
         });
         }
 
-        //========================remove items from cart ===============================
+    //========================remove items from cart ===============================
 
-        $(document).ready(function(){
+    $(document).ready(function(){
         $(document).on('click', '#cart-remove-btn', function(e){
-            
+
             e.preventDefault();
             var cart_id=$(this).val();
             // alert(cart_id);
@@ -84,10 +84,10 @@
                 dataType:"json",
                 success:function(response)
                 {
-                    
+
                     $(".appendCart").html(response.view);
                     $(".appendCartHeader").html(response.header);
-                
+
                     toastr.warning(response.warning, "Warning", {
                         positionClass: "toast-top-right",
                         timeOut: 3e3,
@@ -116,14 +116,9 @@
             });
 
         });
-  
-    });
-
 
     //========================remove items from cart header===============================
 
-
-    $(document).ready(function(){
         $(document).on('click', '.remove-cart-btn', function(e){
             e.preventDefault();
             var cart_id=$(this).val();
@@ -144,7 +139,7 @@
                     // alert('success!!')
                     $(".appendCart").html(response.view);
                     $(".appendCartHeader").html(response.header);
-                
+
                     toastr.warning(response.warning, "Warning", {
                         positionClass: "toast-top-right",
                         timeOut: 3e3,
@@ -173,7 +168,38 @@
             });
 
         });
-  
+
+    //========================Shipping Option===============================
+
+        $(document).on('change', '.shipping_val', function(e){
+            e.preventDefault();
+            var shipping_val=$(this).val();
+            // alert(shipping_val);
+            $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+            }
+            });
+            $.ajax({
+                data:{shipping_val:shipping_val},
+                url:"{{route('shipping')}}",
+                type:"POST",
+                dataType:"json",
+                success:function(response)
+                {
+                    $('.final_tot').text(response.final_tot);
+                    // $(".appendCart").html(response.view);
+                    // $(".appendCartHeader").html(response.header);
+                },
+                error:function(error)
+                {
+                    console.log(error);
+                }
+            });
+
+
+        });
+
     });
 </script>
 

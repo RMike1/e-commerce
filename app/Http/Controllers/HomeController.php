@@ -32,7 +32,7 @@ class HomeController extends Controller
             }
             elseif(Auth::user()->usertype=='1')
             {
-                return redirect('agent-dashboard');
+                return redirect('agent/agent-dashboard');
             }
             else
             {
@@ -57,7 +57,7 @@ class HomeController extends Controller
     public function Check_Product($id)
     {
         $related_products_data=Product::where('product_publish','1')->where('id','!=',$id)->latest()->take(6)->get();
-        
+
         $product=Product::where('product_publish','1')->where('id',$id)->first();
 
         if($product)
@@ -74,18 +74,16 @@ class HomeController extends Controller
 
 //========================= Cart =========================
 
-   
-    public function ProductCart()
+
+    public function ProductCart(Request $req)
     {
-        $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-        $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
-        return view('user.cart',compact('carts','subtotcart'));
+            $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+            $final_tot=$subtotcart+$req->shipping_val;
+            $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
+            return view('user.cart',compact('carts','subtotcart','final_tot'));
     }
 
-
 //=========================Update Cart =========================
-
-
 
     public function Update_Cart(Request $req)
     {
@@ -98,14 +96,20 @@ class HomeController extends Controller
 
         $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
         $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+        $final_tot=$subtotcart+$req->shipping_val;
+
 
         return response()->json([
             'message'=>'product updated successfully',
             'status'=>200,
-            'view'=>(String)View::make('user.includes.cartItems',compact('carts','subtotcart')),
-            'header'=>(String)View::make('user.includes.cartheader',compact('carts','subtotcart')),
-            
+            'view'=>(String)View::make('user.includes.cartItems',compact('carts','subtotcart','final_tot')),
+            'header'=>(String)View::make('user.includes.cartheader',compact('carts','subtotcart','final_tot')),
+
         ]);
+
+        // $shipping=Shipping
+
+
     }
 
 //=========================Page Category =========================
@@ -114,7 +118,7 @@ class HomeController extends Controller
     public function Product_Category(Request $req)
     {
 
-        // dd($req->category_val);  
+        // dd($req->category_val);
         if($req->category_val)
         {
             $products=Category::where('name',$req->category_val)->first()->product()->where('product_publish','1')->paginate(8);
@@ -131,7 +135,7 @@ class HomeController extends Controller
 
     public function Add_Cart(Request $req)
     {
-        
+
 if(Auth::check())
 {
     $req->validate([
@@ -169,7 +173,7 @@ if(Auth::check())
             $cart_data->user_id=$user_id;
             $cart_data->quantity=$req->quantity;
             $cart_data->tot_amount=$req->quantity*$product_data->product_price;
-            $cart_data->save(); 
+            $cart_data->save();
 
             $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
             $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
@@ -190,7 +194,7 @@ if(Auth::check())
             'message'=>'first login to continue!!',
         ]);
     }
-        
+
     }
 
 //=========================Remove items from in Cart =========================
@@ -202,19 +206,21 @@ public function Remove_Cart(Request $req)
         $cart_id=$req->cart_id;
         $cart=Cart::find($cart_id);
         $cart->delete();
-        
+
         $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
         $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
         $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+        $final_tot=$subtotcart+$req->shipping_val;
+
         return response()->json([
             'status'=>200,
             'warning'=>'product has been removed from cart successfully!!',
-            'view'=>(String)View::make('user.includes.cartItems',compact('carts','subtotcart')),
-            'header'=>(String)View::make('user.includes.cartheader',compact('carts','subtotcart')),
+            'view'=>(String)View::make('user.includes.cartItems',compact('carts','subtotcart','final_tot')),
+            'header'=>(String)View::make('user.includes.cartheader',compact('carts','subtotcart','final_tot')),
         ]);
-        
+
     }
-    
+
     //=========================Load more products =========================
 
     public function Load_More_Products(){
@@ -229,18 +235,18 @@ public function Remove_Cart(Request $req)
     }
 
     //=========================Less products =========================
-    
+
     public function Less_Products(){
 
         $categories=Category::latest()->where('category_status','1')->take(3)->get();
         $slide_products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
         $products=Product::where('product_publish','1')->with('ProductImage')->latest()->take(3)->get();
-        
+
         return response()->json([
             'view'=>(String)View::make('user.includes.load-more',compact('slide_products','categories','products'))
         ],200);
     }
-    
+
     //=========================Sort products by category=========================
 
     public function Sort_By_Category(Request $req)
@@ -250,14 +256,14 @@ public function Remove_Cart(Request $req)
             return response()->json([
                 'status'=>200,
                 'view'=>(String)View::make('user.includes.sort-category',compact('products')),
-            ]);  
+            ]);
         }
         else{
             $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
             return response()->json([
                 'status'=>200,
                 'view'=>(String)View::make('user.includes.category-products',compact('products')),
-            ]);   
+            ]);
         }
     }
 
@@ -269,8 +275,8 @@ public function Remove_Cart(Request $req)
             return response()->json([
                 'status'=>200,
                 'view'=>(String)View::make('user.includes.sort-category',compact('products')),
-            ]);   
-        
+            ]);
+
     }
 
     //=========================Search Products=========================
@@ -281,6 +287,23 @@ public function Remove_Cart(Request $req)
         return view('user.category',compact('products'));
     }
 
-    
+    //=========================Search Products=========================
+
+
+    public function Checkout(Request $req)
+    {
+
+        return view('user.checkout');
+
+    }
+    public function Shipping(Request $req)
+    {
+            $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+            $final_tot=$subtotcart+$req->shipping_val;
+            $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
+            return response()->json([
+                'final_tot'=>number_format($final_tot,2),
+            ],200);
+    }
 
 }
