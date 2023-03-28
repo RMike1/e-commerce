@@ -18,7 +18,7 @@ class ShippingSeeder extends Seeder
           [
             'shipping_method'=>'Free Shipping',
             'value'=>'0',
-            'status'=>'0',
+            'status'=>'1',
             'user_id'=>'1',
           ],
           [

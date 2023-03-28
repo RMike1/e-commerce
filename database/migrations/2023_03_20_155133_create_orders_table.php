@@ -20,16 +20,18 @@ class CreateOrdersTable extends Migration
             $table->string('company')->nullable();
             $table->string('country');
             $table->string('town');
+            $table->string('state');
             $table->string('street');
             $table->string('phone');
             $table->string('email');
+            $table->string('quantity');
+            $table->string('shipping_method');
             $table->string('payment_method')->nullable();
-            $table->string('final_tot')->nullable();
+            $table->string('delivery_status')->nullable();
+            $table->string('tot_amount')->nullable();
             $table->mediumText('note')->nullable();
-            $table->foreignId('cart_id')->references('id')->on('carts')->onDelete('cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('shipping_id')->references('id')->on('shippings')->onDelete('cascade');
             $table->timestamps();
         });
     }

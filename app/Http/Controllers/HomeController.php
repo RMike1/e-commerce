@@ -12,6 +12,7 @@ use App\Models\Cart_Product;
 use App\Models\ProductImage;
 use App\Models\Category;
 use App\Models\Shipping;
+use App\Models\Order;
 
 class HomeController extends Controller
 {
@@ -291,50 +292,8 @@ public function Remove_Cart(Request $req)
         return view('user.category',compact('products'));
     }
 
-    //=========================Search Products=========================
 
-
-    public function Checkout(Request $req)
-    {
-
-        return view('user.checkout');
-
-    }
-
-    //=====================Order Now======================
-
-    public function OrderNow(Request $req)
-    {
-
-        $shipping=Shipping::get('id')->first();
-        $carts=Cart::where('user_id',Auth::user()->id)->get();
-
-        foreach($carts as $cart)
-        {
-            $order=new Order;
-            $order->first_name=$req->first_name;
-            $order->second_name=$req->second_name;
-            $order->company=$req->company;
-            $order->country=$req->country;
-            $order->town=$req->town;
-            $order->street=$req->street;
-            $order->phone=$req->phone;
-            $order->email=$req->email;
-            $order->cart_id=$req->cart_id;
-            $order->product_id=$cart->product_id;
-            $order->user_id=Auth::user()->id;
-            $order->shipping_id=$shipping;
-            $order->final_tot=$tot_amount;
-            $order->save();
-            return redirect()->back()->with('success','your order has been created successfully!');
-        }
-
-        $cart_id=$cart->cart_id;
-        $cart=Cart::find($cart_id);
-        $cart->delete();
-
-    }
-
+    //=====================Shipping======================
 
     public function Shipping(Request $req)
     {
@@ -389,5 +348,58 @@ public function Remove_Cart(Request $req)
 
         }
     }
+
+      //=====================Order Now======================
+
+      public function Order_by_Cash(Request $req)
+      {
+          $shipping_method=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->shipping_method;
+          $carts=Cart::where('user_id',Auth::user()->id)->get();
+
+        //   dd($carts);
+          foreach($carts as $cart)
+          {
+
+              $order=new Order;
+              $order->first_name=$req->first_name;
+              $order->second_name=$req->second_name;
+              $order->company=$req->company;
+              $order->country=$req->country;
+              $order->town=$req->town;
+              $order->state=$req->state;
+              $order->street=$req->street;
+              $order->phone=$req->phone;
+              $order->shipping_method=$shipping_method;
+              $order->quantity=$cart->quantity;
+              $order->email=$req->email;
+              $order->tot_amount=$cart->tot_amount;
+              $order->note=$req->note;
+              $order->payment_method="cash";
+              $order->delivery_status="pending";
+              $order->product_id=$cart->product_id;
+              $order->user_id=$cart->user_id;
+              $order->save();
+
+              $cart_id=$cart->id;
+              $cart_data=Cart::find($cart_id);
+              $cart_data->delete();
+
+            }
+            return redirect()->back()->with('success','your order has been created successfully!');
+
+      }
+
+      public function Checkout(Request $req)
+      {
+
+            $shipping_val=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->value;
+            $shipping_method=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->shipping_method;
+            $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+            $final_tot=$subtotcart+$shipping_val;
+            $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
+
+            return view('user.checkout',compact('carts','subtotcart','final_tot','shipping_method'));
+
+      }
 
 }
