@@ -6,11 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateShippingsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('shippings', function (Blueprint $table) {
@@ -19,15 +15,12 @@ class CreateShippingsTable extends Migration
             $table->string('free')->default('0');
             $table->string('standard')->default('10');
             $table->string('express')->default('20');
+            $table->string('shipping_method')->default('0');
+            $table->string('cart_id')->references('id')->on('carts')->onDelete('cascade');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('shippings');

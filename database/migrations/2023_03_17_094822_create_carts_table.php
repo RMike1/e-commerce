@@ -17,6 +17,7 @@ class CreateCartsTable extends Migration
             $table->id();
             $table->string('quantity')->default(1)->nullable();
             $table->string('tot_amount')->nullable();
+            $table->string('shipping_method')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();

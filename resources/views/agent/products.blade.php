@@ -1,6 +1,6 @@
-@extends('admin.layouts.title')
+@extends('agent.layouts.title')
 @section('title','MK Dashboard')
-@extends('admin.layouts.master')
+@extends('agent.layouts.master')
 @section('styles')
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="light-style">
@@ -78,7 +78,6 @@
                         <div class="card-body">
                             <div class="row mb-2">
                                 <div class="col-sm-4">
-                                    <a href="{{route('add.product')}}" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Products</a>
                                 </div>
                                 <div class="col-sm-8">
                                     <div class="text-sm-end">
@@ -101,12 +100,10 @@
                                             </th>
                                             <th class="all">Product</th>
                                             <th>Category</th>
-                                            <th>Added Date</th>
                                             <th>Price</th>
                                             <th>Quantity</th>
                                             <th>Status</th>
-                                            <th>Publish Status</th>
-                                            <th style="width: 85px;">Action</th>
+                                            <th style="width:120px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -128,16 +125,6 @@
                                             <td>
                                                 {{$product->category->name}}
                                             </td>
-                                            @if ($product->created_at)
-                                            <td>
-                                                {{$product->created_at->format('d-m-Y')}}
-                                                <small> {{$product->created_at->diffForHumans()}}</small>
-                                            </td>
-                                            @else
-                                            <td>
-                                                <script>document.write(new Date().getDate())</script>-<script>document.write(new Date().getMonth()+1)</script>-<script>document.write(new Date().getFullYear())</script>
-                                            </td>
-                                            @endif
                                             <td>
                                                 ${{number_format($product->product_price,2)}}
                                             </td>
@@ -161,15 +148,6 @@
                                             @else
                                             <td>
                                                 <span class="badge badge-success-lighten">Available</span>
-                                            </td>
-                                            @endif
-                                            @if ($product->product_publish=='1')
-                                            <td>
-                                                <span class="badge badge-success-lighten">Published</span>
-                                            </td>
-                                            @else
-                                            <td>
-                                                <span class="badge badge-warning-lighten">Pending..</span>
                                             </td>
                                             @endif
 

@@ -52,9 +52,11 @@ Route::post('shipping',[HomeController::class,'Shipping'])->name('shipping');
 
 Route::prefix('agent')->middleware(['auth','Agent'])->group(function () {
 
-Route::get('agent/create',[AgentController::class,'create']);
+// Route::get('agent/create',[AgentController::class,'create']);
 
 Route::get('agent-dashboard', [AgentController::class, 'index'])->name('agent-dashboard');
+
+Route::get('products', [AgentController::class, 'Agent_Products'])->name('agent-products');
 
 });
 //=====================================Admin Routes============================================

@@ -23,7 +23,9 @@ class CreateOrdersTable extends Migration
             $table->string('street');
             $table->string('phone');
             $table->string('email');
-            $table->string('note')->nullable();
+            $table->string('payment_method')->nullable();
+            $table->string('final_tot')->nullable();
+            $table->mediumText('note')->nullable();
             $table->foreignId('cart_id')->references('id')->on('carts')->onDelete('cascade');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');

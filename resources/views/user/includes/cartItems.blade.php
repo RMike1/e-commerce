@@ -92,11 +92,18 @@
                                 @php
                                     $shipping_data=App\Models\Shipping::all();
                                 @endphp
+                                {{-- @if ()
+
+                                @endif --}}
                                 @foreach ($shipping_data as $shipping)
                                 <tr class="summary-shipping-row">
                                     <td>
                                         <div class="custom-control custom-radio">
+                                            @if ($shipping->free==true)
+                                            <input type="radio" id="free-shipping" value="{{$shipping->free}}" name="shipping" class="custom-control-input shipping_val" checked>
+                                            @else
                                             <input type="radio" id="free-shipping" value="{{$shipping->free}}" name="shipping" class="custom-control-input shipping_val">
+                                            @endif
                                             <label class="custom-control-label" for="free-shipping">Free Shipping</label>
                                         </div><!-- End .custom-control -->
                                     </td>
@@ -106,7 +113,11 @@
                                 <tr class="summary-shipping-row">
                                     <td>
                                         <div class="custom-control custom-radio">
+                                            @if ($shipping->standard==true)
+                                            <input type="radio" id="standart-shipping" value="{{$shipping->standard}}" name="shipping" class="custom-control-input shipping_val" checked>
+                                            @else
                                             <input type="radio" id="standart-shipping" value="{{$shipping->standard}}" name="shipping" class="custom-control-input shipping_val">
+                                            @endif
                                             <label class="custom-control-label" for="standart-shipping">Standart:</label>
                                         </div><!-- End .custom-control -->
                                     </td>
@@ -116,7 +127,7 @@
                                 <tr class="summary-shipping-row">
                                     <td>
                                         <div class="custom-control custom-radio">
-                                            @if ($shipping->express)
+                                            @if ($shipping->express==true)
                                             <input type="radio" id="express-shipping" value="{{$shipping->express}}" name="shipping" class="custom-control-input shipping_val" checked>
                                             @else
                                             <input type="radio" id="express-shipping" value="{{$shipping->express}}" name="shipping" class="custom-control-input shipping_val">

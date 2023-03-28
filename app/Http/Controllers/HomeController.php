@@ -77,6 +77,9 @@ class HomeController extends Controller
 
     public function ProductCart(Request $req)
     {
+            $free=0;
+            $standard=0;
+            $express=0;
             $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
             $final_tot=$subtotcart+$req->shipping_val;
             $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
@@ -305,5 +308,41 @@ public function Remove_Cart(Request $req)
                 'final_tot'=>number_format($final_tot,2),
             ],200);
     }
+
+
+    //=====================Order Now======================
+
+    public function OrderNow(Request $req)
+    {
+
+        $shipping=Shipping::get('id')->first();
+        $carts=Cart::where('user_id',Auth::user()->id)->get();
+
+        foreach($carts as $cart)
+        {
+            $order=new Order;
+            $order->first_name=$req->first_name;
+            $order->second_name=$req->second_name;
+            $order->company=$req->company;
+            $order->country=$req->country;
+            $order->town=$req->town;
+            $order->street=$req->street;
+            $order->phone=$req->phone;
+            $order->email=$req->email;
+            $order->cart_id=$req->cart_id;
+            $order->product_id=$cart->product_id;
+            $order->user_id=Auth::user()->id;
+            $order->shipping_id=$shipping;
+            $order->final_tot=$tot_amount;
+            $order->save();
+            return redirect()->back()->with('success','your order has been created successfully!');
+        }
+
+        $cart_id=$cart->cart_id;
+        $cart=Cart::find($cart_id);
+        $cart->delete();
+
+    }
+    
 
 }

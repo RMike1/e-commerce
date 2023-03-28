@@ -196,10 +196,7 @@
                     console.log(error);
                 }
             });
-
-
         });
-
     });
 </script>
 
