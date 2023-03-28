@@ -27,12 +27,12 @@ class="page-content">
                                 <td class="product-col">
                                     <div class="product">
                                         <figure class="product-media">
-                                            <a href="#">
+                                            <a href="{{route('user.product',$cart->product->id)}}">
                                                 <img src="{{asset($cart->product->product_image)}}" alt="Product image">
                                             </a>
                                         </figure>
                                         <h3 class="product-title">
-                                            <a href="#">{{$cart->product->product_name}}</a>
+                                            <a href="{{route('user.product',$cart->product->id)}}">{{$cart->product->product_name}}</a>
                                         </h3><!-- End .product-title -->
                                     </div><!-- End .product -->
                                 </td>

@@ -124,7 +124,7 @@
                                     </div><!-- End .product-cat -->
                                     <div class="social-icons social-icons-sm">
                                         <span class="social-label">Share:</span>
-                                        
+
                                         <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
                                         <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
                                         <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
@@ -157,7 +157,7 @@
                                 <h3>Product Information</h3>
 
                                 <p>{!!$product->product_description!!}</p>
-                            
+
                             </div><!-- End .product-desc-content -->
                         </div><!-- .End .tab-pane -->
                         <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
@@ -247,9 +247,9 @@
 
                 <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
 
-              <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+              <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
                 data-owl-options='{
-                "nav": false, 
+                "nav": false,
                 "dots": true,
                 "margin": 20,
                 "loop": false,
@@ -302,7 +302,7 @@
                         <div class="product-cat">
                             <span>{{$related_products->category->name}}</span>
                         </div><!-- End .product-cat -->
-                        <h3 class="product-title"><a href="{{route('user.product',$product->id)}}">{{$related_products->product_name}}</h3><!-- End .product-title -->
+                        <h3 class="product-title"><a href="{{route('user.product',$related_products->id)}}">{{$related_products->product_name}}</h3><!-- End .product-title -->
                         <div class="product-price">
                             ${{number_format($related_products->product_price,2)}}
                         </div><!-- End .product-price -->
@@ -319,10 +319,10 @@
                         </div><!-- End .product-nav -->
                     </div><!-- End .product-body -->
                 </div><!-- End .product -->
-                    
+
                 @endforeach
                 </div><!-- End .owl-carousel -->
-            
+
             </div><!-- End .container -->
         </div><!-- End .page-content -->
     </main><!-- End .main -->
@@ -389,7 +389,7 @@
             $(this).find('.btn-product-info').text('adding..');
             $('.login-auth').html("");
 
-            
+
             $.ajaxSetup({
                 headers:{
                     "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
@@ -407,7 +407,7 @@
                 $(".append-category-data").html(response.view);
                 $(".appendCartHeader").html(response.header);
                 $('.btn-product-info').text('add to cart')
-               
+
                 toastr.success(response.message, "Success", {
                     positionClass: "toast-top-right",
                     timeOut: 3e3,
@@ -447,16 +447,16 @@
 
  //========================adding item to cart ===============================
 
-        
+
 function productId(caller){
 
             var product_id=document.getElementById('prod_id_btn').value=$(caller).attr('data-ProductQty');
             var quantity=$('#product_qty').val();
             // alert(quantity);
-            
+
             $('.btn-product-info').text('adding..');
             $('.login-auth').html("");
-            
+
         $.ajaxSetup({
             headers:{
                 "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
@@ -475,7 +475,7 @@ function productId(caller){
                 $(".appendCartHeader").html(response.header);
                 $('.btn-product-info').text('add to cart')
                 $('#product_qty').val(1)
-            
+
                 toastr.success(response.message, "Success", {
                     positionClass: "toast-top-right",
                     timeOut: 3e3,
@@ -515,10 +515,10 @@ function productId2(caller2){
         var product_id=document.getElementById('prod_id_btn2').value=$(caller2).attr('data-ProductQty2');
         var quantity=$('#product_qty2').val();
         // alert(quantity);
-        
+
         $('.btn-product-info2').text('adding..');
         $('.login-auth').html("");
-        
+
      $.ajaxSetup({
         headers:{
             "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
@@ -537,7 +537,7 @@ function productId2(caller2){
             $(".appendCartHeader").html(response.header);
             $('.btn-product-info2').text('add to cart')
             $('#product_qty2').val(1)
-           
+
             toastr.success(response.message, "Success", {
                 positionClass: "toast-top-right",
                 timeOut: 3e3,
@@ -595,7 +595,7 @@ function productId2(caller2){
                     // alert('success!!')
                     $(".appendCart").html(response.view);
                     $(".appendCartHeader").html(response.header);
-                
+
                     toastr.warning(response.warning, "Warning", {
                         positionClass: "toast-top-right",
                         timeOut: 3e3,
@@ -624,7 +624,7 @@ function productId2(caller2){
             });
 
         });
-  
+
     });
 
 
