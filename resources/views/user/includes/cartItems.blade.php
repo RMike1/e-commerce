@@ -1,4 +1,5 @@
-<div class="page-content">
+<div
+class="page-content">
     <div class="cart">
         <div class="container">
             <div class="row">
@@ -90,61 +91,46 @@
                                     <td>&nbsp;</td>
                                 </tr>
                                 @php
-                                    $shipping_data=App\Models\Shipping::all();
+                                    $free_shipping=App\Models\Shipping::where('shipping_method','Free Shipping')->first();
+                                    $standard_shipping=App\Models\Shipping::where('shipping_method','Standard')->first();
+                                    $express_shipping=App\Models\Shipping::where('shipping_method','Express')->first();
                                 @endphp
-                                {{-- @if ()
 
-                                @endif --}}
-                                @foreach ($shipping_data as $shipping)
                                 <tr class="summary-shipping-row">
                                     <td>
                                         <div class="custom-control custom-radio">
-                                            @if ($shipping->free==true)
-                                            <input type="radio" id="free-shipping" value="{{$shipping->free}}" name="shipping" class="custom-control-input shipping_val" checked>
+                                            @if ($free_shipping->status=='1')
+                                            <input type="radio" id="free-shipping" value="{{$free_shipping->shipping_method}}" name="shipping" class="custom-control-input shipping_val" checked>
                                             @else
-                                            <input type="radio" id="free-shipping" value="{{$shipping->free}}" name="shipping" class="custom-control-input shipping_val">
+                                            <input type="radio" id="free-shipping" value="{{$free_shipping->shipping_method}}" name="shipping" class="custom-control-input shipping_val">
                                             @endif
                                             <label class="custom-control-label" for="free-shipping">Free Shipping</label>
                                         </div><!-- End .custom-control -->
                                     </td>
-                                    <td>${{number_format($shipping->free,2)}}</td>
+                                    <td>${{number_format($free_shipping->value,2)}}</td>
                                 </tr><!-- End .summary-shipping-row -->
 
                                 <tr class="summary-shipping-row">
                                     <td>
                                         <div class="custom-control custom-radio">
-                                            @if ($shipping->standard==true)
-                                            <input type="radio" id="standart-shipping" value="{{$shipping->standard}}" name="shipping" class="custom-control-input shipping_val" checked>
+                                            @if ($standard_shipping->status=='1')
+                                            <input type="radio" id="standart-shipping" value="{{$standard_shipping->shipping_method}}" name="shipping" class="custom-control-input shipping_val" checked>
                                             @else
-                                            <input type="radio" id="standart-shipping" value="{{$shipping->standard}}" name="shipping" class="custom-control-input shipping_val">
+                                            <input type="radio" id="standart-shipping" value="{{$standard_shipping->shipping_method}}" name="shipping" class="custom-control-input shipping_val">
                                             @endif
-                                            <label class="custom-control-label" for="standart-shipping">Standart:</label>
+                                            <label class="custom-control-label" for="standart-shipping">Standard:</label>
                                         </div><!-- End .custom-control -->
                                     </td>
-                                    <td>${{number_format($shipping->standard,2)}}</td>
+                                    <td>${{number_format($standard_shipping->value,2)}}</td>
                                 </tr><!-- End .summary-shipping-row -->
 
-                                <tr class="summary-shipping-row">
-                                    <td>
-                                        <div class="custom-control custom-radio">
-                                            @if ($shipping->express==true)
-                                            <input type="radio" id="express-shipping" value="{{$shipping->express}}" name="shipping" class="custom-control-input shipping_val" checked>
-                                            @else
-                                            <input type="radio" id="express-shipping" value="{{$shipping->express}}" name="shipping" class="custom-control-input shipping_val">
-                                            @endif
-                                            <label class="custom-control-label" for="express-shipping">Express:</label>
-                                        </div><!-- End .custom-control -->
-                                    </td>
-                                    <td>${{number_format($shipping->express,2)}}</td>
-                                </tr><!-- End .summary-shipping-row -->
                                 <tr class="summary-shipping-estimate">
                                     <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
                                     <td>&nbsp;</td>
                                 </tr><!-- End .summary-shipping-estimate -->
-                                @endforeach
 
                                 <tr class="summary-total">
-                                    <td>Total:</td>
+                                    <td>Grand Total:</td>
                                     <td>$<span class="final_tot">{{number_format(($final_tot),2)}}</span></td>
                                 </tr><!-- End .summary-total -->
                             </tbody>

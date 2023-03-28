@@ -11,6 +11,7 @@ use App\Models\Cart;
 use App\Models\Cart_Product;
 use App\Models\ProductImage;
 use App\Models\Category;
+use App\Models\Shipping;
 
 class HomeController extends Controller
 {
@@ -74,16 +75,13 @@ class HomeController extends Controller
 
 //========================= Cart =========================
 
-
     public function ProductCart(Request $req)
     {
-            $free=0;
-            $standard=0;
-            $express=0;
-            $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-            $final_tot=$subtotcart+$req->shipping_val;
-            $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
-            return view('user.cart',compact('carts','subtotcart','final_tot'));
+        $shipping_val=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->value;
+        $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+        $final_tot=$subtotcart+$shipping_val;
+        $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
+        return view('user.cart',compact('carts','subtotcart','final_tot'));
     }
 
 //=========================Update Cart =========================
@@ -97,9 +95,10 @@ class HomeController extends Controller
         $cart->tot_amount=$req->quantity*$cart->product->product_price;
         $cart->update();
 
-        $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
+        $shipping_val=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->value;
         $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-        $final_tot=$subtotcart+$req->shipping_val;
+        $final_tot=$subtotcart+$shipping_val;
+        $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
 
 
         return response()->json([
@@ -213,7 +212,9 @@ public function Remove_Cart(Request $req)
         $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
         $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
         $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-        $final_tot=$subtotcart+$req->shipping_val;
+
+        $shipping_val=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->value;
+        $final_tot=$subtotcart+$shipping_val;
 
         return response()->json([
             'status'=>200,
@@ -299,16 +300,6 @@ public function Remove_Cart(Request $req)
         return view('user.checkout');
 
     }
-    public function Shipping(Request $req)
-    {
-            $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-            $final_tot=$subtotcart+$req->shipping_val;
-            $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
-            return response()->json([
-                'final_tot'=>number_format($final_tot,2),
-            ],200);
-    }
-
 
     //=====================Order Now======================
 
@@ -343,6 +334,60 @@ public function Remove_Cart(Request $req)
         $cart->delete();
 
     }
-    
+
+
+    public function Shipping(Request $req)
+    {
+    $shipping_id=Shipping::where('shipping_method',$req->shipping_val)->first()->id;
+    $shipping_rest_id=Shipping::where('shipping_method','!=',$req->shipping_val)->first()->id;
+
+        if($req->shipping_val=='Free Shipping')
+        {
+            $shipping=Shipping::find($shipping_id);
+            $shipping_value=$shipping->value;
+            $shipping->value=$shipping_value;
+            $shipping->user_id=Auth::user()->id;
+            $shipping->shipping_method=$shipping->shipping_method;
+            if($shipping->status=='0'){
+                $shipping->status='1';
+            }
+            $shipping->save();
+            $rest_ids=Shipping::find($shipping_rest_id);
+            $rest_ids->status='0';
+            $rest_ids->save();
+
+
+            $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+            $final_tot=$subtotcart+$shipping_value;
+            $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
+            return response()->json([
+                'final_tot'=>number_format($final_tot,2),
+            ],200);
+
+        }
+        else
+        {
+            $shipping=Shipping::find($shipping_id);
+            $shipping_value=$shipping->value;
+            if($shipping->status=='0'){
+                $shipping->status='1';
+            }
+            $shipping->value=$shipping_value;
+            $shipping->user_id=Auth::user()->id;
+            $shipping->shipping_method=$shipping->shipping_method;
+            $shipping->save();
+            $rest_ids=Shipping::find($shipping_rest_id);
+            $rest_ids->status='0';
+            $rest_ids->save();
+
+            $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+            $final_tot=$subtotcart+$shipping_value;
+            $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
+            return response()->json([
+                'final_tot'=>number_format($final_tot,2),
+            ],200);
+
+        }
+    }
 
 }

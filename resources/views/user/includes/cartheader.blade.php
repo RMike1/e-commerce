@@ -2,7 +2,7 @@
     <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
         <i class="icon-shopping-cart"></i>
         @auth
-        <span class="cart-count">{{App\Models\Cart::where('user_id',Auth::user()->id)->count()}}</span>   
+        <span class="cart-count">{{App\Models\Cart::where('user_id',Auth::user()->id)->count()}}</span>
         @endauth
     </a>
 <div class="dropdown-menu dropdown-menu-right">
@@ -41,7 +41,13 @@
     @auth
     <div class="dropdown-cart-total">
         <span>Total</span>
-      <span class="cart-total-price">${{number_format(App\Models\Cart::where('user_id',Auth::user()->id)->sum('tot_amount'),2)}}</span>
+        @php
+        $subtotcart=App\Models\Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+        $shipping_val=App\Models\Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->value;
+        $final_tot=$subtotcart+$shipping_val;
+        @endphp
+      {{-- <span class="cart-total-price">${{number_format(App\Models\Cart::where('user_id',Auth::user()->id)->sum('tot_amount'),2)}}</span> --}}
+      <span class="cart-total-price">$<span class="final_tot">{{number_format(($final_tot),2)}}</span></span>
     </div><!-- End .dropdown-cart-total -->
     @endauth
 

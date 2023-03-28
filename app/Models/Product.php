@@ -22,5 +22,10 @@ class Product extends Model
     {
         return $this->hasMany(ProductImage::class,'product_id','id');
     }
-    
+
+    public function Shipping()
+    {
+        return $this->hasOne(Shipping::class);
+    }
+
 }

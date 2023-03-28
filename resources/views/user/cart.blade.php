@@ -52,7 +52,7 @@
             dataType:"json",
             success:function(response)
             {
-                console.log(response);
+                // console.log(response);
                 $(".appendCart").html(response.view);
                 $(".appendCartHeader").html(response.header);
             },
@@ -175,27 +175,29 @@
             e.preventDefault();
             var shipping_val=$(this).val();
             // alert(shipping_val);
-            $.ajaxSetup({
-            headers:{
-                "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
-            }
-            });
-            $.ajax({
-                data:{shipping_val:shipping_val},
-                url:"{{route('shipping')}}",
-                type:"POST",
-                dataType:"json",
-                success:function(response)
-                {
-                    $('.final_tot').text(response.final_tot);
-                    // $(".appendCart").html(response.view);
-                    // $(".appendCartHeader").html(response.header);
-                },
-                error:function(error)
-                {
-                    console.log(error);
+                $.ajaxSetup({
+                headers:{
+                    "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
                 }
-            });
+                });
+                $.ajax({
+                    data:{shipping_val:shipping_val},
+                    url:"{{route('shipping')}}",
+                    type:"POST",
+                    dataType:"json",
+                    success:function(response)
+                    {
+                        $('.final_tot').text(response.final_tot);
+                        // $(".appendCart").html(response.view);
+                        // $(".appendCartHeader").html(response.header);
+                    },
+                    error:function(error)
+                    {
+                        console.log(error);
+                    }
+                });
+
+
         });
     });
 </script>

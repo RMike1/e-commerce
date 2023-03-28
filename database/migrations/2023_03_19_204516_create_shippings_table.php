@@ -12,11 +12,10 @@ class CreateShippingsTable extends Migration
         Schema::create('shippings', function (Blueprint $table) {
             $table->id();
             $table->string('address')->nullable();
-            $table->string('free')->default('0');
-            $table->string('standard')->default('10');
-            $table->string('express')->default('20');
-            $table->string('shipping_method')->default('0');
-            $table->string('cart_id')->references('id')->on('carts')->onDelete('cascade');
+            $table->string('shipping_method');
+            $table->string('value');
+            $table->string('status')->default('0');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

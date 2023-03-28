@@ -2,19 +2,15 @@
 @section('title','MK Dashboard')
 @extends('agent.layouts.master')
 @section('styles')
-    <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="light-style">
-    <link href="{{asset('admin/assets/css/app-dark.min.css')}}" rel="stylesheet" type="text/css" id="dark-style">
-
-    <link href="{{asset('admin/assets/css/vendor/dataTables.bootstrap5.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('admin/assets/css/vendor/responsive.bootstrap5.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="light-style">
+<link href="{{asset('admin/assets/css/app-dark.min.css')}}" rel="stylesheet" type="text/css" id="dark-style">
+<link href="{{asset('admin/assets/css/vendor/dataTables.bootstrap5.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('admin/assets/css/vendor/responsive.bootstrap5.css')}}" rel="stylesheet" type="text/css">
 @endsection
 @section('content')
-
-
          <!-- Start Content-->
          <div class="container-fluid">
-
             <!-- start page title -->
             <div class="row">
                 <div class="col-12">
@@ -205,7 +201,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-
 @endsection
 @section('scripts')
     <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
@@ -218,12 +213,9 @@
     <script src="{{asset('admin/assets/js/vendor/dataTables.checkboxes.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
-
     <!-- third party js -->
     <script src="{{asset('admin/assets/js/vendor/apexcharts.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/vendor/jquery-jvectormap-1.2.2.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/vendor/jquery-jvectormap-world-mill-en.js')}}"></script>
-
     <script src="{{asset('admin/assets/js/pages/demo.products.js')}}"></script>
-
 @endsection

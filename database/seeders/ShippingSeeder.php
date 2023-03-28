@@ -15,9 +15,18 @@ class ShippingSeeder extends Seeder
     public function run()
     {
         DB::table('shippings')->insert([
-            'free'=>'0',
-            'standard'=>'10',
-            'express'=>'20',
+          [
+            'shipping_method'=>'Free Shipping',
+            'value'=>'0',
+            'status'=>'0',
+            'user_id'=>'1',
+          ],
+          [
+            'shipping_method'=>'Standard',
+            'value'=>'10',
+            'status'=>'0',
+            'user_id'=>'1',
+          ],
         ]);
     }
 }
