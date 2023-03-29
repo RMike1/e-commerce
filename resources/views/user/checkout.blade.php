@@ -1,6 +1,18 @@
 @section('title','MK | Checkout')
 @extends('user.layouts.master')
 
+@section('styles')
+<!-- Plugins CSS File -->
+<link rel="stylesheet" href="{{asset('user/assets/css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/plugins/owl-carousel/owl.carousel.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/plugins/magnific-popup/magnific-popup.css')}}">
+<!-- Main CSS File -->
+
+<link rel="stylesheet" href="{{asset('user/assets/css/style.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/plugins/nouislider/nouislider.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/vendor/css/toastr.css')}}">
+@endsection
+
 @section('content')
 
 @include('user.layouts.header')
@@ -38,50 +50,91 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label>First Name *</label>
-                                        <input type="text" class="form-control" name="first_name" required>
+                                        <input type="text" value="{{old('first_name')}}" class="form-control @error('first_name') is-invalid @enderror" name="first_name" required>
+                                        @error('first_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div><!-- End .col-sm-6 -->
 
                                     <div class="col-sm-6">
                                         <label>Last Name *</label>
-                                        <input type="text" class="form-control" name="second_name" required>
+                                        <input type="text" value="{{old('second_name')}}" class="form-control @error('second_name') is-invalid @enderror" name="second_name" required>
+                                        @error('second_name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div><!-- End .col-sm-6 -->
                                 </div><!-- End .row -->
 
                                 <label>Company Name (Optional)</label>
-                                <input type="text" name="company" class="form-control">
+                                <input type="text" value="{{old('company')}}"  name="company" class="form-control">
+
 
                                 <label>Country *</label>
-                                <input type="text" name="country" class="form-control" required>
+                                <input type="text" value="{{old('country')}}" name="country" class="form-control @error ('country') is-invalid @enderror" required>
+                                @error('country')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
 
                                 <label>Street address *</label>
-                                <input type="text" name="street" class="form-control" placeholder="House number and Street name" required>
+                                <input type="text" name="street" value="{{old('street')}}" class="form-control @error ('street') is-invalid @enderror" placeholder="House number and Street name" required>
+                                @error('street')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
 
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label>Town / City *</label>
-                                        <input type="text" name="town" class="form-control" required>
+                                        <input type="text" name="town" value="{{old('town')}}" class="form-control @error ('town') is-invalid @enderror" required>
+                                        @error('town')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div><!-- End .col-sm-6 -->
 
                                     <div class="col-sm-6">
                                         <label>State / County *</label>
-                                        <input type="text" name="state" class="form-control" required>
+                                        <input type="text" name="state" value="{{old('state')}}" class="form-control @error ('state') is-invalid @enderror" required>
+                                        @error('state')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div><!-- End .col-sm-6 -->
                                 </div><!-- End .row -->
 
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label>Email address *</label>
-                                        <input type="text" name="email" class="form-control" required>
+                                        <input type="text" name="email" value="{{old('email')}}" class="form-control @error ('email') is-invalid @enderror" required>
+                                        @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div><!-- End .col-sm-6 -->
 
                                     <div class="col-sm-6">
                                         <label>Phone *</label>
-                                        <input type="tel" name="phone" class="form-control" required>
+                                        <input type="tel" name="phone" value="{{old('phone')}}" class="form-control @error ('phone') is-invalid @enderror" required>
+                                        @error('phone')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
                                     </div><!-- End .col-sm-6 -->
                                 </div><!-- End .row -->
 
                                 <label>Order notes (optional)</label>
-                                <textarea class="form-control" name="note" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                                <textarea class="form-control" name="note" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery">{{old('note')}}</textarea>
                         </div><!-- End .col-lg-9 -->
 
                         <aside class="col-lg-3">
@@ -170,6 +223,8 @@
 
 @endsection
 @section('scripts')
+<script src="{{asset('user/assets/js/toastr-plugin.js')}}"></script>
+<script src="{{asset('user/assets/vendor/js/toastr.js')}}"></script>
 <script>
 
 
@@ -226,7 +281,27 @@
 
         });
         });
-
-
+</script>
+<script>
+    @if (Session::has('success'))
+    toastr.success("{{Session('success')}}", "Success", {
+                        positionClass: "toast-top-right",
+                        timeOut: 3e3,
+                        closeButton: !0,
+                        debug: !1,
+                        newestOnTop: !0,
+                        progressBar: !0,
+                        preventDuplicates: !0,
+                        onclick: null,
+                        showDuration: "300",
+                        hideDuration: "1000",
+                        extendedTimeOut: "1000",
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                        tapToDismiss: !1
+                    })
+    @endif
 </script>
 @endsection

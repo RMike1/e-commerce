@@ -44,18 +44,18 @@
                 </div>
             </li>
 
-            <li class="side-nav-title side-nav-item mt-1">News</li>
+            <li class="side-nav-title side-nav-item mt-1">Users</li>
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarBaseUI" aria-expanded="false" aria-controls="sidebarBaseUI" class="side-nav-link">
                     <i class="uil-box"></i>
-                    <span> Blog </span>
+                    <span>Management</span>
                     <span class="menu-arrow"></span>
                 </a>
                 <div class="collapse" id="sidebarBaseUI">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="#">All Posts</a>
+                            <a href="{{route('users')}}">View Users</a>
                         </li>
                     </ul>
                 </div>

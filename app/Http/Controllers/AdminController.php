@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\User;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class AdminController extends Controller
@@ -45,14 +47,14 @@ class AdminController extends Controller
         $category->category_position=$req->category_position;
         $category->category_status=$req->category_status==true ? '1':'0';
         $category->category_image="storage/".$req->file('category_image')->store('category_images','public');
-        
+
         $category->save();
         return redirect()->back()->with('success','category has been added successfully!!');
     }
 
 
     //=========================Delete Category =========================
-    
+
     public function Delete_Category($req)
     {
         $category=Category::find($req);
@@ -60,12 +62,12 @@ class AdminController extends Controller
         return redirect()->back()->with('warning','category has been deleted successfully!!');
     }
 
-    
+
     //=========================Edit Category =========================
 
     public function edit_category(Request $req)
     {
-   
+
 
         $category_id=$req->category_id;
 
@@ -105,7 +107,7 @@ class AdminController extends Controller
             $category->category_image="storage/".$req->file('category_image')->store('category_images','public');
         }
         $category->save();
-        
+
         return redirect()->back()->with('success','category has been updated successfully!!');
     }
 
@@ -144,20 +146,20 @@ class AdminController extends Controller
     {
     if($request->hasFile('upload')) {
         $filenamewithextension = $request->file('upload')->getClientOriginalName();
-    
+
         $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-    
+
         $extension = $request->file('upload')->getClientOriginalExtension();
-    
+
         $filenametostore = $filename.'_'.time().'.'.$extension;
-    
+
         $request->file('upload')->storeAs('public/uploads', $filenametostore);
 
         $CKEditorFuncNum = $request->input('CKEditorFuncNum');
         $url = asset('storage/uploads/'.$filenametostore);
         $msg = 'Image successfully uploaded';
         $re = "<script>window.parent.CKEDITOR.tools.callFunction($CKEditorFuncNum, '$url', '$msg')</script>";
-            
+
         @header('Content-type: text/html; charset=utf-8');
         echo $re;
         }
@@ -183,10 +185,10 @@ class AdminController extends Controller
         $product->product_price=$req->product_price;
         $product->product_quantity=$req->product_quantity;
         $product->product_description=$req->product_description;
-        $product->product_publish=$req->product_publish==true ? '1':'0'; 
+        $product->product_publish=$req->product_publish==true ? '1':'0';
         $product->product_status=$req->product_status;
         $product->category_id=$req->category_id;
-        
+
         if($req->product_image)
         {
                 $product->product_image='storage/'.$req->file('product_image')->store('products-images','public');
@@ -278,7 +280,7 @@ class AdminController extends Controller
             }
             }
         return redirect(route('products'))->with('success','product has been updated successfully!!');
-        
+
     }
 
     //=========================View Single Product Admin panel=========================
@@ -321,8 +323,73 @@ class AdminController extends Controller
         if(File::exists($related_image->image)){
             File::delete($related_image->image);
         }
-            $related_image->delete();
-            return redirect()->back()->with('warning','Related image deleted successfully!!');
+        $related_image->delete();
+        return redirect()->back()->with('warning','Related image deleted successfully!!');
     }
-    
+     //=========================update Users=========================
+
+     public function Add_User(Request $req)
+     {
+        $req->validate([
+            'name'=>'required',
+            'email'=>'required|unique:users',
+            'usertype'=>'required',
+        ]);
+
+         $user=new User;
+         $user->name=$req->name;
+         $user->email=$req->email;
+         $user->usertype=$req->usertype;
+         $user->password=Hash::make($req->password);
+         $user->save();
+
+         return redirect(route('users'))->with('success','user added successfully!!');
+     }
+
+    //=========================View Users=========================
+
+    public function Users()
+    {
+        $users=User::all();
+        return view('admin.users',compact('users'));
+    }
+
+    //=========================Edit Users=========================
+
+    public function Edit_User($id)
+    {
+        $users=User::find($id);
+        return view('admin.edit-user',compact('users'));
+    }
+
+    //=========================update Users=========================
+
+    public function Update_User(Request $req)
+    {
+        $req->validate([
+            'name'=>'required',
+            'email'=>'required|unique:users,email'.$req->id,
+            'usertype'=>'required',
+        ]);
+
+        $user_id=$req->use_val;
+        $user=User::find($user_id);
+        $user->name=$req->name;
+        $user->email=$req->email;
+        $user->usertype=$req->usertype;
+        $user->update();
+
+        return redirect(route('users'))->with('success','user updated successfully!!');
+    }
+
+    //=========================update Users=========================
+
+    public function Delete_User($id)
+    {
+        $user=User::find($id);
+        $user->delete();
+        return redirect(route('users'))->with('warning','user deleted successfully!!');
+
+    }
+
 }

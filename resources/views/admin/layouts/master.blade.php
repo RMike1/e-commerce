@@ -5,6 +5,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Coderthemes" name="R Mike">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{asset('admin/admin/assets/images/favicon.ico')}}">
 
@@ -18,17 +20,17 @@
     </head>
 
     <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
-        
+
           <!-- Pre-loader -->
-        
+
         <!-- End Preloader-->
-        
+
         <!-- Begin page -->
         <div class="wrapper">
             <!-- ========== Left Sidebar Start ========== -->
-          
+
             {{View::make('admin.layouts.left-sidebar')}}
-          
+
             <!-- Left Sidebar End -->
 
             <!-- ============================================================== -->
@@ -38,11 +40,11 @@
             <div class="content-page">
                 <div class="content">
                     <!-- Topbar Start -->
-                   
+
                     {{View::make('admin.layouts.navbar')}}
 
                     <!-- end Topbar -->
-                    
+
                     <!-- Start Content-->
                    @yield('content')
                     <!-- container -->

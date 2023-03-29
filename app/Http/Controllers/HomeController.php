@@ -359,6 +359,18 @@ public function Remove_Cart(Request $req)
         //   dd($carts);
           foreach($carts as $cart)
           {
+            $req->validate([
+                'first_name'=>'required|min:2|max:50',
+                'second_name'=>'required|min:2|max:50',
+                'company'=>'nullable',
+                'town'=>'required',
+                'state'=>'required',
+                'street'=>'required',
+                'phone'=>'required',
+                'phone'=>'required',
+                'email'=>'required',
+                'note'=>'nullable',
+            ]);
 
               $order=new Order;
               $order->first_name=$req->first_name;

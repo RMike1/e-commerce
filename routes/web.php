@@ -94,4 +94,16 @@ Route::get('delete/{id}/product', [AdminController::class, 'Delete_Product'])->n
 Route::get('view/{id}/product', [AdminController::class, 'View_Product'])->name('view.product');
 
 Route::get('delete/related_images/{id}', [AdminController::class, 'Delete_Related_image'])->name('delete.related_images');
+
+Route::get('users', [AdminController::class, 'Users'])->name('users');
+
+Route::post('update/user', [AdminController::class, 'Update_User'])->name('update.user');
+
+Route::get('edit/user/{id}', [AdminController::class, 'Edit_User'])->name('edit.user');
+
+Route::post('add/user', [AdminController::class, 'Add_User'])->name('add.user');
+
+Route::get('delete/user/{id}', [AdminController::class, 'Delete_User'])->name('delete.user');
+
+
 });
