@@ -93,11 +93,8 @@
                                 <table class="table table-hover table-centered w-100 dt-responsive nowrap" id="products-datatable">
                                     <thead class="table-light">
                                         <tr>
-                                            <th class="all" style="width: 20px;">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                    <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                </div>
+                                            <th>
+                                                #
                                             </th>
                                             <th class="all">Product</th>
                                             <th>Category</th>
@@ -110,15 +107,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                        $count=1;
+                                        @endphp
                                         @forelse ($products as $product)
                                         <tr>
                                             <td>
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                    <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                </div>
+                                                {{$count++}}.
                                             </td>
-
                                             <td>
                                                 <img src="{{asset($product->product_image)}}" alt="contact-img" title="product-img" class="rounded me-3" height="48">
                                                 <p class="m-0 d-inline-block align-middle font-16">

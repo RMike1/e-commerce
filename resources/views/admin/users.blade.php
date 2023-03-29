@@ -56,15 +56,13 @@
     </div>
     @endif
 
-
-
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-2">
                         <div class="col-sm-4">
-                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#create-user-modal"><i class="mdi mdi-plus-circle me-2"></i>User</button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#create-user-modal"><i class="mdi mdi-plus-circle me-2"></i>Add User</button>
                         </div>
                     </div>
 

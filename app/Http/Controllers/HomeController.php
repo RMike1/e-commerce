@@ -349,7 +349,7 @@ public function Remove_Cart(Request $req)
         }
     }
 
-      //=====================Order Now======================
+      //=====================Order By Cash======================
 
       public function Order_by_Cash(Request $req)
       {
@@ -401,6 +401,9 @@ public function Remove_Cart(Request $req)
 
       }
 
+    //=========================Checkout page============================
+
+
       public function Checkout(Request $req)
       {
 
@@ -411,6 +414,31 @@ public function Remove_Cart(Request $req)
             $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
 
             return view('user.checkout',compact('carts','subtotcart','final_tot','shipping_method'));
+
+      }
+
+
+      //=========================Sort By Date, price and name============================
+
+
+      public function Sortby(Request $req)
+      {
+        $sort_val=$req->data;
+
+        if($sort_val){
+            $products=Product::orderBy($sort_val,'Asc')->get();
+            return response()->json([
+                'status'=>200,
+                'view'=>(String)View::make('user.includes.sort-category',compact('products')),
+            ]);
+        }
+        else{
+            $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
+            return response()->json([
+                'status'=>200,
+                'view'=>(String)View::make('user.includes.category-products',compact('products')),
+            ]);
+        }
 
       }
 

@@ -28,7 +28,21 @@
                             <li class="breadcrumb-item active">User</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Edit User Role</h4>
+                    <h4 class="page-title">Edit User Role | Current Role: 
+                        @if($users->usertype=='0') 
+                        <span>
+                            Normal User
+                        </span>
+                        @elseif($users->usertype=='1') 
+                        <span>
+                            Agent
+                        </span>
+                        @else
+                        <span>
+                            Admin
+                        </span>
+                        @endif
+                    </h4>
                 </div>
             </div>
         </div>

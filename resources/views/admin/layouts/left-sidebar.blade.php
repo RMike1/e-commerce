@@ -38,6 +38,9 @@
                             <a href="{{route('products')}}">Products</a>
                         </li>
                         <li>
+                            <a href="{{route('add.product')}}">Add Products</a>
+                        </li>
+                        <li>
                             <a href="{{route('category')}}">Category</a>
                         </li>
                     </ul>

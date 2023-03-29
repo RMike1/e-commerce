@@ -302,17 +302,17 @@
                         <div class="product-cat">
                             <span>{{$related_products->category->name}}</span>
                         </div><!-- End .product-cat -->
-                        <h3 class="product-title"><a href="{{route('user.product',$related_products->id)}}">{{$related_products->product_name}}</h3><!-- End .product-title -->
+                        <h3 class="product-title"><a href="{{route('user.product',$related_products->id)}}">{{$related_products->product_name}}</a></h3><!-- End .product-title -->
                         <div class="product-price">
                             ${{number_format($related_products->product_price,2)}}
                         </div><!-- End .product-price -->
                         <div class="ratings-container">
                             <div class="ratings">
-                                <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
+                                <div class="ratings-val" style="width: 50%;"></div><!-- End .ratings-val -->
                             </div><!-- End .ratings -->
                             <span class="ratings-text">( 2 Reviews )</span>
                         </div><!-- End .rating-container -->
-                        <div class="product-nav product-nav-thumbs">
+                        <div class="product-nav product-nav-thumbs ">
                             <a href="#" class="d-none">
                                 <img src="assets/images/products/product-4-thumb.jpg" alt="product desc">
                             </a>

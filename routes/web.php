@@ -49,6 +49,8 @@ Route::post('shipping',[HomeController::class,'Shipping'])->name('shipping');
 
 Route::post('order_by_cash',[HomeController::class,'Order_by_Cash'])->name('order_by_cash');
 
+Route::get('sortby',[HomeController::class,'Sortby'])->name('sortby');
+
 
 //=====================================Agent Routes============================================
 

@@ -103,10 +103,14 @@
     })
 
     
-    //========================remove items from cart header===============================
-
-
+    
+    
     $(document).ready(function(){
+
+
+        //========================remove items from cart header===============================
+        
+        
         $(document).on('click', '.remove-cart-btn', function(e){
             e.preventDefault();
             var cart_id=$(this).val();
@@ -225,8 +229,37 @@
                 }
             });
             }
-                // alert(cat_val);
+        });
 
+    //========================sort items by date, price and name===============================
+
+
+        $(document).on('change','.sortby_products', function(e){
+            e.preventDefault();
+            var sort_val=$(this).val();
+            alert(sort_val);
+
+            $.ajaxSetup({
+                    headers:{
+                        "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+            $.ajax({
+                data:{data:sort_val},
+                url:"{{route('sortby')}}",
+                type:"get",
+                dataType:"json",
+                success:function(response){
+                    // console.log(response);
+                    $(".append-sort-category-product").html(response.view);
+                },
+
+                error:function(error)
+                {
+                    console.log(error)
+                }
+            });
             
         });
 
