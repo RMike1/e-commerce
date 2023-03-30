@@ -24,7 +24,10 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.index');
+        
+        $customers=User::where('usertype','0')->count();
+        $orders=Order::count();
+        return view('admin.index',compact('customers','orders'));
     }
 
     //=========================Category Page =========================
@@ -602,6 +605,7 @@ class AdminController extends Controller
             return $pdf->download('invoice-'.$tracking_no.'.'.'pdf');
     }
 
+    //=================Cancel order====================
       public function Cancel_Order($id)
       {
        $order=Order::find($id);
@@ -609,6 +613,8 @@ class AdminController extends Controller
        $order->update();
        return redirect()->back()->with('warning','order has been rejected successfully!!');
       }
+
+    //=================Approve order====================
 
       public function Approve_Order($id)
       {
@@ -618,6 +624,8 @@ class AdminController extends Controller
        return redirect()->back()->with('success','order has been approved successfully!!');
       }
 
+    //=================Undo order====================
+
       public function Undo_Order($id)
       {
        $order=Order::find($id);
@@ -625,6 +633,7 @@ class AdminController extends Controller
        $order->update();
        return redirect()->back()->with('success','order has been restored successfully!!');
       }
+
 
 
 

@@ -12,7 +12,7 @@
 
 <div class="container-fluid">
 
-    
+
 
     <!-- start page title -->
     <div class="row">
@@ -66,7 +66,6 @@
 
     <div class="row">
         <div class="col-xl-5 col-lg-6">
-
             <div class="row">
                 <div class="col-lg-6">
                     <div class="card widget-flat">
@@ -75,10 +74,10 @@
                                 <i class="mdi mdi-account-multiple widget-icon"></i>
                             </div>
                             <h5 class="text-muted fw-normal mt-0" title="Number of Customers">Customers</h5>
-                            <h3 class="mt-3 mb-3">36,254</h3>
+                            <h3 class="mt-3 mb-3">{{$customers}}</h3>
                             <p class="mb-0 text-muted">
                                 <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span>
-                                <span class="text-nowrap">Since last month</span>  
+                                <span class="text-nowrap">Since last month</span>
                             </p>
                         </div> <!-- end card-body-->
                     </div> <!-- end card-->
@@ -91,7 +90,7 @@
                                 <i class="mdi mdi-cart-plus widget-icon"></i>
                             </div>
                             <h5 class="text-muted fw-normal mt-0" title="Number of Orders">Orders</h5>
-                            <h3 class="mt-3 mb-3">5,543</h3>
+                            <h3 class="mt-3 mb-3">{{$orders}}</h3>
                             <p class="mb-0 text-muted">
                                 <span class="text-danger me-2"><i class="mdi mdi-arrow-down-bold"></i> 1.08%</span>
                                 <span class="text-nowrap">Since last month</span>
@@ -160,7 +159,7 @@
                     <div dir="ltr">
                         <div id="high-performing-product" class="apex-charts" data-colors="#727cf5,#e3eaef"></div>
                     </div>
-                        
+
                 </div> <!-- end card-body-->
             </div> <!-- end card-->
 
@@ -415,7 +414,7 @@
                     <h4 class="header-title">Total Sales</h4>
 
                     <div id="average-sales" class="apex-charts mb-4 mt-4" data-colors="#727cf5,#0acf97,#fa5c7c,#ffbc00"></div>
-                   
+
 
                     <div class="chart-widget-list">
                         <p>
@@ -459,7 +458,7 @@
                     </div>
                     <h4 class="header-title mb-2">Recent Activity</h4>
 
-                    <div data-simplebar="" style="max-height: 419px;"> 
+                    <div data-simplebar="" style="max-height: 419px;">
                         <div class="timeline-alt pb-0">
                             <div class="timeline-item">
                                 <i class="mdi mdi-upload bg-info-lighten text-info timeline-icon"></i>

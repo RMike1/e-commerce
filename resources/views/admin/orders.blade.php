@@ -1,5 +1,5 @@
 @extends('admin.layouts.title')
-@section('title','MK')
+@section('title','MK | Orders')
 @extends('admin.layouts.master')
 @section('styles')
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css">
@@ -176,14 +176,10 @@
       <script src="{{asset('admin/assets/js/vendor/responsive.bootstrap5.min.js')}}"></script>
       <script src="{{asset('admin/assets/js/vendor/dataTables.checkboxes.min.js')}}"></script>
       <script src="{{asset('admin/assets/js/vendor/dataTables.buttons.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/buttons.bootstrap5.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/buttons.html5.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/buttons.flash.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/buttons.print.min.js')}}"></script>
-
-      <!-- Datatables js -->
-
-      <!-- Datatable Init js -->
+        <script src="{{asset('admin/assets/js/vendor/buttons.bootstrap5.min.js')}}"></script>
+        <script src="{{asset('admin/assets/js/vendor/buttons.html5.min.js')}}"></script>
+        <script src="{{asset('admin/assets/js/vendor/buttons.flash.min.js')}}"></script>
+        <script src="{{asset('admin/assets/js/vendor/buttons.print.min.js')}}"></script>
       <script src="{{asset('admin/assets/js/pages/demo.datatable-init.js')}}"></script>
 
         <script>
