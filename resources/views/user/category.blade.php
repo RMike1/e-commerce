@@ -237,7 +237,6 @@
         $(document).on('change','.sortby_products', function(e){
             e.preventDefault();
             var sort_val=$(this).val();
-            alert(sort_val);
 
             $.ajaxSetup({
                     headers:{

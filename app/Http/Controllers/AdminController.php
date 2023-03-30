@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\User;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+use App\Models\Order;
+use App\Models\Shipping;
+use App\Models\Cart;
 
 class AdminController extends Controller
 {
@@ -390,6 +394,53 @@ class AdminController extends Controller
         $user->delete();
         return redirect(route('users'))->with('warning','user deleted successfully!!');
 
+    }
+
+    //=========================Orders=========================
+
+    public function Orders()
+    {
+        $orders=DB::table('orders')
+            ->join('products','products.id','=','orders.product_id')
+            ->select('products.*','orders.*','orders.quantity as orderQty','orders.tot_amount as orderTot')
+            ->get();
+        return view('admin.orders',compact('orders'));
+    }
+
+    public function View_Order($id)
+    {
+
+
+        $tracking_no=Order::where('id',$id)->first()->tracking_no;
+        if($tracking_no)
+        {
+            $orders=DB::table('orders')
+            ->join('products','products.id','=','orders.product_id')
+            ->join('shippings','shippings.id','=','orders.shipping_id')
+            ->join('users','users.id','=','orders.user_id')
+            ->where('tracking_no',$tracking_no)->where('status','1')
+            ->select('products.*','orders.*','orders.quantity as orderQty','orders.tot_amount as orderTot')
+            ->get();
+
+            $shipping_val=DB::table('shippings')
+            ->join('users','users.id','=','shippings.user_id')
+            // ->join('orders','order_id','=','shippings.id')
+            ->where('status','1')->first()->value;
+
+            $shipping_method=DB::table('shippings')
+            ->join('users','users.id','=','shippings.user_id')
+            // ->join('orders','order_id','=','shippings.id')
+            ->where('status','1')->first()->shipping_method;
+
+            $subtotcart=Order::where('tracking_no',$tracking_no)->sum('tot_amount');
+            $final_tot=$subtotcart+$shipping_val;
+
+            return view('admin.order-details',compact('orders','tracking_no','subtotcart','final_tot','shipping_method','shipping_val'));
+        }
+        else
+        {
+            return redirect('404');
+        }
     }
 
 }

@@ -43,7 +43,7 @@ Route::get('reset_sort/category',[HomeController::class,'Reset_Sort_By_Category'
 
 Route::get('search',[HomeController::class,'Search_Product'])->name('search.product');
 
-Route::get('checkout',[HomeController::class,'Checkout'])->name('checkout');
+Route::get('checkout',[HomeController::class,'Checkout'])->name('checkout')->middleware('auth');
 
 Route::post('shipping',[HomeController::class,'Shipping'])->name('shipping');
 
@@ -106,6 +106,10 @@ Route::get('edit/user/{id}', [AdminController::class, 'Edit_User'])->name('edit.
 Route::post('add/user', [AdminController::class, 'Add_User'])->name('add.user');
 
 Route::get('delete/user/{id}', [AdminController::class, 'Delete_User'])->name('delete.user');
+
+Route::get('orders', [AdminController::class, 'Orders'])->name('orders');
+
+Route::get('view/order/{id}', [AdminController::class, 'View_Order'])->name('view.order');
 
 
 });

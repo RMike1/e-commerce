@@ -15,6 +15,8 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('order_id');
+            $table->string('tracking_no');
             $table->string('first_name');
             $table->string('second_name');
             $table->string('company')->nullable();
@@ -28,10 +30,12 @@ class CreateOrdersTable extends Migration
             $table->string('shipping_method');
             $table->string('payment_method')->nullable();
             $table->string('delivery_status')->nullable();
+            $table->string('payment_status')->nullable();
             $table->string('tot_amount')->nullable();
             $table->mediumText('note')->nullable();
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('shipping_id')->nullable();
             $table->timestamps();
         });
     }

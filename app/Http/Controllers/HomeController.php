@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 use App\Models\Product;
 use App\Models\Cart;
 use App\Models\Cart_Product;
@@ -354,7 +355,12 @@ public function Remove_Cart(Request $req)
       public function Order_by_Cash(Request $req)
       {
           $shipping_method=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->shipping_method;
+          $shipping_id=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->id;
+
+
           $carts=Cart::where('user_id',Auth::user()->id)->get();
+          $tracking_no=Str::random(10);
+
 
         //   dd($carts);
           foreach($carts as $cart)
@@ -371,8 +377,13 @@ public function Remove_Cart(Request $req)
                 'email'=>'required',
                 'note'=>'nullable',
             ]);
+            $shipp_id=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->id;
+            $shipp_rest_id=Shipping::where('status','!=','1')->where('user_id',Auth::user()->id)->first()->id;
 
+              $order_id=Str::random(8);
               $order=new Order;
+              $order->order_id='MK-'.$order_id;
+              $order->tracking_no='MK-'.$tracking_no;
               $order->first_name=$req->first_name;
               $order->second_name=$req->second_name;
               $order->company=$req->company;
@@ -388,13 +399,34 @@ public function Remove_Cart(Request $req)
               $order->note=$req->note;
               $order->payment_method="cash";
               $order->delivery_status="pending";
+              $order->payment_status="pending";
               $order->product_id=$cart->product_id;
               $order->user_id=$cart->user_id;
+              $order->shipping_id=$shipping_id;
               $order->save();
 
               $cart_id=$cart->id;
-              $cart_data=Cart::find($cart_id);
-              $cart_data->delete();
+              if($cart_id)
+              {
+                  $cart_data=Cart::find($cart_id);
+                  $cart_data->delete();
+              }
+              else{
+                  return redirect()->back();
+              }
+
+              $shipping=Shipping::find($shipp_id);
+              if($shipping->value!='0')
+              {
+                  $shipping->status='0';
+                  $shipping->save();
+
+                  $shipping_rest_id=Shipping::find($shipp_rest_id);
+                  $shipping_rest_id->status='1';
+                  $shipping_rest_id->save();
+
+              }
+
 
             }
             return redirect()->back()->with('success','your order has been created successfully!');
@@ -407,8 +439,8 @@ public function Remove_Cart(Request $req)
       public function Checkout(Request $req)
       {
 
-            $shipping_val=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->value;
-            $shipping_method=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->shipping_method;
+            $shipping_val=Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->value;
+            $shipping_method=Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->shipping_method;
             $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
             $final_tot=$subtotcart+$shipping_val;
             $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();

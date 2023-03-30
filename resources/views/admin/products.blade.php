@@ -2,12 +2,14 @@
 @section('title','MK Dashboard')
 @extends('admin.layouts.master')
 @section('styles')
-    <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="light-style">
-    <link href="{{asset('admin/assets/css/app-dark.min.css')}}" rel="stylesheet" type="text/css" id="dark-style">
+<link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="light-style">
+<link href="{{asset('admin/assets/css/app-dark.min.css')}}" rel="stylesheet" type="text/css" id="dark-style">
+<link href="{{asset('admin/assets/css/vendor/dataTables.bootstrap5.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('admin/assets/css/vendor/responsive.bootstrap5.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('admin/assets/css/vendor/select.bootstrap5.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('admin/assets/css/vendor/buttons.bootstrap5.css')}}" rel="stylesheet" type="text/css" />
 
-    <link href="{{asset('admin/assets/css/vendor/dataTables.bootstrap5.css')}}" rel="stylesheet" type="text/css">
-    <link href="{{asset('admin/assets/css/vendor/responsive.bootstrap5.css')}}" rel="stylesheet" type="text/css">
 @endsection
 @section('content')
 
@@ -78,19 +80,16 @@
                         <div class="card-body">
                             <div class="row mb-2">
                                 <div class="col-sm-4">
-                                    <a href="{{route('add.product')}}" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Products</a>
+                                    <a href="{{route('add.product')}}" class="btn btn-secondary mb-2"><i class="mdi mdi-plus-circle me-2"></i> Add Products</a>
                                 </div>
                                 <div class="col-sm-8">
                                     <div class="text-sm-end">
-                                        <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog-outline"></i></button>
-                                        <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                                        <button type="button" class="btn btn-light mb-2">Export</button>
                                     </div>
                                 </div><!-- end col-->
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-hover table-centered w-100 dt-responsive nowrap" id="products-datatable">
+                                <table  class="table table-centered w-100 dt-responsive nowrap products-datatable">
                                     <thead class="table-light">
                                         <tr>
                                             <th>
@@ -207,12 +206,31 @@
                     <h4 class="modal-title" id="standard-modalLabel">Create Category</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div>
-                <form action="{{route('store.category')}}" method="post">
+                <form action="{{route('store.category')}}" method="post" enctype="multipart/form-data">
                 @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                                <label for="category-title">Category Name</label>
-                                <input type="text" class="form-control form-control-light" name="name" id="category-title" placeholder="Enter name">
+                                <label for="category-title">Category Name*</label>
+                                <input type="text" class="form-control form-control-light" value="{{old('name')}}" name="name" id="category-title" placeholder="Enter name">
+                            </div>
+                        <div class="mb-3">
+                                <label for="category-image">Category Image</label>
+                                <input type="file" class="form-control form-control-light" name="category_image" id="category-image">
+                            </div>
+
+                        <div class="mb-3">
+                            <label for="category-pos">Category Postion for Homepage</label>
+                            <select type="text" id="category-pos" name="category_position" class="form-control form-control-light">
+                                <option value="" selected disabled>--select--</option>
+                                <option value="right">Right</option>
+                                <option value="left">Left</option>
+                                <option value="up">Up</option>
+                                <option value="down">Down</option>
+                            </select>
+                            </div>
+                        <div class="mb-3 form-check form-checkbox-secondary">
+                                <label class="form-check-label" for="category-status">Publish?</label>
+                                <input type="checkbox" class="form-check-input" name="category_status" id="category-status">
                             </div>
                         </div>
                     <div class="modal-footer">
@@ -226,22 +244,28 @@
 
 @endsection
 @section('scripts')
-    <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/pages/demo.dashboard.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/dataTables.bootstrap5.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/dataTables.responsive.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/responsive.bootstrap5.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/dataTables.checkboxes.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
+    
 
-    <!-- third party js -->
-    <script src="{{asset('admin/assets/js/vendor/apexcharts.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/jquery-jvectormap-1.2.2.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/jquery-jvectormap-world-mill-en.js')}}"></script>
+<script src="{{asset('admin/assets/js/pages/demo.dashboard.js')}}"></script>
+<!-- third party js -->
+<script src="{{asset('admin/assets/js/vendor/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/dataTables.bootstrap5.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/responsive.bootstrap5.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/dataTables.checkboxes.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/buttons.bootstrap5.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/buttons.html5.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/buttons.flash.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/buttons.print.min.js')}}"></script>
 
-    <script src="{{asset('admin/assets/js/pages/demo.products.js')}}"></script>
+<!-- Datatables js -->
 
+<!-- Datatable Init js -->
+<script src="{{asset('admin/assets/js/pages/demo.datatable-init.js')}}"></script>
+
+  <script>
+      $(document).ready(function(){"use strict";
+      $(".products-datatable").DataTable({keys:!0,language:{paginate:{previous:"<i class='mdi mdi-chevron-left'>",next:"<i class='mdi mdi-chevron-right'>"}},drawCallback:function(){$(".dataTables_paginate > .pagination").addClass("pagination-rounded")}});var a=$("#datatable-buttons").DataTable({lengthChange:!1,buttons:["copy","print"],language:{paginate:{previous:"<i class='mdi mdi-chevron-left'>",next:"<i class='mdi mdi-chevron-right'>"}},drawCallback:function(){$(".dataTables_paginate > .pagination").addClass("pagination-rounded")}});});
+  </script>
 @endsection

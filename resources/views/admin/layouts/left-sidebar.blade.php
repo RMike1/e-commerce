@@ -29,19 +29,19 @@
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link">
                     <i class="uil-layer-group"></i>
-                    <span> Products </span>
+                    <span> Data </span>
                     <span class="menu-arrow"></span>
                 </a>
                 <div class="collapse" id="sidebarPages">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="{{route('products')}}">Products</a>
+                            <a href="{{route('products')}}">View Products</a>
                         </li>
                         <li>
-                            <a href="{{route('add.product')}}">Add Products</a>
+                            <a href="{{route('category')}}">View Category</a>
                         </li>
                         <li>
-                            <a href="{{route('category')}}">Category</a>
+                            <a href="{{route('orders')}}">View Orders</a>
                         </li>
                     </ul>
                 </div>
