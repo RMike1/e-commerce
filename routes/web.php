@@ -111,5 +111,9 @@ Route::get('orders', [AdminController::class, 'Orders'])->name('orders');
 
 Route::get('view/order/{id}', [AdminController::class, 'View_Order'])->name('view.order');
 
+Route::get('download-invoice/{id}', [AdminController::class, 'Download_Invoice'])->name('download.invoice');
+
+Route::get('view/invoice/{id}', [AdminController::class, 'View_Invoice'])->name('view.invoice');
+
 
 });

@@ -129,8 +129,13 @@
                                                 <small> {{$product->created_at->diffForHumans()}}</small>
                                             </td>
                                             @else
+                                            @php
+                                                $todayTime=Carbon\Carbon::now()->format('g:i A');
+                                                $todayDate=Carbon\Carbon::now()->format('d-m- Y');
+                                            @endphp
                                             <td>
-                                                <script>document.write(new Date().getDate())</script>-<script>document.write(new Date().getMonth()+1)</script>-<script>document.write(new Date().getFullYear())</script>
+                                                {{$todayDate}}
+                                                <small>{{$todayTime}}</small>
                                             </td>
                                             @endif
                                             <td>
@@ -244,7 +249,7 @@
 
 @endsection
 @section('scripts')
-    
+
 
 <script src="{{asset('admin/assets/js/pages/demo.dashboard.js')}}"></script>
 <!-- third party js -->

@@ -31,7 +31,7 @@ class ProductSeeder extends Seeder
             'product_price'=>'1000000',
             'product_quantity'=>'300',
             'product_description'=>'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloribus ex eaque nulla, rem dignissimos laborum exercitationem sunt sint? Culpa obcaecati autem et. Distinctio, dolore. Voluptatibus cumque maxime impedit laudantium quos.',
-            'product_status'=>'0',
+            'product_status'=>'1',
             'product_publish'=>'1',
             'product_image'=>'storage/uploads/matt-bluejay-In3VT75Nb2A-unsplash_1678873285.jpg',
             'category_id'=>'2',

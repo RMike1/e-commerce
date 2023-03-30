@@ -140,7 +140,7 @@
                             </div><!-- End .megamenu megamenu-md -->
                         </li>
                         <li>
-                            <a href="product.html" class="sf-with-ul">Product</a>
+                            <a href="{{route('product.category')}}" class="sf-with-ul">Product</a>
 
                             <div class="megamenu megamenu-sm">
                                 <div class="row no-gutters">
@@ -148,29 +148,37 @@
                                         <div class="menu-col">
                                             <div class="menu-title">Product Details</div><!-- End .menu-title -->
                                             <ul>
-                                                <li><a href="product.html">Default</a></li>
-                                                <li><a href="product-centered.html">Centered</a></li>
-                                                <li><a href="product-extended.html"><span>Extended Info<span class="tip tip-new">New</span></span></a></li>
-                                                <li><a href="product-gallery.html">Gallery</a></li>
-                                                <li><a href="product-sticky.html">Sticky Info</a></li>
-                                                <li><a href="product-sidebar.html">Boxed With Sidebar</a></li>
-                                                <li><a href="product-fullwidth.html">Full Width</a></li>
-                                                <li><a href="product-masonry.html">Masonry Sticky Info</a></li>
+                                            @foreach (App\Models\Product::where('product_publish','1')->get() as $product)
+                                            @if ($product->product_status=='1')
+                                            <li><a href="{{route('user.product',$product->id)}}"><span>{{$product->product_name}}<span class="tip tip-new">New</span></span></a></li>
+                                            @else
+                                            <li><a href="{{route('user.product',$product->id)}}">{{$product->product_name}}</a></li>
+                                            @endif
+                                            @endforeach
                                             </ul>
                                         </div><!-- End .menu-col -->
                                     </div><!-- End .col-md-6 -->
+                                    @foreach (App\Models\Category::where('category_status','1')->latest()->take(1)->get() as $best_category)
 
                                     <div class="col-md-6">
                                         <div class="banner banner-overlay">
-                                            <a href="category.html">
-                                                <img src="{{asset('user/assets/images/menu/banner-2.jpg')}}" alt="Banner">
-
+                                            <a href="#" onclick="event.preventDefault();document.getElementById('best_h_cat').submit()">
+                                                @if($best_category->image)
+                                                <img src="{{asset($best_category->category_image)}}" alt="Banner">
+                                                @else
+                                                <img src="{{asset($best_category->category_image)}}" alt="Banner">
+                                                @endif
                                                 <div class="banner-content banner-content-bottom">
-                                                    <div class="banner-title text-white">New Trends<br><span><strong>spring 2019</strong></span></div><!-- End .banner-title -->
+                                                    <div class="banner-title text-white">New Trends<br><span><strong>{{$best_category->name}} {{Carbon\Carbon::now()->format('Y')}}</strong></span></div><!-- End .banner-title -->
                                                 </div><!-- End .banner-content -->
                                             </a>
+                                            <form action="{{route('product.category')}}" id="best_h_cat" method="post" class="d-none">
+                                                @csrf
+                                                <input type="hidden" name="category_val" value="{{$best_category->name}}">
+                                            </form>
                                         </div><!-- End .banner -->
                                     </div><!-- End .col-md-6 -->
+                                    @endforeach
                                 </div><!-- End .row -->
                             </div><!-- End .megamenu megamenu-sm -->
                         </li>

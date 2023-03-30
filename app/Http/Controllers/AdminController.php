@@ -14,6 +14,8 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Shipping;
 use App\Models\Cart;
+use Barryvdh\DomPDF\Facade\PDF;
+// use PDF;
 
 class AdminController extends Controller
 {
@@ -407,40 +409,121 @@ class AdminController extends Controller
         return view('admin.orders',compact('orders'));
     }
 
+//=================View Single Order Details======================
+
     public function View_Order($id)
     {
 
-
         $tracking_no=Order::where('id',$id)->first()->tracking_no;
+        $order=Order::find($id);
         if($tracking_no)
         {
             $orders=DB::table('orders')
             ->join('products','products.id','=','orders.product_id')
             ->join('shippings','shippings.id','=','orders.shipping_id')
             ->join('users','users.id','=','orders.user_id')
-            ->where('tracking_no',$tracking_no)->where('status','1')
+            ->where('tracking_no',$tracking_no)
             ->select('products.*','orders.*','orders.quantity as orderQty','orders.tot_amount as orderTot')
             ->get();
 
-            $shipping_val=DB::table('shippings')
-            ->join('users','users.id','=','shippings.user_id')
-            // ->join('orders','order_id','=','shippings.id')
-            ->where('status','1')->first()->value;
-
-            $shipping_method=DB::table('shippings')
-            ->join('users','users.id','=','shippings.user_id')
-            // ->join('orders','order_id','=','shippings.id')
-            ->where('status','1')->first()->shipping_method;
-
+            $shipping_method=DB::table('orders')
+            ->join('products','products.id','=','orders.product_id')
+            ->join('shippings','shippings.id','=','orders.shipping_id')
+            ->join('users','users.id','=','orders.user_id')
+            ->where('tracking_no',$tracking_no)
+            ->first()->shipping_method;
+          
+            $shipping_val=DB::table('orders')
+            ->join('products','products.id','=','orders.product_id')
+            ->join('shippings','shippings.id','=','orders.shipping_id')
+            ->join('users','users.id','=','orders.user_id')
+            ->where('tracking_no',$tracking_no)
+            ->first()->value;
+            
             $subtotcart=Order::where('tracking_no',$tracking_no)->sum('tot_amount');
             $final_tot=$subtotcart+$shipping_val;
 
-            return view('admin.order-details',compact('orders','tracking_no','subtotcart','final_tot','shipping_method','shipping_val'));
+            return view('admin.order-details',compact('orders','tracking_no','subtotcart','final_tot','shipping_method','shipping_val','order'));
         }
         else
         {
             return redirect('404');
         }
+    }
+
+    //=================View Invoice Details======================
+
+    public function View_Invoice($id)
+    {
+        $tracking_no=Order::where('id',$id)->first()->tracking_no;
+        $order=Order::find($id);
+        if($tracking_no)
+        {
+            $orders=DB::table('orders')
+            ->join('products','products.id','=','orders.product_id')
+            ->join('shippings','shippings.id','=','orders.shipping_id')
+            ->join('users','users.id','=','orders.user_id')
+            ->where('tracking_no',$tracking_no)
+            ->select('products.*','orders.*','orders.quantity as orderQty','orders.tot_amount as orderTot')
+            ->get();
+
+            $shipping_method=DB::table('orders')
+            ->join('products','products.id','=','orders.product_id')
+            ->join('shippings','shippings.id','=','orders.shipping_id')
+            ->join('users','users.id','=','orders.user_id')
+            ->where('tracking_no',$tracking_no)
+            ->first()->shipping_method;
+          
+            $shipping_val=DB::table('orders')
+            ->join('products','products.id','=','orders.product_id')
+            ->join('shippings','shippings.id','=','orders.shipping_id')
+            ->join('users','users.id','=','orders.user_id')
+            ->where('tracking_no',$tracking_no)
+            ->first()->value;
+            
+            $subtotcart=Order::where('tracking_no',$tracking_no)->sum('tot_amount');
+            $final_tot=$subtotcart+$shipping_val;
+
+            return view('admin.invoice',compact('orders','tracking_no','subtotcart','final_tot','shipping_method','shipping_val','order'));
+        }
+        else
+        {
+            return redirect('404');
+        }
+    }
+
+    public function Download_Invoice($id)
+    {
+            $tracking_no=Order::where('id',$id)->first()->tracking_no;
+            // $order=Order::where('id',$id)->where('tracking_no',$tracking_no)->get();
+            $orders=DB::table('orders')
+            ->join('products','products.id','=','orders.product_id')
+            ->join('shippings','shippings.id','=','orders.shipping_id')
+            ->join('users','users.id','=','orders.user_id')
+            ->where('tracking_no',$tracking_no)
+            ->select('products.*','orders.*','orders.quantity as orderQty','orders.tot_amount as orderTot')
+            ->get();
+
+            $shipping_method=DB::table('orders')
+            ->join('products','products.id','=','orders.product_id')
+            ->join('shippings','shippings.id','=','orders.shipping_id')
+            ->join('users','users.id','=','orders.user_id')
+            ->where('tracking_no',$tracking_no)
+            ->first()->shipping_method;
+          
+            $shipping_val=DB::table('orders')
+            ->join('products','products.id','=','orders.product_id')
+            ->join('shippings','shippings.id','=','orders.shipping_id')
+            ->join('users','users.id','=','orders.user_id')
+            ->where('tracking_no',$tracking_no)
+            ->first()->value;
+
+            $subtotcart=Order::where('tracking_no',$tracking_no)->sum('tot_amount');
+            $final_tot=$subtotcart+$shipping_val;
+
+            // $data=['orders'=>$orders,'tracking_no'=>$tracking_no,'subtotcart'=>$subtotcart,'final_tot'=>$final_tot,'shipping_method'=>$shipping_method,'shipping_val'=>$shipping_val];
+            $pdf = PDF::loadView('admin.invoice-download',compact('orders','tracking_no','subtotcart','final_tot','shipping_method','shipping_val','tracking_no'));
+            return $pdf->download('invoice.pdf');
     }
 
 }
