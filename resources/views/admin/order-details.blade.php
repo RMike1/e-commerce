@@ -64,10 +64,10 @@
             <div class="horizontal-steps mt-4 mb-4 pb-5" id="tooltip-container">
                 <div class="horizontal-steps-content">
                     <div class="step-item">
-                        <span data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="20/08/2018 07:24 PM">Order Placed</span>
+                        <span data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{$shipping_delivery_info->created_at}}">Order Placed</span>
                     </div>
                     <div class="step-item current">
-                        <span data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="bottom" title="21/08/2018 11:32 AM">Packed</span>
+                        <span data-bs-container="#tooltip-container" data-bs-toggle="tooltip" data-bs-placement="bottom">Packed</span>
                     </div>
                     <div class="step-item">
                         <span>Shipped</span>
@@ -83,9 +83,8 @@
     </div>
     <!-- end row -->
 
-    <a href="{{route('view.invoice',$order->id)}}" class="btn btn-secondary"><i class="mdi mdi-eye me-1"></i>View Invoice</a>
     <a href="{{route('download.invoice',$order->id)}}" class="btn btn-secondary"><i class="mdi mdi-download me-1"></i>Download Invoice</a>
-
+    <a href="{{route('view.invoice',$order->id)}}" class="btn btn-secondary"><i class="mdi mdi-eye me-1"></i>View Invoice</a>
     <div class="row">
         <div class="col-lg-8">
             <div class="card">
@@ -164,13 +163,13 @@
                 <div class="card-body">
                     <h4 class="header-title mb-3">Shipping Information</h4>
 
-                    <h5>Stanley Jones</h5>
+                    <h5>{{$shipping_info->first_name}} {{$shipping_info->second_name}}</h5>
 
                     <address class="mb-0 font-14 address-lg">
-                        795 Folsom Ave, Suite 600<br>
-                        San Francisco, CA 94107<br>
-                        <abbr title="Phone">P:</abbr> (123) 456-7890 <br>
-                        <abbr title="Mobile">M:</abbr> (+01) 12345 67890
+                        {{$shipping_info->street}}, <br>
+                        {{$shipping_info->state}}, {{$shipping_info->town}}<br>
+                        <abbr title="Phone">P:</abbr> {{$shipping_info->phone}} <br>
+                        <abbr title="Email">E:</abbr> {{$shipping_info->email}} <br>
                     </address>
 
                 </div>
@@ -184,8 +183,7 @@
 
                     <ul class="list-unstyled mb-0">
                         <li>
-                            <p class="mb-2"><span class="fw-bold me-2">Payment Type:</span> Credit Card</p>
-                            <p class="mb-2"><span class="fw-bold me-2">Provider:</span> Visa ending in 2851</p>
+                            <p class="mb-2"><span class="fw-bold me-2">Payment Type:</span> {{$billing_info->payment_method}}</p>
                             <p class="mb-2"><span class="fw-bold me-2">Valid Date:</span> 02/2020</p>
                             <p class="mb-0"><span class="fw-bold me-2">CVV:</span> xxx</p>
                         </li>
@@ -198,13 +196,15 @@
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-3">Delivery Info</h4>
+                    <h4 class="header-title mb-3 text-center">Delivery Info</h4>
 
                     <div class="text-center">
                         <i class="mdi mdi-truck-fast h2 text-muted"></i>
                         <h5><b>UPS Delivery</b></h5>
-                        <p class="mb-1"><b>Order ID :</b> xxxx235</p>
-                        <p class="mb-0"><b>Payment Mode :</b> COD</p>
+                        <p class="mb-1"><b>Order ID :</b> {{$delivery_info->order_id}}</p>
+                        <p class="mb-0"><b>Payment Mode :</b>  {{$delivery_info->payment_method}}</p>
+                        <p class="mb-0"><b>Payment Status :</b>  {{$delivery_info->payment_status}}</p>
+                        <p class="mb-0"><b>Shipping Method :</b>  {{$delivery_info->shipping_method}}</p>
                     </div>
                 </div>
             </div>

@@ -14,7 +14,7 @@
 
  <!-- Start Content-->
  <div class="container-fluid">
-                        
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -23,14 +23,14 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">E-shop</a></li>
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Data</a></li>
-                        <li class="breadcrumb-item active">Order</li>
+                        <li class="breadcrumb-item active">Orders</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Order</h4>
+                <h4 class="page-title">Orders</h4>
             </div>
         </div>
-    </div>     
-    <!-- end page title --> 
+    </div>
+    <!-- end page title -->
 
     @if (Session::has('success'))
     <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
@@ -43,7 +43,7 @@
         {{Session::get('warning')}}
     </div>
     @endif
-    
+
     @if($errors->any())
     <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -90,7 +90,7 @@
                                 @foreach($orders as $order)
                                 <tr>
                                      <td>
-                                       {{$count++}} 
+                                       {{$count++}}
                                     </td>
                                      <td>
                                        #{{$order->order_id}}
@@ -115,21 +115,43 @@
                                     <td>
                                         <h5><span class="badge badge-warning-lighten">Pending..</span></h5>
                                     </td>
+                                    @elseif ($order->payment_status=='rejected')
+                                    <td>
+                                        <h5><span class="badge badge-danger-lighten">rejected</span></h5>
+                                    </td>
                                     @else
                                     <td>
-                                        <h5><span class="badge badge-success-lighten">Delivered</span></h5>
+                                        <h5><span class="badge badge-success-lighten">approved</span></h5>
                                     </td>
                                     @endif
                                     <td>
                                         {{$order->payment_method}}
                                     </td>
+
+                                    @if ($order->payment_status=='rejected')
                                     <td class="table-action">
-                                        <a  class="action-icon" href="{{route('view.order',$order->id)}}"><i title="view this order" class="mdi mdi-eye-outline"></i></a>
-                                        <a  class="action-icon" onclick="return confirm('are u sure to cancel this category?')"> <i class="mdi mdi-cancel" title="cancel this order"></i></a>
+                                        <a  class="btn btn-secondary me-2" href="{{route('view.order',$order->id)}}"><i title="view this order" class="mdi mdi-eye-outline me-1"></i>View</a>
+                                        <a  class="btn btn-outline-danger me-2 disabled" role="button" aria-disabled="true" href="{{route('cancel.order',$order->id)}}" onclick="return confirm('are u sure to cancel this order?')"> <i class="mdi mdi-cancel me-1" title="cancel this order"></i>Canceled</a>
+                                        <a class="btn btn-secondary" type="button" href="{{route('undo.order',$order->id)}}" title="Undo"  class="action-icon" onclick="return confirm('are u sure to undo this order?')"> <i class="mdi mdi-undo me-1" ></i>Undo</a>
                                     </td>
+                                    @elseif ($order->payment_status=='Approved')
+                                    <td class="table-action">
+                                        <a  class="btn btn-secondary me-2" href="{{route('view.order',$order->id)}}"><i title="view this order" class="mdi mdi-eye-outline me-1"></i>View</a>
+                                        <a  class="btn btn-danger me-2" href="{{route('cancel.order',$order->id)}}" onclick="return confirm('are u sure to cancel this order?')"> <i class="mdi mdi-cancel me-1" title="cancel this order"></i>Cancel</a>
+                                        <a class="btn btn-outline-secondary disabled" role="button" aria-disabled="true" disabled href="{{route('approve.order',$order->id)}}" title="Approve"  class="action-icon" onclick="return confirm('are u sure to approve this order?')"> <i class="mdi mdi-check me-1" ></i>Approved</a>
+                                    </td>
+                                    @else
+                                    <td class="table-action">
+                                        <a  class="btn btn-secondary me-2" href="{{route('view.order',$order->id)}}"><i title="view this order" class="mdi mdi-eye-outline me-1"></i>View</a>
+                                        <a  class="btn btn-danger me-2" href="{{route('cancel.order',$order->id)}}" onclick="return confirm('are u sure to cancel this order?')"> <i class="mdi mdi-cancel me-1" title="cancel this order"></i>Cancel</a>
+                                        <a class="btn btn-secondary" href="{{route('approve.order',$order->id)}}" title="Approve"  class="action-icon" onclick="return confirm('are u sure to approve this order?')"> <i class="mdi mdi-check me-1" ></i>Approve</a>
+                                    </td>
+                                    @endif
+
+
                                 </tr>
                                 @endforeach
-                                
+
                             </tbody>
                         </table>
                 </div> <!-- end card-body-->
@@ -139,7 +161,7 @@
     <!-- end row-->
 
 
-    
+
     </div>
 </div> <!-- container -->
 
@@ -160,14 +182,14 @@
     <script src="{{asset('admin/assets/js/vendor/buttons.print.min.js')}}"></script>
 
       <!-- Datatables js -->
-  
+
       <!-- Datatable Init js -->
       <script src="{{asset('admin/assets/js/pages/demo.datatable-init.js')}}"></script>
-      
+
         <script>
             $(document).ready(function(){"use strict";
             $(".orders-datatable").DataTable({keys:!0,language:{paginate:{previous:"<i class='mdi mdi-chevron-left'>",next:"<i class='mdi mdi-chevron-right'>"}},drawCallback:function(){$(".dataTables_paginate > .pagination").addClass("pagination-rounded")}});var a=$("#datatable-buttons").DataTable({lengthChange:!1,buttons:["copy","print"],language:{paginate:{previous:"<i class='mdi mdi-chevron-left'>",next:"<i class='mdi mdi-chevron-right'>"}},drawCallback:function(){$(".dataTables_paginate > .pagination").addClass("pagination-rounded")}});});
         </script>
-      
+
 
 @endsection

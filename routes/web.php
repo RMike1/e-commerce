@@ -115,5 +115,11 @@ Route::get('download-invoice/{id}', [AdminController::class, 'Download_Invoice']
 
 Route::get('view/invoice/{id}', [AdminController::class, 'View_Invoice'])->name('view.invoice');
 
+Route::get('cancel/order/{id}', [AdminController::class, 'Cancel_Order'])->name('cancel.order');
+
+Route::get('approve/order/{id}', [AdminController::class, 'Approve_Order'])->name('approve.order');
+
+Route::get('undo/order/{id}', [AdminController::class, 'Undo_Order'])->name('undo.order');
+
 
 });

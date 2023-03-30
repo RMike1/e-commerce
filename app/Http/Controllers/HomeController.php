@@ -368,6 +368,8 @@ public function Remove_Cart(Request $req)
             $req->validate([
                 'first_name'=>'required|min:2|max:50',
                 'second_name'=>'required|min:2|max:50',
+                'tracking_no'=>'nullable',
+                'order_id'=>'nullable',
                 'company'=>'nullable',
                 'town'=>'required',
                 'state'=>'required',
@@ -473,5 +475,6 @@ public function Remove_Cart(Request $req)
         }
 
       }
+    
 
 }
