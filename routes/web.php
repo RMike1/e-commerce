@@ -12,7 +12,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
 //=====================================user Routes============================================
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -121,7 +120,9 @@ Route::get('approve/order/{id}', [AdminController::class, 'Approve_Order'])->nam
 
 Route::get('undo/order/{id}', [AdminController::class, 'Undo_Order'])->name('undo.order');
 
-Route::get('send/mail/{id}', [AdminController::class, 'Send_Mail'])->name('send.mail');
+Route::get('mail/{id}', [AdminController::class, 'Send_Mail'])->name('send.mail');
+
+Route::get('send/mail/{id}', [AdminController::class, 'Send_Mail_Notification'])->name('send.mail_notification');
 
 
 });

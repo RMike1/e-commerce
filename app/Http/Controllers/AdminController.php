@@ -668,7 +668,24 @@ class AdminController extends Controller
 
       public function Send_Mail($id)
       {
-        $users=User::find($id);
-        return view('admin.mail',compact('users'));
+        $order=Order::findOrfail($id);
+
+            return view('admin.mail',compact('order'));
+      }
+      public function Send_Mail_Notification(Request $req, $id)
+      {
+        $order=Order::findOrfail($id);
+
+        $details=[
+            'greeting'=>$req->greeting,
+            'first_line'=>$req->first_line,
+            'body'=>$req->body,
+            'url'=>$req->url,
+            'button'=>$req->button,
+            'last_line'=>$req->last_line,
+        ];
+
+        Notification::send($order, new SendEmailNotification($details));
+
       }
 }

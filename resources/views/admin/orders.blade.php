@@ -130,21 +130,21 @@
 
                                     @if ($order->payment_status=='rejected')
                                     <td class="table-action">
-                                        <a  class="btn btn-secondary me-2" href="{{route('view.order',$order->id)}}"><i title="view this order" class="mdi mdi-eye-outline me-1"></i>View</a>
-                                        <a  class="btn btn-outline-danger me-2 disabled" role="button" aria-disabled="true" href="{{route('cancel.order',$order->id)}}" onclick="return confirm('are u sure to cancel this order?')"> <i class="mdi mdi-cancel me-1" title="cancel this order"></i>Canceled</a>
-                                        <a class="btn btn-secondary" type="button" href="{{route('undo.order',$order->id)}}" title="Undo"  class="action-icon" onclick="return confirm('are u sure to undo this order?')"> <i class="mdi mdi-undo me-1" ></i>Undo</a>
+                                        <a  class="btn btn-sm btn-secondary me-2" href="{{route('view.order',$order->id)}}"><i title="view this order" class="mdi mdi-eye-outline me-1"></i>View</a>
+                                        <a  class="btn btn-sm btn-outline-danger me-2 disabled" role="button" aria-disabled="true" href="{{route('cancel.order',$order->id)}}" onclick="return confirm('are u sure to cancel this order?')"> <i class="mdi mdi-cancel me-1" title="cancel this order"></i>Canceled</a>
+                                        <a class="btn btn-sm btn-secondary" type="button" href="{{route('undo.order',$order->id)}}" title="Undo"  class="action-icon" onclick="return confirm('are u sure to undo this order?')"> <i class="mdi mdi-undo me-1" ></i>Undo</a>
                                     </td>
                                     @elseif ($order->payment_status=='Approved')
                                     <td class="table-action">
-                                        <a  class="btn btn-secondary me-2" href="{{route('view.order',$order->id)}}"><i title="view this order" class="mdi mdi-eye-outline me-1"></i>View</a>
-                                        <a  class="btn btn-danger me-2" href="{{route('cancel.order',$order->id)}}" onclick="return confirm('are u sure to cancel this order?')"> <i class="mdi mdi-cancel me-1" title="cancel this order"></i>Cancel</a>
-                                        <a class="btn btn-outline-secondary disabled" role="button" aria-disabled="true" disabled href="{{route('approve.order',$order->id)}}" title="Approve"  class="action-icon" onclick="return confirm('are u sure to approve this order?')"> <i class="mdi mdi-check me-1" ></i>Approved</a>
+                                        <a  class="btn btn-sm btn-secondary me-2" href="{{route('view.order',$order->id)}}"><i title="view this order" class="mdi mdi-eye-outline me-1"></i>View</a>
+                                        <a  class="btn btn-sm btn-danger me-2" href="{{route('cancel.order',$order->id)}}" onclick="return confirm('are u sure to cancel this order?')"> <i class="mdi mdi-cancel me-1" title="cancel this order"></i>Cancel</a>
+                                        <a class="btn btn-sm btn-outline-secondary disabled" role="button" aria-disabled="true" disabled href="{{route('approve.order',$order->id)}}" title="Approve"  class="action-icon" onclick="return confirm('are u sure to approve this order?')"> <i class="mdi mdi-check me-1" ></i>Approved</a>
                                     </td>
                                     @else
                                     <td class="table-action">
-                                        <a  class="btn btn-secondary me-2" href="{{route('view.order',$order->id)}}"><i title="view this order" class="mdi mdi-eye-outline me-1"></i>View</a>
-                                        <a  class="btn btn-danger me-2" href="{{route('cancel.order',$order->id)}}" onclick="return confirm('are u sure to cancel this order?')"> <i class="mdi mdi-cancel me-1" title="cancel this order"></i>Cancel</a>
-                                        <a class="btn btn-secondary" href="{{route('approve.order',$order->id)}}" title="Approve"  class="action-icon" onclick="return confirm('are u sure to approve this order?')"> <i class="mdi mdi-check me-1" ></i>Approve</a>
+                                        <a  class="btn btn-sm btn-secondary me-2" href="{{route('view.order',$order->id)}}"><i title="view this order" class="mdi mdi-eye-outline me-1"></i>View</a>
+                                        <a  class="btn btn-sm btn-danger me-2" href="{{route('cancel.order',$order->id)}}" onclick="return confirm('are u sure to cancel this order?')"> <i class="mdi mdi-cancel me-1" title="cancel this order"></i>Cancel</a>
+                                        <a class="btn btn-sm btn-secondary" href="{{route('approve.order',$order->id)}}" title="Approve"  class="action-icon" onclick="return confirm('are u sure to approve this order?')"> <i class="mdi mdi-check me-1" ></i>Approve</a>
                                     </td>
                                     @endif
 

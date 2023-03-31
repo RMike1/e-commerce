@@ -26,20 +26,7 @@
                             <li class="breadcrumb-item active">User</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Edit User Role | Current Role: 
-                        @if($users->usertype=='0') 
-                        <span>
-                            Normal User
-                        </span>
-                        @elseif($users->usertype=='1') 
-                        <span>
-                            Agent
-                        </span>
-                        @else
-                        <span>
-                            Admin
-                        </span>
-                        @endif
+                    <h4 class="page-title">Send Mail To: {{$order->first_name}} {{$order->second_name}}
                     </h4>
                 </div>
             </div>
@@ -58,56 +45,44 @@
         @endif
 
         <div class="row">
-            <div class="col-12">
+            <div class="col-8">
                 <div class="card">
                     <div class="card-body">
                         <form action="{{route('update.user')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-header">
-                                <a href="{{route('users')}}" type="submit" class="btn btn-secondary float-end">Back</a>
+                                <a href="{{route('users')}}" type="submit" class="btn btn-secondary float-end"><i class="mdi mdi-keyboard-return me-1"></i>Back</a>
                             </div>
                             <div class="modal-body">
+
                                 <div class="mb-3">
-                                        <label for="category-title">User Name</label>
-                                        <input type="hidden"name="use_val" id="user_name" value="{{$users->id}}">
-                                        <input type="text" class="form-control form-control-light" name="name" id="user_name" value="{{$users->name}}">
-                                        @error('name')
-                                        <span class="invalid-feedback">
-                                            <strong>
-                                                {{$message}}
-                                            </strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                <div class="mb-3">
-                                        <label for="category-title">User Email</label>
-                                        <input type="text" class="form-control form-control-light" name="email" id="user_email" value="{{$users->email}}">
-                                        @error('email')
-                                        <span class="invalid-feedback">
-                                            <strong>
-                                                {{$message}}
-                                            </strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="category-pos">Role</label>
-                                        <select type="text" id="" name="usertype" class="form-control form-control-light user_roles">
-                                            @if ($users->usertype=='0')
-                                            <option hidden>Normal User</option>
-                                            @elseif ($users->usertype=='1')
-                                            <option hidden>Agent</option>
-                                            @else
-                                            <option hidden>Admin</option>
-                                            @endif
-                                            <option value="0">Normal User</option>
-                                            <option value="1">Agent</option>
-                                            <option value="2">Admin</option>
-                                        </select>
-                                        </div>
+                                        <label for="category-title">Greeting</label>
+                                        <input type="text" class="form-control form-control-light" name="greeting" id="user_name" value="">
                                 </div>
+                                <div class="mb-3">
+                                        <label for="category-title">First Line</label>
+                                        <input type="text" class="form-control form-control-light" name="first_line" id="user_name" value="">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="category-title">Body </label>
+                                    <textarea type="text" class="form-control form-control-light" name="body" id="user_name" value=""></textarea>
+                                </div>
+                                <div class="mb-3">
+                                        <label for="category-title">Button</label>
+                                        <input type="text" class="form-control form-control-light" name="button" id="user_name" value="">
+                                </div>
+                                <div class="mb-3">
+                                        <label for="category-title">Url</label>
+                                        <input type="text" class="form-control form-control-light" name="url" id="user_name" value="">
+                                </div>
+                                <div class="mb-3">
+                                        <label for="category-title">Last Line</label>
+                                        <input type="text" class="form-control form-control-light" name="last_line" id="user_name" value="">
+                                </div>
+
+                            </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-dark">Update</button>
+                                <button type="submit" class="btn btn-secondary d-block w-100"><i class="mdi mdi-email-send-outline"></i> Send</button>
                             </div>
                         </form>                        <!-- end row -->
                     </div> <!-- end card-body -->
