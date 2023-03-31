@@ -121,5 +121,7 @@ Route::get('approve/order/{id}', [AdminController::class, 'Approve_Order'])->nam
 
 Route::get('undo/order/{id}', [AdminController::class, 'Undo_Order'])->name('undo.order');
 
+Route::get('send/mail/{id}', [AdminController::class, 'Send_Mail'])->name('send.mail');
+
 
 });

@@ -117,11 +117,11 @@
                                     </td>
                                     @elseif ($order->payment_status=='rejected')
                                     <td>
-                                        <h5><span class="badge badge-danger-lighten">rejected</span></h5>
+                                        <h5><span class="badge badge-danger-lighten">Rejected</span></h5>
                                     </td>
                                     @else
                                     <td>
-                                        <h5><span class="badge badge-success-lighten">approved</span></h5>
+                                        <h5><span class="badge badge-success-lighten">Approved</span></h5>
                                     </td>
                                     @endif
                                     <td>

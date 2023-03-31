@@ -146,7 +146,7 @@
                                 <div class="row no-gutters">
                                     <div class="col-md-6">
                                         <div class="menu-col">
-                                            <div class="menu-title">Product Details</div><!-- End .menu-title -->
+                                            <div class="menu-title">Product</div><!-- End .menu-title -->
                                             <ul>
                                             @foreach (App\Models\Product::where('product_publish','1')->get() as $product)
                                             @if ($product->product_status=='1')

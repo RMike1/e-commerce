@@ -15,19 +15,55 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Shipping;
 use App\Models\Cart;
+use Notification;
+use App\Notifications\SendEmailNotification;
 use Barryvdh\DomPDF\Facade\PDF;
 
 class AdminController extends Controller
 {
-
     //=========================Index =========================
 
     public function index()
     {
-        
         $customers=User::where('usertype','0')->count();
         $orders=Order::count();
-        return view('admin.index',compact('customers','orders'));
+
+        $tot_revenue=DB::table('orders')
+            ->join('products','products.id','=','orders.product_id')
+            ->join('shippings','shippings.id','=','orders.shipping_id')
+            ->select('product_price')
+            ->sum('product_price');
+
+
+            $currentweek=Carbon::now()->Week();
+            $previousweek=Carbon::now()->subMonth(2);
+            $currentyear=Carbon::now()->year();
+
+            $revenue=DB::select(
+            DB::raw("SELECT products.product_name as products, SUM(orders.tot_amount) AS total FROM orders LEFT JOIN products on products.id = orders.product_id GROUP BY products.product_name;"));
+
+            // dd($previousweek);
+
+            $total="";
+            $data="";
+            foreach($revenue as $val){
+                $total.="".$val->total.",";
+            }
+
+            foreach($revenue as $info){
+                $data.="'".$info->products."',";
+            }
+            $today=now()->today();
+            $tomorrow=now()->tomorrow();
+            $toDayEarning=Order::whereBetween('created_at',[$today,$tomorrow])->sum('tot_amount');
+
+            $top_selling_products=DB::table('products')
+            ->join('orders','orders.product_id','=','products.id')
+            ->select('products.product_name as product_names','products.product_price as product_prices','orders.quantity as orderQty','orders.tot_amount as orderTot','orders.created_at as order_created_at')
+            // ->GROUPBY('products.product_name')
+            ->get();
+
+            return view('admin.index',compact('customers','orders','tot_revenue','tot_revenue','total','data','toDayEarning','top_selling_products'));
     }
 
     //=========================Category Page =========================
@@ -39,7 +75,6 @@ class AdminController extends Controller
     }
 
     //=========================Store Category =========================
-
 
     public function Store_Category(Request $req)
     {
@@ -88,10 +123,7 @@ class AdminController extends Controller
         );
     }
 
-
-
     //=========================Update Category =========================
-
 
     public function Update_Category(Request $req)
     {
@@ -634,7 +666,9 @@ class AdminController extends Controller
        return redirect()->back()->with('success','order has been restored successfully!!');
       }
 
-
-
-
+      public function Send_Mail($id)
+      {
+        $users=User::find($id);
+        return view('admin.mail',compact('users'));
+      }
 }

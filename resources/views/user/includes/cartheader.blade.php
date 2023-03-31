@@ -43,10 +43,9 @@
         <span>Total</span>
         @php
         $subtotcart=App\Models\Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-        $shipping_val=App\Models\Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->value;
+        $shipping_val=App\Models\Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->value;
         $final_tot=$subtotcart+$shipping_val;
         @endphp
-      {{-- <span class="cart-total-price">${{number_format(App\Models\Cart::where('user_id',Auth::user()->id)->sum('tot_amount'),2)}}</span> --}}
       <span class="cart-total-price">$<span class="final_tot">{{number_format(($final_tot),2)}}</span></span>
     </div><!-- End .dropdown-cart-total -->
     @endauth

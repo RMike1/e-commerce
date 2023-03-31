@@ -85,6 +85,7 @@
 
     <a href="{{route('download.invoice',$order->id)}}" class="btn btn-secondary"><i class="mdi mdi-download me-1"></i>Download Invoice</a>
     <a href="{{route('view.invoice',$order->id)}}" class="btn btn-secondary"><i class="mdi mdi-eye me-1"></i>View Invoice</a>
+    <a href="{{route('send.mail',$order->id)}}" class="btn btn-secondary"><i class="mdi mdi-eye me-1"></i>Send Mail</a>
     <div class="row">
         <div class="col-lg-8">
             <div class="card">
