@@ -122,7 +122,7 @@ Route::get('undo/order/{id}', [AdminController::class, 'Undo_Order'])->name('und
 
 Route::get('mail/{id}', [AdminController::class, 'Send_Mail'])->name('send.mail');
 
-Route::get('send/mail/{id}', [AdminController::class, 'Send_Mail_Notification'])->name('send.mail_notification');
+Route::post('send/mail/{id}', [AdminController::class, 'Send_Mail_Notification'])->name('send.mail_notification');
 
 
 });

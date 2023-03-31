@@ -48,35 +48,35 @@
             <div class="col-8">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{route('update.user')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('send.mail_notification',$order->id)}}" method="post">
                             @csrf
                             <div class="modal-header">
-                                <a href="{{route('users')}}" type="submit" class="btn btn-secondary float-end"><i class="mdi mdi-keyboard-return me-1"></i>Back</a>
+                                <a href="{{route('view.order',$order->id)}}" type="submit" class="btn btn-secondary float-end"><i class="mdi mdi-keyboard-return me-1"></i>Back</a>
                             </div>
                             <div class="modal-body">
 
                                 <div class="mb-3">
-                                        <label for="category-title">Greeting</label>
+                                        <label for="mail-title">Greeting</label>
                                         <input type="text" class="form-control form-control-light" name="greeting" id="user_name" value="">
                                 </div>
                                 <div class="mb-3">
-                                        <label for="category-title">First Line</label>
+                                        <label for="mail-title">First Line</label>
                                         <input type="text" class="form-control form-control-light" name="first_line" id="user_name" value="">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="category-title">Body </label>
+                                    <label for="mail-title">Body </label>
                                     <textarea type="text" class="form-control form-control-light" name="body" id="user_name" value=""></textarea>
                                 </div>
                                 <div class="mb-3">
-                                        <label for="category-title">Button</label>
+                                        <label for="mail-title">Button</label>
                                         <input type="text" class="form-control form-control-light" name="button" id="user_name" value="">
                                 </div>
                                 <div class="mb-3">
-                                        <label for="category-title">Url</label>
+                                        <label for="mail-title">Url</label>
                                         <input type="text" class="form-control form-control-light" name="url" id="user_name" value="">
                                 </div>
                                 <div class="mb-3">
-                                        <label for="category-title">Last Line</label>
+                                        <label for="mail-title">Last Line</label>
                                         <input type="text" class="form-control form-control-light" name="last_line" id="user_name" value="">
                                 </div>
 
