@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 
 class AgentController extends Controller
 {
@@ -11,10 +12,18 @@ class AgentController extends Controller
     {
         return view('agent.index');
     }
-     public function Agent_Products()
+     public function Agent_Products(Request $req)
      {
-        $products=Product::where('product_status','1')->latest()->get();
+        if($req->category){
+
+        $products=Category::where('name',$req->category)->first()->product()->where('product_status','1')->latest()->get();
         return view('agent.products',compact('products'));
+        }
+        else{
+            $products=Product::where('product_status','1')->latest()->get();
+            return view('agent.products',compact('products'));
+        }
+
      }
 
      public function View_Product_Details($id)
@@ -28,5 +37,11 @@ class AgentController extends Controller
         else{
             return redirect()->back()->with('warning','product not found!!');
         }
+     }
+
+     public function Agent_Category()
+     {
+        $category=Category::all();
+        return view('agent.category',compact('category'));
      }
 }

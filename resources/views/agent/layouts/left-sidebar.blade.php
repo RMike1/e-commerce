@@ -24,7 +24,7 @@
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link">
                     <i class="uil-store"></i>
-                    <span> Products </span>
+                    <span> Data </span>
                     <span class="menu-arrow"></span>
                 </a>
                 <div class="collapse" id="sidebarPages">
@@ -32,9 +32,9 @@
                         <li>
                             <a href="{{route('agent-products')}}">Products</a>
                         </li>
-                        {{-- <li>
-                            <a href="{{route('category')}}">Category</a>
-                        </li> --}}
+                        <li>
+                            <a href="{{route('agent.category')}}">Category</a>
+                        </li>
                     </ul>
                 </div>
             </li>

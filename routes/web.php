@@ -59,6 +59,8 @@ Route::get('products', [AgentController::class, 'Agent_Products'])->name('agent-
 
 Route::get('view-product/{id}', [AgentController::class, 'View_Product_Details'])->name('view-product');
 
+Route::get('agent-category', [AgentController::class, 'Agent_Category'])->name('agent.category');
+
 });
 //=====================================Admin Routes============================================
 

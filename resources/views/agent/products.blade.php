@@ -21,7 +21,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">MK</a></li>
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">Products</a></li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Data</a></li>
                                 <li class="breadcrumb-item active">Products</li>
                             </ol>
                         </div>
@@ -63,9 +63,9 @@
                             <h4>Categories: </h4>
                         </div>
                         <div class="btn-group mb-3 ms-1">
-                            <a type="button" href="{{route('products')}}" style="border-left: 1px #6c757d37 solid" class="btn btn-light">All</a>
+                            <a type="button" href="{{route('agent-products')}}" style="border-left: 1px #6c757d37 solid" class="btn btn-light">All</a>
                             @foreach (App\Models\Category::latest()->take(4)->get() as $category)
-                            <a type="button" href="{{route('products',['category'=>$category->name])}}" style="border-left: 1px #6c757d37 solid" class="btn btn-light">{{$category->name}} </a>
+                            <a type="button" href="{{route('agent-products',['category'=>$category->name])}}" style="border-left: 1px #6c757d37 solid" class="btn btn-light">{{$category->name}} </a>
                             @endforeach
                         </div>
                     </div>
