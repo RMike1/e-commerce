@@ -37,7 +37,7 @@ class LoginController extends Controller
         }
         elseif(Auth::user()->usertype=='1')
         {
-            return redirect('agent/agent-dashboard')->with('success','welcome to agent dashboard!');
+            return redirect('agent/products')->with('success','welcome to agent dashboard!');
         }
         else
         {

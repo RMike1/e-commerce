@@ -17,7 +17,7 @@
 
     <!-- Start Content-->
     <div class="container-fluid">
-                        
+
         <!-- start page title -->
         <div class="row">
             <div class="col-12">
@@ -25,15 +25,15 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{route('admin-dashboard')}}">E-shop</a></li>
-                            <li class="breadcrumb-item"><a href="{{route('products')}}">Products</a></li>
+                            <li class="breadcrumb-item"><a href="{{route('products')}}">Data</a></li>
                             <li class="breadcrumb-item active">Add-Product</li>
                         </ol>
                     </div>
                     <h4 class="page-title">Add Product</h4>
                 </div>
             </div>
-        </div>     
-        <!-- end page title --> 
+        </div>
+        <!-- end page title -->
         @if (Session::has('success'))
         <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -54,7 +54,7 @@
                             @csrf
                             <div class="row">
                                     <div class="col-xl-6">
-                                        
+
                                         <div class="mb-3">
                                             <label for="productname" class="form-label">Product Name</label>
                                             <input type="text" name="product_name" value="{{old('product_name')}}" id="productname" class="form-control @error('product_name')  is-invalid @enderror" placeholder="Enter post title" required>
@@ -100,7 +100,7 @@
                                             </span>
                                             @enderror
                                         </div>
-                                        </div> 
+                                        </div>
                                         <div class="col-xl-6">
                                             <div class="mb-3 mt-3 mt-xl-0">
                                                 <label for="projectname" class="mb-1">Post Image</label><br>
@@ -146,9 +146,9 @@
                                                 </span>
                                                 @enderror
                                             </div>
-                                           
+
                                         </div>
-                                     
+
                                         <div class="mb-3">
                                             <label for="product_description" class="form-label">Body</label>
                                             <textarea class="ckeditor @error('product_description') is-invalid @enderror" id="product_description" name="product_description" required>{{old('product_description')}}</textarea>
@@ -167,7 +167,7 @@
             </div> <!-- end col-->
         </div>
         <!-- end row-->
-        
+
     </div> <!-- container -->
 <!-- Dropzone js -->
 
@@ -182,7 +182,7 @@
             filebrowserUploadUrl:"{{route('upload',['_token'=>csrf_token()] )}}",
             filebrowserUploadMethod:'form'
         });
-    </script> 
+    </script>
 
     <script src="{{asset('admin/assets/js/pages/demo.dashboard.js')}}"></script>
 

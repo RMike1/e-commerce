@@ -22,8 +22,8 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{route('admin-dashboard')}}">MK</a></li>
-                            <li class="breadcrumb-item"><a href="{{route('products')}}">Users</a></li>
-                            <li class="breadcrumb-item active">User</li>
+                            <li class="breadcrumb-item"><a href="{{route('products')}}">Data</a></li>
+                            <li class="breadcrumb-item active">Mail</li>
                         </ol>
                     </div>
                     <h4 class="page-title">Send Mail To: {{$order->first_name}} {{$order->second_name}} [{{$order->email}}]

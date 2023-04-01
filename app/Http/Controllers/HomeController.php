@@ -35,7 +35,7 @@ class HomeController extends Controller
             }
             elseif(Auth::user()->usertype=='1')
             {
-                return redirect('agent/agent-dashboard');
+                return redirect('agent/products');
             }
             else
             {
@@ -475,6 +475,6 @@ public function Remove_Cart(Request $req)
         }
 
       }
-    
+
 
 }

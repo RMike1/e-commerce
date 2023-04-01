@@ -1,13 +1,15 @@
 <div class="leftside-menu">
 
     <!-- LOGO -->
-    <a href="{{route('agent-dashboard')}}" class="logo text-center logo-light">
-        <h1 class="text-light">Agent</h1>
+    <a href="{{route('agent-products')}}" class="logo text-center logo-light">
+        <h3 class="font-weight-bold text-muted h2" style="font-family:Arial, Helvetica, sans-serif">MK <span style="color:#c96;">Store</span></h3>
+        <h4 class="font-weight-bold text-light" style="font-family:Arial, Helvetica, sans-serif">| Agent |</h4>
     </a>
 
     <!-- LOGO -->
-    <a href="{{route('agent-dashboard')}}" class="logo text-center logo-dark">
-        <h1 class="text-dark">Agent</h1>
+    <a href="{{route('agent-products')}}" class="logo text-center logo-dark">
+        <h3 class="font-weight-bold text-muted h2" style="font-family:Arial, Helvetica, sans-serif">MK <span style="color:#c96;">Store</span></h3>
+        <h4 class="font-weight-bold text-light" style="font-family:Arial, Helvetica, sans-serif">| Agent |</h4>
     </a>
 
     <div class="h-100" id="leftside-menu-container" data-simplebar="">
@@ -15,20 +17,13 @@
         <!--- Sidemenu -->
         <ul class="side-nav">
 
-            <li class="side-nav-title side-nav-item">Navigation</li>
 
-            <li class="side-nav-item">
-                <a href="{{route('agent-dashboard')}}"  class="side-nav-link">
-                    <i class="uil-home-alt"></i>
-                    <span> Dashboard</span>
-                </a>
-            </li>
 
-            <li class="side-nav-title side-nav-item">Section</li>
+            <li class="side-nav-title side-nav-item"></li>
 
             <li class="side-nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link">
-                    <i class="uil-layer-group"></i>
+                    <i class="uil-store"></i>
                     <span> Products </span>
                     <span class="menu-arrow"></span>
                 </a>

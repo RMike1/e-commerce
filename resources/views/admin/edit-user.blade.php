@@ -24,16 +24,16 @@
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
                             <li class="breadcrumb-item"><a href="{{route('admin-dashboard')}}">MK</a></li>
-                            <li class="breadcrumb-item"><a href="{{route('products')}}">Users</a></li>
-                            <li class="breadcrumb-item active">User</li>
+                            <li class="breadcrumb-item"><a href="{{route('products')}}">Management</a></li>
+                            <li class="breadcrumb-item active">Edit User</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Edit User Role | Current Role: 
-                        @if($users->usertype=='0') 
+                    <h4 class="page-title">Edit User Role | Current Role:
+                        @if($users->usertype=='0')
                         <span>
                             Normal User
                         </span>
-                        @elseif($users->usertype=='1') 
+                        @elseif($users->usertype=='1')
                         <span>
                             Agent
                         </span>

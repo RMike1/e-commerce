@@ -330,10 +330,13 @@ class AdminController extends Controller
     public function View_Product($id)
     {
         $product_name=Product::where('id',$id)->first()->product_name;
+        $product_order_number=Order::where('product_id',$id)->count();
+        $revenue_order=Order::where('product_id',$id)->sum('tot_amount');
+        // dd($revenue_order);
         $available_product=Product::where('product_name',$product_name)->count();
         $product=Product::find($id);
         if($product){
-            return view('admin.view-product',compact('product','available_product'));
+            return view('admin.view-product',compact('product','available_product','product_order_number','revenue_order'));
         }
         else{
             return redirect()->back()->with('warning','product not found!!');

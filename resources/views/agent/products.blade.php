@@ -7,6 +7,9 @@
 <link href="{{asset('admin/assets/css/app-dark.min.css')}}" rel="stylesheet" type="text/css" id="dark-style">
 <link href="{{asset('admin/assets/css/vendor/dataTables.bootstrap5.css')}}" rel="stylesheet" type="text/css">
 <link href="{{asset('admin/assets/css/vendor/responsive.bootstrap5.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('admin/assets/css/vendor/select.bootstrap5.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('admin/assets/css/vendor/buttons.bootstrap5.css')}}" rel="stylesheet" type="text/css" />
+
 @endsection
 @section('content')
          <!-- Start Content-->
@@ -18,7 +21,7 @@
                         <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">MK</a></li>
-                                <li class="breadcrumb-item"><a href="javascript: void(0);">eCommerce</a></li>
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Products</a></li>
                                 <li class="breadcrumb-item active">Products</li>
                             </ol>
                         </div>
@@ -56,14 +59,14 @@
             <div class="row mb-2">
                 <div class="col-sm-12">
                     <div class="text-sm-end">
+                        <div class="btn-group mb-3 ms-2 d-none d-sm-inline-block">
+                            <h4>Categories: </h4>
+                        </div>
                         <div class="btn-group mb-3 ms-1">
                             <a type="button" href="{{route('products')}}" style="border-left: 1px #6c757d37 solid" class="btn btn-light">All</a>
                             @foreach (App\Models\Category::latest()->take(4)->get() as $category)
                             <a type="button" href="{{route('products',['category'=>$category->name])}}" style="border-left: 1px #6c757d37 solid" class="btn btn-light">{{$category->name}} </a>
                             @endforeach
-                        </div>
-                        <div class="btn-group mb-3 ms-2 d-none d-sm-inline-block">
-                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#create-category-modal"><i class="mdi mdi-plus-circle me-1"></i>Category</button>
                         </div>
                     </div>
                 </div><!-- end col-->
@@ -76,23 +79,16 @@
                                 <div class="col-sm-4">
                                 </div>
                                 <div class="col-sm-8">
-                                    <div class="text-sm-end">
-                                        <button type="button" class="btn btn-success mb-2 me-1"><i class="mdi mdi-cog-outline"></i></button>
-                                        <button type="button" class="btn btn-light mb-2 me-1">Import</button>
-                                        <button type="button" class="btn btn-light mb-2">Export</button>
-                                    </div>
                                 </div><!-- end col-->
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-hover table-centered w-100 dt-responsive nowrap" id="products-datatable">
+                                <table  class="table table-centered w-100 dt-responsive nowrap agent-products-datatable">
+
                                     <thead class="table-light">
                                         <tr>
                                             <th class="all" style="width: 20px;">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                    <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                </div>
+                                               #
                                             </th>
                                             <th class="all">Product</th>
                                             <th>Category</th>
@@ -103,15 +99,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $i=1;
+                                        @endphp
                                         @forelse ($products as $product)
                                         <tr>
                                             <td>
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input" id="customCheck2">
-                                                    <label class="form-check-label" for="customCheck2">&nbsp;</label>
-                                                </div>
+                                                {{$i++}}.
                                             </td>
-
                                             <td>
                                                 <img src="{{asset($product->product_image)}}" alt="contact-img" title="product-img" class="rounded me-3" height="48">
                                                 <p class="m-0 d-inline-block align-middle font-16">
@@ -148,9 +143,7 @@
                                             @endif
 
                                             <td class="table-action">
-                                                <a href="{{route('view.product',$product->id)}}" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                <a href="{{route('edit.product',$product->id)}}" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                                                <a href="{{route('delete.product',$product->id)}}" onclick="return confirm('delete product?')" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                <a href="{{route('view-product',$product->id)}}" title="View this product's details" class="action-icon"> <i class="mdi mdi-eye"></i></a>
                                             </td>
                                         </tr>
                                         @empty
@@ -203,19 +196,28 @@
     </div><!-- /.modal -->
 @endsection
 @section('scripts')
-    <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/pages/demo.dashboard.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/dataTables.bootstrap5.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/dataTables.responsive.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/responsive.bootstrap5.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/dataTables.checkboxes.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
-    <!-- third party js -->
-    <script src="{{asset('admin/assets/js/vendor/apexcharts.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/jquery-jvectormap-1.2.2.min.js')}}"></script>
-    <script src="{{asset('admin/assets/js/vendor/jquery-jvectormap-world-mill-en.js')}}"></script>
-    <script src="{{asset('admin/assets/js/pages/demo.products.js')}}"></script>
+
+
+<script src="{{asset('admin/assets/js/pages/demo.dashboard.js')}}"></script>
+<!-- third party js -->
+<script src="{{asset('admin/assets/js/vendor/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/dataTables.bootstrap5.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/responsive.bootstrap5.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/dataTables.checkboxes.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/buttons.bootstrap5.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/buttons.html5.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/buttons.flash.min.js')}}"></script>
+<script src="{{asset('admin/assets/js/vendor/buttons.print.min.js')}}"></script>
+
+<!-- Datatables js -->
+
+<!-- Datatable Init js -->
+<script src="{{asset('admin/assets/js/pages/demo.datatable-init.js')}}"></script>
+
+  <script>
+      $(document).ready(function(){"use strict";
+      $(".agent-products-datatable").DataTable({keys:!0,language:{paginate:{previous:"<i class='mdi mdi-chevron-left'>",next:"<i class='mdi mdi-chevron-right'>"}},drawCallback:function(){$(".dataTables_paginate > .pagination").addClass("pagination-rounded")}});var a=$("#datatable-buttons").DataTable({lengthChange:!1,buttons:["copy","print"],language:{paginate:{previous:"<i class='mdi mdi-chevron-left'>",next:"<i class='mdi mdi-chevron-right'>"}},drawCallback:function(){$(".dataTables_paginate > .pagination").addClass("pagination-rounded")}});});
+  </script>
 @endsection

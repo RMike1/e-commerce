@@ -13,7 +13,7 @@
 
  <!-- Start Content-->
  <div class="container-fluid">
-                        
+
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -21,15 +21,15 @@
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">MK</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">Blog</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('home')}}">Data</a></li>
                         <li class="breadcrumb-item active">Category</li>
                     </ol>
                 </div>
                 <h4 class="page-title">Category</h4>
             </div>
         </div>
-    </div>     
-    <!-- end page title --> 
+    </div>
+    <!-- end page title -->
 
     @if (Session::has('success'))
     <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
@@ -42,7 +42,7 @@
         {{Session::get('warning')}}
     </div>
     @endif
-    
+
     @if($errors->any())
     <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -55,7 +55,7 @@
         @endforeach
     </div>
     @endif
-    
+
 
 
     <div class="row">
@@ -90,7 +90,7 @@
                                 @foreach ($category as $category)
                                 <tr>
                                      <td>
-                                       {{$count++}} 
+                                       {{$count++}}
                                     </td>
                                     <td>
                                         {{$category->name}}
@@ -120,7 +120,7 @@
                                     </td>
                                 </tr>
                                 @endforeach
-                                
+
                             </tbody>
                         </table>
                 </div> <!-- end card-body-->
@@ -194,7 +194,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="category_image" id="image_category">Category Image</label>
-                                
+
                                 <input type="file" class="form-control form-control" name="category_image" id="category_image">
                             </div>
                             <div class="mb-3">
@@ -221,7 +221,7 @@
         </div><!-- /.modal-dialog -->
        </div><!-- /.modal -->
 
-    
+
     </div>
 </div> <!-- container -->
 
@@ -237,10 +237,10 @@
       <script src="{{asset('admin/assets/js/vendor/dataTables.checkboxes.min.js')}}"></script>
 
       <!-- Datatables js -->
-  
+
       <!-- Datatable Init js -->
       <script src="{{asset('admin/assets/js/pages/demo.datatable-init.js')}}"></script>
-      
+
       <script>
         $(document).ready(function(){
             $(document).on('click', '#cat_id', function(e){
@@ -262,7 +262,7 @@
                     success: function(response)
 
                     {
-                        
+
                         $('#select_cat_position').val(response.category.category_position);
                         $('#category_name').val(response.category.name);
                         // $('#image_category').append('<img src="{{asset('+response.category.category_image+')}}" style="width:100%; height:50%" id="category_image" alt="">');
@@ -286,6 +286,6 @@
             $(document).ready(function(){"use strict";
             $(".comment-datatable").DataTable({keys:!0,language:{paginate:{previous:"<i class='mdi mdi-chevron-left'>",next:"<i class='mdi mdi-chevron-right'>"}},drawCallback:function(){$(".dataTables_paginate > .pagination").addClass("pagination-rounded")}});var a=$("#datatable-buttons").DataTable({lengthChange:!1,buttons:["copy","print"],language:{paginate:{previous:"<i class='mdi mdi-chevron-left'>",next:"<i class='mdi mdi-chevron-right'>"}},drawCallback:function(){$(".dataTables_paginate > .pagination").addClass("pagination-rounded")}});});
         </script>
-      
+
 
 @endsection

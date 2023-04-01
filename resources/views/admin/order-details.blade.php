@@ -23,7 +23,7 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">E-shop</a></li>
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Data</a></li>
-                        <li class="breadcrumb-item active">Order</li>
+                        <li class="breadcrumb-item active">Order details</li>
                     </ol>
                 </div>
                 <h4 class="page-title">Order</h4>

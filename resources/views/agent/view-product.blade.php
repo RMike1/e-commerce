@@ -1,6 +1,6 @@
-@extends('admin.layouts.title')
-@section('title','MK Dashboard')
-@extends('admin.layouts.master')
+@extends('agent.layouts.title')
+@section('title','MK Agent')
+@extends('agent.layouts.master')
 @section('styles')
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="light-style">
@@ -21,7 +21,7 @@
                 <div class="page-title-box">
                     <div class="page-title-right">
                         <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">E-shop</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">MK</a></li>
                             <li class="breadcrumb-item"><a href="javascript: void(0);">products</a></li>
                             <li class="breadcrumb-item active">Product Details</li>
                         </ol>
@@ -53,13 +53,14 @@
             @endforeach
         </div>
         @endif
+
         <!-- end page title -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="float-end">
-                            <a href="{{route('products')}}" class="btn btn-sm btn-secondary"><i class="mdi mdi-keyboard-return me-1"></i>Back</a>
+                            <a href="{{route('agent-products')}}" class="btn btn-sm btn-secondary"><i class="mdi mdi-keyboard-return me-1"></i>Back</a>
                         </div>
                         <div class="row">
                             <div class="col-lg-5">
@@ -81,7 +82,7 @@
                             <div class="col-lg-7">
                                 <form class="ps-lg-4">
                                     <!-- Product title -->
-                                    <h3 class="mt-0">{{$product->product_name}}<a href="{{route('edit.product',$product->id)}}" class="text-muted"><i class="mdi mdi-square-edit-outline ms-2"></i></a> </h3>
+                                    <h3 class="mt-0">{{$product->product_name}}</h3>
                                   @if ($product->created_at)
                                   <p class="mb-1">{{$product->created_at->format('d-m-Y')}} at {{$product->created_at->diffForHumans()}}</p>
                                   @else
@@ -119,14 +120,6 @@
                                             <div class="col-md-4">
                                                 <h6 class="font-14">Available Stock:</h6>
                                                 <p class="text-sm lh-150">{{$available_product}}</p>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <h6 class="font-14">Number of Orders:</h6>
-                                                <p class="text-sm lh-150">{{$product_order_number}}</p>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <h6 class="font-14">Revenue:</h6>
-                                                <p class="text-sm lh-150">${{number_format($revenue_order,2)}}</p>
                                             </div>
                                         </div>
                                     </div>

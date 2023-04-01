@@ -55,11 +55,9 @@ Route::get('sortby',[HomeController::class,'Sortby'])->name('sortby');
 
 Route::prefix('agent')->middleware(['auth','Agent'])->group(function () {
 
-// Route::get('agent/create',[AgentController::class,'create']);
-
-Route::get('agent-dashboard', [AgentController::class, 'index'])->name('agent-dashboard');
-
 Route::get('products', [AgentController::class, 'Agent_Products'])->name('agent-products');
+
+Route::get('view-product/{id}', [AgentController::class, 'View_Product_Details'])->name('view-product');
 
 });
 //=====================================Admin Routes============================================

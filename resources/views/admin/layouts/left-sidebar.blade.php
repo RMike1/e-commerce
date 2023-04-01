@@ -2,12 +2,14 @@
 
     <!-- LOGO -->
     <a href="{{route('admin-dashboard')}}" class="logo text-center logo-light">
-        <h1 class="text-light">Admin</h1>
+        <h3 class="font-weight-bold text-muted h2" style="font-family:Arial, Helvetica, sans-serif">MK <span style="color:#c96;">Store</span></h3>
+        <h4 class="font-weight-bold text-light" style="font-family:Arial, Helvetica, sans-serif">| Admin |</h4>
     </a>
 
     <!-- LOGO -->
     <a href="{{route('admin-dashboard')}}" class="logo text-center logo-dark">
-        <h1 class="text-dark">Admin</h1>
+        <h3 class="font-weight-bold text-muted h2" style="font-family:Arial, Helvetica, sans-serif">MK <span style="color:#c96;">Store</span></h3>
+        <h4 class="font-weight-bold text-light" style="font-family:Arial, Helvetica, sans-serif">| Admin |</h4>
     </a>
 
     <div class="h-100" id="leftside-menu-container" data-simplebar="">
@@ -15,7 +17,7 @@
         <!--- Sidemenu -->
         <ul class="side-nav">
 
-            <li class="side-nav-title side-nav-item">Navigation</li>
+            <li class="side-nav-title side-nav-item"></li>
 
             <li class="side-nav-item">
                 <a href="{{route('admin-dashboard')}}" class="side-nav-link">
