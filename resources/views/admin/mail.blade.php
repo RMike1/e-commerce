@@ -26,7 +26,7 @@
                             <li class="breadcrumb-item active">User</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">Send Mail To: {{$order->first_name}} {{$order->second_name}}
+                    <h4 class="page-title">Send Mail To: {{$order->first_name}} {{$order->second_name}} [{{$order->email}}]
                     </h4>
                 </div>
             </div>

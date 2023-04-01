@@ -16,7 +16,7 @@ use App\Models\Order;
 use App\Models\Shipping;
 use App\Models\Cart;
 use Notification;
-use App\Notifications\SendEmailNotification;
+use App\Notifications\MK_Shop;
 use Barryvdh\DomPDF\Facade\PDF;
 
 class AdminController extends Controller
@@ -42,8 +42,6 @@ class AdminController extends Controller
             $revenue=DB::select(
             DB::raw("SELECT products.product_name as products, SUM(orders.tot_amount) AS total FROM orders LEFT JOIN products on products.id = orders.product_id GROUP BY products.product_name;"));
 
-            // dd($previousweek);
-
             $total="";
             $data="";
             foreach($revenue as $val){
@@ -60,7 +58,9 @@ class AdminController extends Controller
             $top_selling_products=DB::table('products')
             ->join('orders','orders.product_id','=','products.id')
             ->select('products.product_name as product_names','products.product_price as product_prices','orders.quantity as orderQty','orders.tot_amount as orderTot','orders.created_at as order_created_at')
-            // ->GROUPBY('products.product_name')
+            ->orderBy('orders.tot_amount','desc')
+            ->groupBy('products.product_name')
+            ->take(5)
             ->get();
 
             return view('admin.index',compact('customers','orders','tot_revenue','tot_revenue','total','data','toDayEarning','top_selling_products'));
@@ -666,12 +666,17 @@ class AdminController extends Controller
        return redirect()->back()->with('success','order has been restored successfully!!');
       }
 
+    //=================Mail User Page====================
+
       public function Send_Mail($id)
       {
-        $order=Order::findOrfail($id);
+            $order=Order::findOrfail($id);
 
             return view('admin.mail',compact('order'));
       }
+
+    //=================Mailing User====================
+
       public function Send_Mail_Notification(Request $req, $id)
       {
         $order=Order::findOrfail($id);
@@ -684,8 +689,9 @@ class AdminController extends Controller
             'button'=>$req->button,
             'last_line'=>$req->last_line,
         ];
+        Notification::send($order, new MK_Shop($details));
 
-        Notification::send($order, new SendEmailNotification($details));
+        return redirect()->back()->with('success','email has been sent successfully!!');
 
       }
 }
