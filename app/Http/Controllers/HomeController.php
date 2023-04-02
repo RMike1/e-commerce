@@ -39,7 +39,7 @@ class HomeController extends Controller
             }
             else
             {
-                    $slide_products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
+                    $slide_products=Product::where('product_publish','1')->with('ProductImage')->latest()->take(3)->get();
                     $products=Product::where('product_publish','1')->with('ProductImage')->latest()->take(3)->get();
                     $categories=Category::latest()->where('category_status','1')->take(3)->get();
                     return view('user.index',compact('slide_products','categories','products'));
@@ -47,7 +47,7 @@ class HomeController extends Controller
         }
         else
         {
-            $slide_products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
+            $slide_products=Product::where('product_publish','1')->with('ProductImage')->latest()->take(3)->get();
             $products=Product::where('product_publish','1')->with('ProductImage')->latest()->take(3)->get();
             $categories=Category::latest()->where('category_status','1')->take(3)->get();
             return view('user.index',compact('slide_products','categories','products'));

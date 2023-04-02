@@ -16,9 +16,16 @@ class SupplierSeeder extends Seeder
     public function run()
     {
         DB::table('suppliers')->insert([
+         [
             'first_name'=>'Kalisa',
             'second_name'=>'James',
             'status'=>'1',
+         ],
+         [
+            'first_name'=>'Shami',
+            'second_name'=>'Fabrice',
+            'status'=>'2',
+         ]
         ]);
     }
 }
