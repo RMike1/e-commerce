@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Shipping;
 use App\Models\Cart;
+use App\Models\Supplier;
 use Notification;
 use App\Notifications\MK_Shop;
 use Barryvdh\DomPDF\Facade\PDF;
@@ -38,6 +39,8 @@ class AdminController extends Controller
             $currentweek=Carbon::now()->Week();
             $previousweek=Carbon::now()->subMonth(2);
             $currentyear=Carbon::now()->year();
+
+        
 
             $revenue=DB::select(
             DB::raw("SELECT products.product_name as products, SUM(orders.tot_amount) AS total FROM orders LEFT JOIN products on products.id = orders.product_id GROUP BY products.product_name;"));
@@ -63,7 +66,26 @@ class AdminController extends Controller
             ->take(5)
             ->get();
 
-            return view('admin.index',compact('customers','orders','tot_revenue','tot_revenue','total','data','toDayEarning','top_selling_products'));
+            $pendings_no=Order::where('orders.payment_status','pending')->sum('orders.tot_amount');
+            $rejected_no=Order::where('orders.payment_status','rejected')->sum('orders.tot_amount');
+            $approved_no=Order::where('orders.payment_status','Approved')->sum('orders.tot_amount');
+
+
+            $tot_sales=DB::select(DB::raw("SELECT orders.payment_status AS Label, SUM(orders.tot_amount) as Tot FROM orders GROUP BY orders.payment_status;"));
+
+            $tot="";
+            $sales_tot="";
+            foreach($tot_sales as $value)
+            {
+                $tot.="".$value->Tot.",";
+            }
+
+            foreach($tot_sales as $infor)
+            {
+                $sales_tot.="'".$infor->Label."',";
+            }
+               
+            return view('admin.index',compact('customers','orders','tot_revenue','tot_revenue','total','data','toDayEarning','top_selling_products','sales_tot','tot','pendings_no','rejected_no','approved_no'));
     }
 
     //=========================Category Page =========================
@@ -176,7 +198,8 @@ class AdminController extends Controller
     public function Add_Products()
     {
         $categories=Category::all();
-        return view('admin.add-product',compact('categories'));
+        $suppliers=Supplier::latest()->get();
+        return view('admin.add-product',compact('categories','suppliers'));
     }
 
 
@@ -219,6 +242,7 @@ class AdminController extends Controller
             'product_description'=>'required|max:355|min:3',
             'product_status'=>'required',
             'category_id'=>'required',
+            'supplier_id'=>'required',
         ]);
 
         $product=new Product;
@@ -229,6 +253,7 @@ class AdminController extends Controller
         $product->product_publish=$req->product_publish==true ? '1':'0';
         $product->product_status=$req->product_status;
         $product->category_id=$req->category_id;
+        $product->supplier_id=$req->supplier_id;
 
         if($req->product_image)
         {
@@ -264,8 +289,16 @@ class AdminController extends Controller
         if($product)
         {
             $product_category=Product::where('id',$id)->first()->category_id;
+            $product_supplier=Product::where('id',$id)->first()->supplier_id;
             $categories=Category::find($product_category);
-            return view('admin.edit-product',compact('categories','product'));
+            $suppliers=Supplier::where('id','!=',$product_supplier)->get();
+            $supplier=Supplier::find($product_supplier);
+            if($supplier==null){
+                $supplier=0;
+            }
+            return view('admin.edit-product',compact('categories','product','supplier','suppliers'));
+
+
         }
         else
         {
@@ -285,6 +318,7 @@ class AdminController extends Controller
             'product_description'=>'required|max:355|min:3',
             'product_image'=>'mimes:jpg,png',
             'category_id'=>'required',
+            'supplier_id'=>'required',
         ]);
 
         $product_id=$req->product_id;
@@ -297,6 +331,7 @@ class AdminController extends Controller
         $product->product_status=$req->product_status;
         $product->product_publish=$req->product_publish==true ? '1':'0';
         $product->category_id=$req->category_id;
+        $product->supplier_id=$req->supplier_id;
 
         if($req->product_image)
         {
@@ -697,4 +732,70 @@ class AdminController extends Controller
         return redirect()->back()->with('success','email has been sent successfully!!');
 
       }
+      
+      public function View_Supplier()
+        {
+            $suppliers=Supplier::latest()->get();
+            return view('admin.supplier',compact('suppliers'));
+        }
+
+      public function Add_Supplier()
+        {
+            return view('admin.add-supplier');
+        }
+
+      public function Store_Supplier(Request $req)
+        {
+            $req->validate([
+                'first_name'=>'required',
+                'second_name'=>'required',
+                'status'=>'nullable',
+            ]);
+
+            $supplier=new Supplier;
+            $supplier->first_name=$req->first_name;
+            $supplier->second_name=$req->second_name;
+            $supplier->status=$req->status==true ? '1' : '0';
+            $supplier->save();
+            
+            return redirect()->back()->with('success', 'supplier saved successfully!');
+        }
+        
+        public function Edit_Supplier(Request $req)
+        {
+            $supplier_id=$req->supplier_id;
+            $supplier=Supplier::find($supplier_id);
+            return response()->json([
+                    'status'=>200,
+                    'supplier'=>$supplier,
+            ]);
+        }
+        
+        public function Update_Supplier(Request $req)
+          {
+              $req->validate([
+                  'first_name'=>'required',
+                  'second_name'=>'required',
+                  'status'=>'nullable',
+              ]);
+  
+              $supplier_id=$req->supplier_id;
+              $supplier=Supplier::find($supplier_id);
+              $supplier->first_name=$req->first_name;
+              $supplier->second_name=$req->second_name;
+              $supplier->status=$req->status==true ? '1' : '0';
+              $supplier->update();
+              
+              return redirect()->back()->with('success', 'supplier updated successfully!');
+            }
+            
+            public function Delete_Supplier($id)
+            {
+                $supplier=Supplier::find($id);
+                $supplier->delete();
+
+                return redirect()->back()->with('warning', 'supplier deleted successfully!');
+
+            }
+
 }

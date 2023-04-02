@@ -25,6 +25,7 @@ class ProductSeeder extends Seeder
             'product_publish'=>'1',
             'product_image'=>'storage/uploads/img_la_1678873640.jpg',
             'category_id'=>'1',
+            'supplier_id'=>'1',
             ],
             [
             'product_name'=>'HTML/CSS',
@@ -34,7 +35,8 @@ class ProductSeeder extends Seeder
             'product_status'=>'1',
             'product_publish'=>'1',
             'product_image'=>'storage/uploads/matt-bluejay-In3VT75Nb2A-unsplash_1678873285.jpg',
-            'category_id'=>'2',
+            'category_id'=>'1',
+            'supplier_id'=>'1',
             ],
         ]);
     }

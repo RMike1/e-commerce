@@ -100,6 +100,7 @@
                                             <th>Added Date</th>
                                             <th>Price</th>
                                             <th>Quantity</th>
+                                            <th>Supplier Name</th>
                                             <th>Status</th>
                                             <th>Publish Status</th>
                                             <th style="width: 85px;">Action</th>
@@ -141,10 +142,13 @@
                                             <td>
                                                 ${{number_format($product->product_price,2)}}
                                             </td>
-
                                             <td>
                                                 {{$product->product_quantity}}
                                             </td>
+                                            <td>
+                                                {{$product->supplier->first_name}} {{$product->supplier->second_name}}
+                                            </td>
+
                                             @if ($product->product_status=='0')
                                             <td>
                                                 <span class="badge badge-warning-lighten">Out Of Stock</span>

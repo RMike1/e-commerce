@@ -7,14 +7,14 @@
  <main class="main">
 
     <div class="intro-section bg-lighter pt-5 pb-6">
-                
+
                 <div class="container">
-                    
+
                     <div class="row">
                         <div class="col-lg-8">
                             <div class="intro-slider-container slider-container-ratio slider-container-1 mb-2 mb-lg-0">
                                 <div class="intro-slider intro-slider-1 owl-carousel owl-simple owl-light owl-nav-inside" data-toggle="owl" data-owl-options='{
-                                        "nav": false, 
+                                        "nav": false,
                                         "responsive": {
                                             "768": {
                                                 "nav": true
@@ -23,7 +23,7 @@
                                     }'>
 
                                     @foreach ($slide_products as $product)
-                                        
+
                                     <div class="intro-slide">
                                         <figure class="slide-image">
                                             <picture>
@@ -46,7 +46,7 @@
                                     @endforeach
 
                                 </div><!-- End .intro-slider owl-carousel owl-simple -->
-                                
+
                                 <span class="slider-loader"></span><!-- End .slider-loader -->
                             </div><!-- End .intro-slider-container -->
                         </div><!-- End .col-lg-8 -->
@@ -81,7 +81,7 @@
                                                 <h4 class="banner-subtitle text-darkwhite"><a href="#">New in</a></h4><!-- End .banner-subtitle -->
                                                 <h3 class="banner-title text-white"><a href="#">Best {{$best_category->name}} <br>Collection</a></h3><!-- End .banner-title -->
                                                 <a href="#" onclick="event.preventDefault();document.getElementById('best_cat').submit()" class="btn btn-outline-white banner-link">Discover Now<i class="icon-long-arrow-right"></i></a>
-                                             
+
                                                 <form action="{{route('product.category')}}" id="best_cat" method="post" class="d-none">
                                                     @csrf
                                                     <input type="hidden" name="category_val" value="{{$best_category->name}}">
@@ -183,12 +183,12 @@
 
             <div class="mb-5"></div><!-- End .mb-6 -->
 
-            
+
             <div class="container">
                 <div class="appendIndex-Load-more">
                     @include('user.includes.load-more')
                 </div>
-          
+
                 <div class="more-container text-center">
                     <button href="#" class="btn btn-outline-darker btn-more load-more"><span class="append-load">Load more products</span>
                         <i class="icon-long-arrow-down load-icon"></i>
@@ -246,7 +246,7 @@
                             <div class="row no-gutters flex-column flex-sm-row align-items-sm-center">
                                 <div class="col">
                                     <h3 class="cta-title text-white">Sign Up & Get 10% Off</h3><!-- End .cta-title -->
-                                    <p class="cta-desc text-white">Molla presents the best in interior design</p><!-- End .cta-desc -->
+                                    <p class="cta-desc text-white">MK Store presents the best in interior design</p><!-- End .cta-desc -->
                                 </div><!-- End .col -->
 
                                 <div class="col-auto">
@@ -290,7 +290,7 @@
                     // alert('success!!')
                     $(".appendCart").html(response.view);
                     $(".appendCartHeader").html(response.header);
-                
+
                     toastr.warning(response.warning, "Warning", {
                         positionClass: "toast-top-right",
                         timeOut: 3e3,
@@ -329,7 +329,7 @@
             $(this).find('.btn-product-info').text('adding..');
             $('.login-auth').html("");
 
-            
+
             $.ajaxSetup({
                 headers:{
                     "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
@@ -342,10 +342,10 @@
             dataType:"json",
             success:function(response)
             {
-            
+
                 $(".appendCartHeader").html(response.header);
                 $('.btn-product-info').text('add to cart')
-               
+
                 toastr.success(response.message, "Success", {
                     positionClass: "toast-top-right",
                     timeOut: 3e3,
@@ -384,7 +384,7 @@
 
         $(document).on('click','.load-more', function(e){
             e.preventDefault();
-            
+
             $('.load-icon').removeClass('icon-long-arrow-down');
             $('.load-icon').text("...");
 
@@ -408,7 +408,7 @@
 
         $(document).on('click','.less-product', function(e){
             e.preventDefault();
-            
+
             $('.load-icon').removeClass('icon-long-arrow-up');
             $('.load-icon').text("...");
             $('.btn-outline-darker').addClass('load-more');

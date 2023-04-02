@@ -71,13 +71,12 @@
                     <div class="card widget-flat">
                         <div class="card-body">
                             <div class="float-end">
-                                <i class="mdi mdi-account-multiple widget-icon"></i>
+                                {{-- <i class="mdi mdi-account-multiple widget-icon"></i> --}}
                             </div>
                             <h5 class="text-muted fw-normal mt-0" title="Number of Customers">Customers</h5>
                             <h3 class="mt-3 mb-3">{{$customers}}</h3>
                             <p class="mb-0 text-muted">
-                                <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 5.27%</span>
-                                <span class="text-nowrap">Since last month</span>
+                                <span class="text-nowrap"></span>
                             </p>
                         </div> <!-- end card-body-->
                     </div> <!-- end card-->
@@ -92,8 +91,7 @@
                             <h5 class="text-muted fw-normal mt-0" title="Number of Orders">Orders</h5>
                             <h3 class="mt-3 mb-3">{{$orders}}</h3>
                             <p class="mb-0 text-muted">
-                                <span class="text-danger me-2"><i class="mdi mdi-arrow-down-bold"></i> 1.08%</span>
-                                <span class="text-nowrap">Since last month</span>
+                                <span class="text-nowrap"></span>
                             </p>
                         </div> <!-- end card-body-->
                     </div> <!-- end card-->
@@ -110,8 +108,7 @@
                             <h5 class="text-muted fw-normal mt-0" title="Average Revenue">Revenue</h5>
                             <h3 class="mt-3 mb-3">${{number_format($tot_revenue,2)}}</h3>
                             <p class="mb-0 text-muted">
-                                <span class="text-danger me-2"><i class="mdi mdi-arrow-down-bold"></i> 7.00%</span>
-                                <span class="text-nowrap">Since last month</span>
+                                <span class="text-nowrap"></span>
                             </p>
                         </div> <!-- end card-body-->
                     </div> <!-- end card-->
@@ -126,8 +123,8 @@
                             <h5 class="text-muted fw-normal mt-0" title="Growth">Growth</h5>
                             <h3 class="mt-3 mb-3">+ 30.56%</h3>
                             <p class="mb-0 text-muted">
-                                <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 4.87%</span>
-                                <span class="text-nowrap">Since last month</span>
+
+                                <span class="text-nowrap"></span>
                             </p>
                         </div> <!-- end card-body-->
                     </div> <!-- end card-->
@@ -190,27 +187,15 @@
 
                     <div class="chart-content-bg">
                         <div class="row text-center">
+                           
                             <div class="col-md-6">
-                                <p class="text-muted mb-0 mt-3">Current Week</p>
-                                <h2 class="fw-normal mb-3">
-                                    <small class="mdi mdi-checkbox-blank-circle text-primary align-middle me-1"></small>
-                                    <span>$58,254</span>
-                                </h2>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="text-muted mb-0 mt-3">Previous Week</p>
-                                <h2 class="fw-normal mb-3">
-                                    <small class="mdi mdi-checkbox-blank-circle text-success align-middle me-1"></small>
-                                    <span>$69,524</span>
-                                </h2>
+                                <div class="">
+                                    <h5>Today's Earning: ${{number_format($toDayEarning,2)}}</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <div class="dash-item-overlay d-none d-md-block" dir="ltr">
-                        <h5>Today's Earning: ${{number_format($toDayEarning,2)}}</h5>
-
-                    </div>
+                    
                     <div dir="ltr">
                         <div id="revenue-chart" class="apex-charts mt-3" data-colors="#727cf5,#0acf97"></div>
                     </div>
@@ -279,27 +264,23 @@
                             <a href="javascript:void(0);" class="dropdown-item">Action</a>
                         </div>
                     </div>
-                    <h4 class="header-title">Total Sales</h4>
+                    <h4 class="header-title">Sales</h4>
 
-                    <div id="average-sales" class="apex-charts mb-4 mt-4" data-colors="#727cf5,#0acf97,#fa5c7c,#ffbc00"></div>
+                    <div id="average-sales" class="apex-charts mb-4 mt-4" data-colors="#0acf97,#ffbc00,#fa5c7c,#ffbc00"></div>
 
 
                     <div class="chart-widget-list">
                         <p>
-                            <i class="mdi mdi-square text-primary"></i> Direct
-                            <span class="float-end">$300.56</span>
+                            <i class="mdi mdi-square text-success"></i> Delivered
+                            <span class="float-end">${{number_format($approved_no,2)}}</span>
                         </p>
                         <p>
-                            <i class="mdi mdi-square text-danger"></i> Affilliate
-                            <span class="float-end">$135.18</span>
+                            <i class="mdi mdi-square text-warning"></i> Pendings
+                            <span class="float-end">${{number_format($pendings_no,2)}}</span>
                         </p>
                         <p>
-                            <i class="mdi mdi-square text-success"></i> Sponsored
-                            <span class="float-end">$48.96</span>
-                        </p>
-                        <p class="mb-0">
-                            <i class="mdi mdi-square text-warning"></i> E-mail
-                            <span class="float-end">$154.02</span>
+                            <i class="mdi mdi-square text-danger"></i> Rejected
+                            <span class="float-end">${{number_format($rejected_no,2)}}</span>
                         </p>
                     </div>
                 </div> <!-- end card-body-->
@@ -338,9 +319,9 @@
         offsetX:-15}},
         fill:{opacity:1},
         tooltip:{y:{formatter:function(e){return"$"+e+"k"}}}};
-        new ApexCharts(document.querySelector("#high-performing-product"),r).render();e=["#727cf5","#0acf97","#fa5c7c","#ffbc00"];
+        new ApexCharts(document.querySelector("#high-performing-product"),r).render();e=["#fa5c7c","#ffbc00",'#fff'];
         (t=o("#average-sales").data("colors"))&&(e=t.split(","));
-        r={chart:{height:208,type:"donut"},legend:{show:!1},stroke:{colors:["transparent"]},series:[44,55,41,17],labels:["Direct","Affilliate","Sponsored","E-mail"],
+        r={chart:{height:208,type:"donut"},legend:{show:!1},stroke:{colors:["#fa5c7c","#ffbc00",'#fff']},series:[<?php echo $tot?>],labels:[<?php echo $sales_tot ?>],
         colors:e,responsive:[{breakpoint:480,options:{chart:{width:200},
         legend:{position:"bottom"}}}]};new ApexCharts(document.querySelector("#average-sales"),r).render()},
         e.prototype.initMaps=function(){0<o("#world-map-markers").length&&o("#world-map-markers").vectorMap({map:"world_mill_en",normalizeFunction:"polynomial",hoverOpacity:.7,hoverColor:!1,regionStyle:{initial:{fill:"#e3eaef"}}
@@ -350,6 +331,5 @@
         zoomOnScroll:!1})},e.prototype.init=function(){o("#dash-daterange").daterangepicker({singleDatePicker:!0}),
         this.initCharts(),this.initMaps()},o.Dashboard=new e,o.Dashboard.Constructor=e}(window.jQuery),
         function(t){"use strict";t(document).ready(function(e){t.Dashboard.init()})}(window.jQuery);
-
     </script>
 @endsection

@@ -32,5 +32,10 @@ class Product extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function Supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
 
 }

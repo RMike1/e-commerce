@@ -90,6 +90,21 @@
                                         </div>
 
                                         <div class="mb-3">
+                                            <label for="productstatus" class="form-label">Supplier</label>
+                                            <select type="text" id="productstatus"  name="supplier_id" data-toggle="select2"  class="form-control select2 @error('supplier_id')  is-invalid @enderror" required>
+                                                <option value="" selected disabled>--select--</option>
+                                                @foreach ($suppliers as $supplier)
+                                                <option value="{{$supplier->id}}">{{$supplier->first_name}} {{$supplier->second_name}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('supplier_id')
+                                            <span class="invalid-feedback">
+                                                <strong>{{$message}}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="mb-3">
                                             <div class="form-check form-checkbox-secondary mb-2">
                                                 <label class="form-check-label" for="customCheck">Publish?</label>
                                                 <input type="checkbox" name="product_publish" id="customCheck" class="form-check-input @error('product_publish')  is-invalid @enderror">

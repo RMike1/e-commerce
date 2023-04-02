@@ -33,9 +33,9 @@ class CreateOrdersTable extends Migration
             $table->string('payment_status')->nullable();
             $table->string('tot_amount')->nullable();
             $table->mediumText('note')->nullable();
+            $table->foreignId('shipping_id')->nullable()->references('id')->on('products')->onDelete('restrict');
             $table->foreignId('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('shipping_id')->nullable();
             $table->timestamps();
         });
     }

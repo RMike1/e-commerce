@@ -89,6 +89,29 @@
                                             </span>
                                             @enderror
                                         </div>
+
+                                        <div class="mb-3">
+                                            <label for="productstatus" class="form-label">Supplier</label>
+                                            <select type="text" id="productstatus"  name="supplier_id" data-toggle="select2"  class="form-control select2 @error('supplier_id')  is-invalid @enderror" required>
+                                                @if ($supplier=='0')
+                                                <option  selected disabled>--No selected supplier please choose one--</option>
+                                                @foreach ($suppliers as $supplier)
+                                                <option value="{{$supplier->id}}">{{$supplier->first_name}} {{$supplier->second_name}}</option>
+                                                @endforeach
+                                                @else
+                                                <option value="{{$supplier->id}}" selected>{{$supplier->first_name}} {{$supplier->second_name}}</option>
+                                                @foreach ($suppliers as $supplier)
+                                                <option value="{{$supplier->id}}">{{$supplier->first_name}} {{$supplier->second_name}}</option>
+                                                @endforeach
+                                                @endif
+                                            </select>
+                                            @error('supplier_id')
+                                            <span class="invalid-feedback">
+                                                <strong>{{$message}}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+
                                         <div class="mb-3">
                                             <div class="form-check form-checkbox-secondary mb-2">
                                                 <label class="form-check-label" for="customCheck">Publish?</label>

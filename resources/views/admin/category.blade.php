@@ -265,7 +265,6 @@
 
                         $('#select_cat_position').val(response.category.category_position);
                         $('#category_name').val(response.category.name);
-                        // $('#image_category').append('<img src="{{asset('+response.category.category_image+')}}" style="width:100%; height:50%" id="category_image" alt="">');
 
                         if(response.category.category_status=='1')
                         {

@@ -1,7 +1,7 @@
 <footer class="footer footer-dark">
     <div class="footer-middle">
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-sm-6 col-lg-3">
                     <div class="widget widget-about">
                     <h3 class="font-weight-bold text-muted text-light">MK <span style="color:#c96;">Store</span></h3>
@@ -22,29 +22,14 @@
                         <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
 
                         <ul class="widget-list">
-                            <li><a href="about.html">About Molla</a></li>
-                            <li><a href="#">How to shop on Molla</a></li>
+                            <li><a href="#">About E-Shop</a></li>
+                            <li><a href="#">How to shop on E-shop</a></li>
                             <li><a href="#">FAQ</a></li>
-                            <li><a href="contact.html">Contact us</a></li>
-                            <li><a href="login.html">Log in</a></li>
+                            <li><a href="#">Log in</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
 
-                <div class="col-sm-6 col-lg-3">
-                    <div class="widget">
-                        <h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
-
-                        <ul class="widget-list">
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Money-back guarantee!</a></li>
-                            <li><a href="#">Returns</a></li>
-                            <li><a href="#">Shipping</a></li>
-                            <li><a href="#">Terms and conditions</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                        </ul><!-- End .widget-list -->
-                    </div><!-- End .widget -->
-                </div><!-- End .col-sm-6 col-lg-3 -->
 
                 <div class="col-sm-6 col-lg-3">
                     <div class="widget">
@@ -52,9 +37,8 @@
 
                         <ul class="widget-list">
                             <li><a href="#">Sign In</a></li>
-                            <li><a href="cart.html">View Cart</a></li>
-                            <li><a href="#">My Wishlist</a></li>
-                            <li><a href="#">Track My Order</a></li>
+                            <li><a href="{{route('cart')}}">View Cart</a></li>
+                            <li><a href="#">Contact us</a></li>
                             <li><a href="#">Help</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->

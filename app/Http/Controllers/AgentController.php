@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Supplier;
+use App\Models\Purchase_Order;
+use App\Models\Order_Product_Items;
+use DB;
 
 class AgentController extends Controller
 {
@@ -44,4 +48,67 @@ class AgentController extends Controller
         $category=Category::all();
         return view('agent.category',compact('category'));
      }
+     public function Purchase_Order ()
+     {
+        return view('agent.purchase-order');
+     }
+
+     public function Add_Purchase_Order ()
+     {
+        // $po_id=Purchase_Order::latest()->take(1)->first()->id;
+        
+        $po_invoice_no= 'PO-'.rand();
+        $suppliers=Supplier::where('status','1')->latest()->get();
+        return view('agent.create-purchase-order', compact('suppliers','po_invoice_no'));
+     }
+     
+     public function Store_Purchase_Order (Request $req)
+     {
+        $req->validate([
+            // 'inputs[*]product_name'=>'required',
+            // 'inputs[*]product_price'=>'required',
+            // 'inputs[*]product_quantity'=>'required',
+            // 'inputs[*]product_total'=>'required',
+            // 'date'=>'required',
+            // 'invoice_no'=>'required',
+            // 'information'=>'required',
+            // 'supplier_name'=>'required',
+        ]);
+
+        $po=new Purchase_Order;
+        $po->date=$req->date;
+        $po->invoice_no=$req->invoice_no;
+        $po->information=$req->information;
+        $po->supplier_name=$req->supplier_name;
+        $po->save();
+        
+        
+        $p_name=$req->product_name;
+        $p_price=$req->product_price;
+        $p_quantity=$req->product_quantity;
+        $p_total=$req->product_total;
+
+        // dd($p_total);
+
+
+        foreach($req->inputs as $key=> $val)
+        {
+            $po_i=new Order_Product_Items;
+            $po_i->product_name=$req->product_name[$key];
+            $po_i->product_price=$req->product_price[$key];
+            $po_i->product_quantity=$req->product_quantity[$key];
+            $po_i->product_total=$req->product_total[$key];
+            $po_i->purchase_orders_id=$po->id;
+            $po_i->save();
+            // ['purchase_orders_id'=>$po->id],
+            // dd($val);
+            // DB::table('order__product__items')->insert([
+            //     'product_name'=>
+            // ]);
+            // dd($test);
+        }
+
+        return redirect()->back()->with('success','purchase order has been sent!!');
+
+    }
 }

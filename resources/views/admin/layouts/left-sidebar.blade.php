@@ -45,6 +45,9 @@
                         <li>
                             <a href="{{route('orders')}}">View Orders</a>
                         </li>
+                        <li>
+                            <a href="{{route('view.supplier')}}">Supplier</a>
+                        </li>
                     </ul>
                 </div>
             </li>

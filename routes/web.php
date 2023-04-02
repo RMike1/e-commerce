@@ -61,6 +61,12 @@ Route::get('view-product/{id}', [AgentController::class, 'View_Product_Details']
 
 Route::get('agent-category', [AgentController::class, 'Agent_Category'])->name('agent.category');
 
+Route::get('purchase/order', [AgentController::class, 'Purchase_Order'])->name('purchase.order');
+
+Route::get('add/purchase-order', [AgentController::class, 'Add_Purchase_Order'])->name('add.purchase-order');
+
+Route::post('store/purchase-order', [AgentController::class, 'Store_Purchase_Order'])->name('store.purchase-order');
+
 });
 //=====================================Admin Routes============================================
 
@@ -123,6 +129,16 @@ Route::get('undo/order/{id}', [AdminController::class, 'Undo_Order'])->name('und
 Route::get('mail/{id}', [AdminController::class, 'Send_Mail'])->name('send.mail');
 
 Route::post('send/mail/{id}', [AdminController::class, 'Send_Mail_Notification'])->name('send.mail_notification');
+
+Route::get('supplier', [AdminController::class, 'View_Supplier'])->name('view.supplier');
+
+Route::post('store/supplier', [AdminController::class, 'Store_Supplier'])->name('store.supplier');
+
+Route::get('edit/supplier', [AdminController::class, 'Edit_Supplier'])->name('edit.supplier');
+
+Route::post('update/supplier', [AdminController::class, 'Update_Supplier'])->name('update.supplier');
+
+Route::get('delete/supplier/{id}', [AdminController::class, 'Delete_Supplier'])->name('delete.supplier');
 
 
 });

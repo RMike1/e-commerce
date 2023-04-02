@@ -73,32 +73,12 @@
             </div><!-- End .widget -->
             <div class="widget widget-collapsible">
                 <h3 class="widget-title">
-                    <a data-toggle="collapse" href="#widget-5" role="button" aria-expanded="true" aria-controls="widget-5">
-                        Price
-                    </a>
-                </h3><!-- End .widget-title -->
-
-                <div class="collapse show" id="widget-5">
-                    <div class="widget-body">
-                        <div class="filter-price">
-                            <div class="filter-price-text">
-                                Price Range: 
-                                <span id="filter-price-range"></span>
-                            </div><!-- End .filter-price-text -->
-
-                            <div id="price-slider"></div><!-- End #price-slider -->
-                        </div><!-- End .filter-price -->
-                    </div><!-- End .widget-body -->
-                </div><!-- End .collapse -->
-            </div><!-- End .widget -->
-            <div class="widget widget-collapsible">
-                <h3 class="widget-title">
-                    <a data-toggle="collapse" href="#widget-2" role="button" aria-expanded="false" aria-controls="widget-2">
+                    <a data-toggle="collapse" href="#widget-2" role="button" aria-expanded="true" aria-controls="widget-2">
                         Size
                     </a>
                 </h3><!-- End .widget-title -->
 
-                <div class="collapse false" id="widget-2">
+                <div class="collapse show" id="widget-2">
                     <div class="widget-body">
                         <div class="filter-items">
                             <div class="filter-item">
@@ -143,28 +123,6 @@
                                 </div><!-- End .custom-checkbox -->
                             </div><!-- End .filter-item -->
                         </div><!-- End .filter-items -->
-                    </div><!-- End .widget-body -->
-                </div><!-- End .collapse -->
-            </div><!-- End .widget -->
-            <div class="widget widget-collapsible">
-                <h3 class="widget-title">
-                    <a data-toggle="collapse" href="#widget-3" role="button" aria-expanded="false" aria-controls="widget-3">
-                        Colour
-                    </a>
-                </h3><!-- End .widget-title -->
-
-                <div class="collapse false" id="widget-3">
-                    <div class="widget-body">
-                        <div class="filter-colors">
-                            <a href="#" style="background: #b87145;"><span class="sr-only">Color Name</span></a>
-                            <a href="#" style="background: #f0c04a;"><span class="sr-only">Color Name</span></a>
-                            <a href="#" style="background: #333333;"><span class="sr-only">Color Name</span></a>
-                            <a href="#" class="selected" style="background: #cc3333;"><span class="sr-only">Color Name</span></a>
-                            <a href="#" style="background: #3399cc;"><span class="sr-only">Color Name</span></a>
-                            <a href="#" style="background: #669933;"><span class="sr-only">Color Name</span></a>
-                            <a href="#" style="background: #f2719c;"><span class="sr-only">Color Name</span></a>
-                            <a href="#" style="background: #ebebeb;"><span class="sr-only">Color Name</span></a>
-                        </div><!-- End .filter-colors -->
                     </div><!-- End .widget-body -->
                 </div><!-- End .collapse -->
             </div><!-- End .widget -->
