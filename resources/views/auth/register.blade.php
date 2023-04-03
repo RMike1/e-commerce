@@ -4,7 +4,7 @@
 @section('content')
 
 
-<div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url({{asset('user/assets/images/backgrounds/login-bg.jpg')}}">
+<div class="login-page bg-image pt-8 pb-8 pt-md-12 pb-md-12 pt-lg-17 pb-lg-17" style="background-image: url({{asset('user/assets/images/backgrounds/bg-a.jpg')}}">
     <div class="container">
         <div class="form-box">
             <div class="form-tab">
@@ -102,7 +102,7 @@
                             </div><!-- End .form-footer -->
                         </form>
                     </div><!-- .End .tab-pane -->
-                  
+
                 </div><!-- End .tab-content -->
             </div><!-- End .form-tab -->
         </div><!-- End .form-box -->

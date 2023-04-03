@@ -187,7 +187,7 @@
 
                     <div class="chart-content-bg">
                         <div class="row text-center">
-                           
+
                             <div class="col-md-6">
                                 <div class="">
                                     <h5>Today's Earning: ${{number_format($toDayEarning,2)}}</h5>
@@ -195,7 +195,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div dir="ltr">
                         <div id="revenue-chart" class="apex-charts mt-3" data-colors="#727cf5,#0acf97"></div>
                     </div>
@@ -266,8 +266,8 @@
                     </div>
                     <h4 class="header-title">Sales</h4>
 
-                    <div id="average-sales" class="apex-charts mb-4 mt-4" data-colors="#0acf97,#ffbc00,#fa5c7c,#ffbc00"></div>
-
+                    <div id="average-sales" class="apex-charts mb-4 mt-4" data-colors="#0acf97,#ffbc00,#fa5c7c"></div>
+                    {{-- <div id="average-sales" class="apex-charts mb-4 mt-4" data-colors="#727cf5,#0acf97,#fa5c7c,#ffbc00"></div> --}}
 
                     <div class="chart-widget-list">
                         <p>
@@ -319,9 +319,10 @@
         offsetX:-15}},
         fill:{opacity:1},
         tooltip:{y:{formatter:function(e){return"$"+e+"k"}}}};
-        new ApexCharts(document.querySelector("#high-performing-product"),r).render();e=["#fa5c7c","#ffbc00",'#fff'];
+        new ApexCharts(document.querySelector("#high-performing-product"),r).render();e=["#727cf5","#0acf97","#fa5c7c","#ffbc00"];
         (t=o("#average-sales").data("colors"))&&(e=t.split(","));
-        r={chart:{height:208,type:"donut"},legend:{show:!1},stroke:{colors:["#fa5c7c","#ffbc00",'#fff']},series:[<?php echo $tot?>],labels:[<?php echo $sales_tot ?>],
+        // r={chart:{height:208,type:"donut"},legend:{show:!1},stroke:{colors:["#727cf5","#0acf97","#fa5c7c","#ffbc00"]},series:[<?php echo $tot?>],labels:[<?php echo $sales_tot ?>],
+        r={chart:{height:208,type:"donut"},legend:{show:!1},stroke:{colors:["#727cf5","#0acf97","#fa5c7c","#ffbc00"]},series:[<?php echo $approved_no?>,<?php echo $pendings_no?>,<?php echo $rejected_no?>],labels:["Delivered","Pending","Rejected"],
         colors:e,responsive:[{breakpoint:480,options:{chart:{width:200},
         legend:{position:"bottom"}}}]};new ApexCharts(document.querySelector("#average-sales"),r).render()},
         e.prototype.initMaps=function(){0<o("#world-map-markers").length&&o("#world-map-markers").vectorMap({map:"world_mill_en",normalizeFunction:"polynomial",hoverOpacity:.7,hoverColor:!1,regionStyle:{initial:{fill:"#e3eaef"}}

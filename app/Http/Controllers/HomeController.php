@@ -203,8 +203,6 @@ if(Auth::check())
 
 //=========================Remove items from in Cart =========================
 
-
-
 public function Remove_Cart(Request $req)
 {
         $cart_id=$req->cart_id;
@@ -354,89 +352,90 @@ public function Remove_Cart(Request $req)
 
       public function Order_by_Cash(Request $req)
       {
-          $shipping_method=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->shipping_method;
-          $shipping_id=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->id;
+        $is_cart=Cart::get('id')->first();
+        if($is_cart!=null)
+        {
+            $shipping_method=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->shipping_method;
+            $shipping_id=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->id;
 
+            $carts=Cart::where('user_id',Auth::user()->id)->get();
+            $tracking_no=Str::random(10);
 
-          $carts=Cart::where('user_id',Auth::user()->id)->get();
-          $tracking_no=Str::random(10);
+            foreach($carts as $cart)
+            {
+              $req->validate([
+                  'first_name'=>'required|min:2|max:50',
+                  'second_name'=>'required|min:2|max:50',
+                  'tracking_no'=>'nullable',
+                  'order_id'=>'nullable',
+                  'company'=>'nullable',
+                  'town'=>'required',
+                  'state'=>'required',
+                  'street'=>'required',
+                  'phone'=>'required',
+                  'phone'=>'required',
+                  'email'=>'required',
+                  'note'=>'nullable',
+              ]);
+              $shipp_id=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->id;
+              $shipp_rest_id=Shipping::where('status','!=','1')->where('user_id',Auth::user()->id)->first()->id;
 
+                $order_id=Str::random(8);
+                $order=new Order;
+                $order->order_id='MK-'.$order_id;
+                $order->tracking_no='MK-'.$tracking_no;
+                $order->first_name=$req->first_name;
+                $order->second_name=$req->second_name;
+                $order->company=$req->company;
+                $order->country=$req->country;
+                $order->town=$req->town;
+                $order->state=$req->state;
+                $order->street=$req->street;
+                $order->phone=$req->phone;
+                $order->shipping_method=$shipping_method;
+                $order->quantity=$cart->quantity;
+                $order->email=$req->email;
+                $order->tot_amount=$cart->tot_amount;
+                $order->note=$req->note;
+                $order->payment_method="cash";
+                $order->delivery_status="pending";
+                $order->payment_status="pending";
+                $order->product_id=$cart->product_id;
+                $order->user_id=$cart->user_id;
+                $order->shipping_id=$shipping_id;
+                $order->save();
 
-        //   dd($carts);
-          foreach($carts as $cart)
-          {
-            $req->validate([
-                'first_name'=>'required|min:2|max:50',
-                'second_name'=>'required|min:2|max:50',
-                'tracking_no'=>'nullable',
-                'order_id'=>'nullable',
-                'company'=>'nullable',
-                'town'=>'required',
-                'state'=>'required',
-                'street'=>'required',
-                'phone'=>'required',
-                'phone'=>'required',
-                'email'=>'required',
-                'note'=>'nullable',
-            ]);
-            $shipp_id=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->id;
-            $shipp_rest_id=Shipping::where('status','!=','1')->where('user_id',Auth::user()->id)->first()->id;
+                $cart_id=$cart->id;
+                if($cart_id)
+                {
+                    $cart_data=Cart::find($cart_id);
+                    $cart_data->delete();
+                }
+                else{
+                    return redirect()->back();
+                }
 
-              $order_id=Str::random(8);
-              $order=new Order;
-              $order->order_id='MK-'.$order_id;
-              $order->tracking_no='MK-'.$tracking_no;
-              $order->first_name=$req->first_name;
-              $order->second_name=$req->second_name;
-              $order->company=$req->company;
-              $order->country=$req->country;
-              $order->town=$req->town;
-              $order->state=$req->state;
-              $order->street=$req->street;
-              $order->phone=$req->phone;
-              $order->shipping_method=$shipping_method;
-              $order->quantity=$cart->quantity;
-              $order->email=$req->email;
-              $order->tot_amount=$cart->tot_amount;
-              $order->note=$req->note;
-              $order->payment_method="cash";
-              $order->delivery_status="pending";
-              $order->payment_status="pending";
-              $order->product_id=$cart->product_id;
-              $order->user_id=$cart->user_id;
-              $order->shipping_id=$shipping_id;
-              $order->save();
+                $shipping=Shipping::find($shipp_id);
+                if($shipping->value!='0')
+                {
+                    $shipping->status='0';
+                    $shipping->save();
 
-              $cart_id=$cart->id;
-              if($cart_id)
-              {
-                  $cart_data=Cart::find($cart_id);
-                  $cart_data->delete();
+                    $shipping_rest_id=Shipping::find($shipp_rest_id);
+                    $shipping_rest_id->status='1';
+                    $shipping_rest_id->save();
+
+                }
+
               }
-              else{
-                  return redirect()->back();
-              }
-
-              $shipping=Shipping::find($shipp_id);
-              if($shipping->value!='0')
-              {
-                  $shipping->status='0';
-                  $shipping->save();
-
-                  $shipping_rest_id=Shipping::find($shipp_rest_id);
-                  $shipping_rest_id->status='1';
-                  $shipping_rest_id->save();
-
-              }
-
+              return redirect()->back()->with('success','your order has been created successfully!');
 
             }
-            return redirect()->back()->with('success','your order has been created successfully!');
+            return redirect()->back()->with('warning','first add products in cart to proceed your order!');
 
       }
 
     //=========================Checkout page============================
-
 
       public function Checkout(Request $req)
       {
@@ -451,9 +450,7 @@ public function Remove_Cart(Request $req)
 
       }
 
-
       //=========================Sort By Date, price and name============================
-
 
       public function Sortby(Request $req)
       {
@@ -474,6 +471,11 @@ public function Remove_Cart(Request $req)
             ]);
         }
 
+      }
+
+      public function stripe()
+      {
+        return view('user.stripe');
       }
 
 

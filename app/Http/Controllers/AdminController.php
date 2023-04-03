@@ -40,7 +40,7 @@ class AdminController extends Controller
             $previousweek=Carbon::now()->subMonth(2);
             $currentyear=Carbon::now()->year();
 
-        
+
 
             $revenue=DB::select(
             DB::raw("SELECT products.product_name as products, SUM(orders.tot_amount) AS total FROM orders LEFT JOIN products on products.id = orders.product_id GROUP BY products.product_name;"));
@@ -71,6 +71,7 @@ class AdminController extends Controller
             $approved_no=Order::where('orders.payment_status','Approved')->sum('orders.tot_amount');
 
 
+
             $tot_sales=DB::select(DB::raw("SELECT orders.payment_status AS Label, SUM(orders.tot_amount) as Tot FROM orders GROUP BY orders.payment_status;"));
 
             $tot="";
@@ -84,7 +85,7 @@ class AdminController extends Controller
             {
                 $sales_tot.="'".$infor->Label."',";
             }
-               
+
             return view('admin.index',compact('customers','orders','tot_revenue','tot_revenue','total','data','toDayEarning','top_selling_products','sales_tot','tot','pendings_no','rejected_no','approved_no'));
     }
 
@@ -732,7 +733,7 @@ class AdminController extends Controller
         return redirect()->back()->with('success','email has been sent successfully!!');
 
       }
-      
+
       public function View_Supplier()
         {
             $suppliers=Supplier::latest()->get();
@@ -757,10 +758,10 @@ class AdminController extends Controller
             $supplier->second_name=$req->second_name;
             $supplier->status=$req->status==true ? '1' : '0';
             $supplier->save();
-            
+
             return redirect()->back()->with('success', 'supplier saved successfully!');
         }
-        
+
         public function Edit_Supplier(Request $req)
         {
             $supplier_id=$req->supplier_id;
@@ -770,7 +771,7 @@ class AdminController extends Controller
                     'supplier'=>$supplier,
             ]);
         }
-        
+
         public function Update_Supplier(Request $req)
           {
               $req->validate([
@@ -778,17 +779,17 @@ class AdminController extends Controller
                   'second_name'=>'required',
                   'status'=>'nullable',
               ]);
-  
+
               $supplier_id=$req->supplier_id;
               $supplier=Supplier::find($supplier_id);
               $supplier->first_name=$req->first_name;
               $supplier->second_name=$req->second_name;
               $supplier->status=$req->status==true ? '1' : '0';
               $supplier->update();
-              
+
               return redirect()->back()->with('success', 'supplier updated successfully!');
             }
-            
+
             public function Delete_Supplier($id)
             {
                 $supplier=Supplier::find($id);
