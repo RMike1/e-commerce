@@ -30,7 +30,7 @@
                         <a href="#">Links</a>
                         <ul>
                             <li><a href="tel:#"><i class="icon-phone"></i>Call: +(250) 788 888 888</a></li>
-                            <li><a href="{{route('cart')}}"><i class="icon-shopping-cart"></i>My Cart 
+                            <li><a href="{{route('cart')}}"><i class="icon-shopping-cart"></i>My Cart
                                 @auth
                                 <span>({{App\Models\Cart::where('user_id',Auth::user()->id)->count()}})</span>
                                 @endauth
@@ -89,7 +89,7 @@
                             <a href="{{route('home')}}" class="">Home</a>
                         </li>
                         <li>
-                            <a href="{{route('product.category')}}" class="sf-with-ul">Product</a>
+                            <a href="{{url('products')}}" class="sf-with-ul">Product</a>
 
                             <div class="megamenu megamenu-sm">
                                 <div class="row no-gutters">

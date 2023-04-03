@@ -326,7 +326,9 @@
             e.preventDefault();
             var product_id=$(this).val();
             var quantity=1;
-            $(this).find('.btn-product-info').text('adding..');
+            $(this).find('.btn-product-info').text('adding..').append(`<div class="spinner-grow" role="status">
+  <span class="visually-hidden"></span>
+</div>`);
             $('.login-auth').html("");
 
 

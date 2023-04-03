@@ -386,7 +386,9 @@
             var product_id=$(this).val();
             // alert(product_id)
             var quantity=1;
-            $(this).find('.btn-product-info').text('adding..');
+            $(this).find('.btn-product-info').text('adding..').append(`<div class="spinner-grow" role="status">
+  <span class="visually-hidden"></span>
+</div>`);
             $('.login-auth').html("");
 
 
@@ -454,7 +456,9 @@ function productId(caller){
             var quantity=$('#product_qty').val();
             // alert(quantity);
 
-            $('.btn-product-info').text('adding..');
+            $('.btn-product-info').text('adding..').append(`<div class="spinner-grow" role="status">
+  <span class="visually-hidden"></span>
+</div>`);
             $('.login-auth').html("");
 
         $.ajaxSetup({
@@ -516,7 +520,9 @@ function productId2(caller2){
         var quantity=$('#product_qty2').val();
         // alert(quantity);
 
-        $('.btn-product-info2').text('adding..');
+        $('.btn-product-info2').text('adding..').append(`<div class="spinner-grow" role="status">
+  <span class="visually-hidden"></span>
+</div>`);
         $('.login-auth').html("");
 
      $.ajaxSetup({

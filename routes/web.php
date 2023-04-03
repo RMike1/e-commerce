@@ -4,12 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\StripeController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// Auth::routes(['verify' => true]);
 Auth::routes();
 
 //=====================================user Routes============================================
@@ -18,19 +16,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::post('products', [HomeController::class, 'Product_Category'])->name('product.category');
 
-Route::get('products', [HomeController::class, 'Product_Category'])->name('product.category');
+Route::get('products', [HomeController::class, 'Product_Category']);
 
 Route::get('product/{id}', [HomeController::class, 'Check_Product'])->name('user.product');
-
-Route::get('cart',[HomeController::class,'ProductCart'])->name('cart')->middleware('auth');
-
-Route::post('add/cart',[HomeController::class,'Add_Cart'])->name('add.cart')->middleware('auth');
-
-Route::post('update/cart',[HomeController::class,'Update_Cart'])->name('update.cart')->middleware('auth');
-
-Route::get('cart/data',[HomeController::class,'Cart_Data'])->name('alldata.cart')->middleware('auth');
-
-Route::get('remove/cart',[HomeController::class,'Remove_Cart'])->name('remove.cart')->middleware('auth');
 
 Route::get('load/more',[HomeController::class,'Load_More_Products'])->name('load.more');
 
@@ -42,13 +30,27 @@ Route::get('reset_sort/category',[HomeController::class,'Reset_Sort_By_Category'
 
 Route::get('search',[HomeController::class,'Search_Product'])->name('search.product');
 
-Route::get('checkout',[HomeController::class,'Checkout'])->name('checkout')->middleware('auth');
-
 Route::post('shipping',[HomeController::class,'Shipping'])->name('shipping');
 
 Route::post('order_by_cash',[HomeController::class,'Order_by_Cash'])->name('order_by_cash');
 
 Route::get('sortby',[HomeController::class,'Sortby'])->name('sortby');
+
+Route::get('stripe',[StripeController::class,'Stripe'])->name('stripe');
+
+//====
+
+Route::get('cart',[HomeController::class,'ProductCart'])->name('cart')->middleware('auth');
+
+Route::post('add/cart',[HomeController::class,'Add_Cart'])->name('add.cart')->middleware('auth');
+
+Route::post('update/cart',[HomeController::class,'Update_Cart'])->name('update.cart')->middleware('auth');
+
+Route::get('cart/data',[HomeController::class,'Cart_Data'])->name('alldata.cart')->middleware('auth');
+
+Route::get('remove/cart',[HomeController::class,'Remove_Cart'])->name('remove.cart')->middleware('auth');
+
+Route::get('checkout',[HomeController::class,'Checkout'])->name('checkout')->middleware('auth');
 
 
 //=====================================Agent Routes============================================
@@ -68,6 +70,7 @@ Route::get('add/purchase-order', [AgentController::class, 'Add_Purchase_Order'])
 Route::post('store/purchase-order', [AgentController::class, 'Store_Purchase_Order'])->name('store.purchase-order');
 
 });
+
 //=====================================Admin Routes============================================
 
 Route::prefix('admin')->middleware(['auth','Admin'])->group(function () {

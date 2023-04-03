@@ -48,9 +48,11 @@
             e.preventDefault();
             var product_id=$(this).val();
             var quantity=1;
-            $(this).find('.btn-product-info').text('adding..');
+            $(this).find('.btn-product-info').text("adding..").append(`<div class="spinner-grow" role="status">
+  <span class="visually-hidden"></span>
+</div>`);
             $('.login-auth').html("");
-            
+
             $.ajaxSetup({
                 headers:{
                     "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
@@ -67,7 +69,7 @@
                 // alert('success!!')
                 $(".appendCartHeader").html(response.header);
                 $('.btn-product-info').text('add to cart')
-               
+
                 toastr.success(response.message, "Success", {
                     positionClass: "toast-top-right",
                     timeOut: 3e3,
@@ -102,15 +104,15 @@
     });
     })
 
-    
-    
-    
+
+
+
     $(document).ready(function(){
 
 
         //========================remove items from cart header===============================
-        
-        
+
+
         $(document).on('click', '.remove-cart-btn', function(e){
             e.preventDefault();
             var cart_id=$(this).val();
@@ -129,9 +131,9 @@
                 {
                     // console.log(response);
                     // alert('success!!')
-                    
+
                     $(".appendCartHeader").html(response.header);
-                
+
                     toastr.warning(response.warning, "Warning", {
                         positionClass: "toast-top-right",
                         timeOut: 3e3,
@@ -160,7 +162,7 @@
             });
 
         });
-        
+
     //========================sort items by categories===============================
 
         $(document).on('click','.checkbox-category', function(e){
@@ -259,10 +261,10 @@
                     console.log(error)
                 }
             });
-            
+
         });
 
-        
+
 });
 
 </script>

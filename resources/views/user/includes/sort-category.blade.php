@@ -1,6 +1,6 @@
 @forelse ($products as $product)
-    
-                    
+
+
 <div class="col-6 col-md-4 col-lg-4">
     <div class="product product-7 text-center">
         <figure class="product-media">
@@ -21,14 +21,12 @@
                 <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
                 <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
             </div><!-- End .product-action-vertical -->
-            {{-- <form action="{{route('add.cart')}}" method="post">
-                @csrf --}}
             <div class="product-action">
                 <input type="hidden" value="{{$product->id}}"  name="product_id">
                 <input type="hidden" value="1" name="quantity">
                 <button type="button" class="btn-product btn-cart btn-product-data border-0" value="{{$product->id}}"><span class="btn-product-info">add to cart</span></button>
             </div><!-- End .product-action -->
-            {{-- </form> --}}
+
         </figure><!-- End .product-media -->
 
         <div class="product-body">
@@ -61,4 +59,4 @@
 </div>
 </div>
 
-@endforelse 
+@endforelse
