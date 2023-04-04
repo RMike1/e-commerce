@@ -161,7 +161,7 @@
                                 </select>
                                 </div>
                             <div class="mb-3 form-check form-checkbox-secondary">
-                                    <label class="form-check-label" for="category-status">Publish?</label>
+                                    <label class="form-check-label" for="category-status">Active?</label>
                                     <input type="checkbox" class="form-check-input" name="category_status" id="category-status">
                                 </div>
                             </div>
@@ -208,7 +208,7 @@
                                 </select>
                                 </div>
                         <div class="mb-3 form-check form-checkbox-secondary">
-                                <label class="form-check-label category_status2" for="category_status">Publish?</label>
+                                <label class="form-check-label category_status2" for="category_status">Active?</label>
                                 <input type="checkbox" class="form-check-input" name="category_status" id="category_status">
                             </div>
                         </div>

@@ -46,62 +46,63 @@
     $(document).ready(function(){
         $(document).on('click', '.btn-product-data',function(e){
             e.preventDefault();
+           
+            
+          
             var product_id=$(this).val();
             var quantity=1;
-            $(this).find('.btn-product-info').text("adding..").append(`<div class="spinner-grow" role="status">
-  <span class="visually-hidden"></span>
-</div>`);
+            $(this).find('.btn-product-info').text("adding..").append(`<div class="spinner-grow" role="status"><span class="visually-hidden"></span></div>`);
             $('.login-auth').html("");
-
             $.ajaxSetup({
                 headers:{
                     "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
-            data:{ product_id:product_id, quantity:quantity},
-            url:"{{route('add.cart')}}",
-            type:"post",
-            dataType:"json",
-            success:function(response)
-            {
-                // console.log(response);
-                // alert('success!!')
-                $(".appendCartHeader").html(response.header);
-                $('.btn-product-info').text('add to cart')
+                data:{ product_id:product_id, quantity:quantity},
+                url:"{{route('add.cart')}}",
+                type:"post",
+                dataType:"json",
+                success:function(response)
+                {
+                    // console.log(response);
+                    // alert('success!!')
+                    $(".appendCartHeader").html(response.header);
+                    $('.btn-product-info').text('add to cart')
 
-                toastr.success(response.message, "Success", {
-                    positionClass: "toast-top-right",
-                    timeOut: 3e3,
-                    closeButton: !0,
-                    debug: !1,
-                    newestOnTop: !0,
-                    progressBar: !0,
-                    preventDuplicates: !0,
-                    onclick: null,
-                    showDuration: "300",
-                    hideDuration: "1000",
-                    extendedTimeOut: "1000",
-                    showEasing: "swing",
-                    hideEasing: "linear",
-                    showMethod: "fadeIn",
-                    hideMethod: "fadeOut",
-                    tapToDismiss: !1
-                })
+                    toastr.success(response.message, "Success", {
+                        positionClass: "toast-top-right",
+                        timeOut: 3e3,
+                        closeButton: !0,
+                        debug: !1,
+                        newestOnTop: !0,
+                        progressBar: !0,
+                        preventDuplicates: !0,
+                        onclick: null,
+                        showDuration: "300",
+                        hideDuration: "1000",
+                        extendedTimeOut: "1000",
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                        tapToDismiss: !1
+                    })
 
-            },
-            error:function(error)
-            {
-                $('#signin-modal').modal('show');
-                $('.btn-product-info').text("add to cart");
-                $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="icon-close"></i></span>
-                            </button>
-                        </div>`);
-            }
+                },
+                error:function(error)
+                {
+                    $('#signin-modal').modal('show');
+                    $('.btn-product-info').text("add to cart");
+                    $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true"><i class="icon-close"></i></span>
+                                </button>
+                            </div>`);
+                }
+            });
+       
         });
-    });
     })
 
 
@@ -115,6 +116,10 @@
 
         $(document).on('click', '.remove-cart-btn', function(e){
             e.preventDefault();
+
+            if(confirm("remove this item?"))
+            {
+
             var cart_id=$(this).val();
             // alert(cart_id);
             $.ajaxSetup({
@@ -134,7 +139,7 @@
 
                     $(".appendCartHeader").html(response.header);
 
-                    toastr.warning(response.warning, "Warning", {
+                    toastr.warning(response.warning,  {
                         positionClass: "toast-top-right",
                         timeOut: 3e3,
                         closeButton: !0,
@@ -160,7 +165,18 @@
                     console.log(error);
                 }
             });
+            }
+            else{
+                return false;
+            }
 
+        });
+
+        $(document).on('click', '#currency_btn', function(e){
+            e.preventDefault();
+            var currency_val=$(this).val();
+            alert(currency_val);
+            // alert('hello');
         });
 
     //========================sort items by categories===============================

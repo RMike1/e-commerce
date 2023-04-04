@@ -25,7 +25,7 @@
                         <img src="{{asset($cart->product->product_image)}}" alt="product">
                     </a>
                 </figure>
-                <button href="#" type="button" onclick="return confirm('remove this item from cart?')" value="{{$cart->id}}" class="btn-remove remove-cart-btn" title="Remove Product"><i class="icon-close"></i></button>
+                <button href="#" type="button" value="{{$cart->id}}" class="btn-remove remove-cart-btn" title="Remove Product"><i class="icon-close"></i></button>
             </div><!-- End .product -->
             @empty
             <div class="product">
@@ -36,7 +36,7 @@
                 </div><!-- End .product-cart-details -->
             </div><!-- End .product -->
         @endforelse
-   @endauth
+    @endauth
     </div><!-- End .cart-product -->
     @auth
     <div class="dropdown-cart-total">
@@ -49,7 +49,6 @@
       <span class="cart-total-price">$<span class="final_tot">{{number_format(($final_tot),2)}}</span></span>
     </div><!-- End .dropdown-cart-total -->
     @endauth
-
     <div class="dropdown-cart-action">
         <a href="{{route('cart')}}" class="btn btn-primary">View Cart</a>
         <a href="{{route('checkout')}}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>

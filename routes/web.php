@@ -145,3 +145,8 @@ Route::get('delete/supplier/{id}', [AdminController::class, 'Delete_Supplier'])-
 
 
 });
+
+
+
+Route::get('stripe', [StripeController::class, 'stripe']);
+Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');

@@ -70,8 +70,9 @@
         $(document).on('click', '#cart-remove-btn', function(e){
 
             e.preventDefault();
+            if(confirm("remove this item?"))
+            {
             var cart_id=$(this).val();
-            // alert(cart_id);
             $.ajaxSetup({
             headers:{
                 "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
@@ -88,7 +89,7 @@
                     $(".appendCart").html(response.view);
                     $(".appendCartHeader").html(response.header);
 
-                    toastr.warning(response.warning, "Warning", {
+                    toastr.warning(response.warning, {
                         positionClass: "toast-top-right",
                         timeOut: 3e3,
                         closeButton: !0,
@@ -114,6 +115,10 @@
                     console.log(error);
                 }
             });
+            }
+            else{
+                return false;
+            }
 
         });
 
@@ -121,8 +126,11 @@
 
         $(document).on('click', '.remove-cart-btn', function(e){
             e.preventDefault();
+            if(confirm("remove this item?"))
+            {
+
             var cart_id=$(this).val();
-            // alert(cart_id);
+            
             $.ajaxSetup({
             headers:{
                 "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
@@ -135,12 +143,10 @@
                 dataType:"json",
                 success:function(response)
                 {
-                    // console.log(response);
-                    // alert('success!!')
                     $(".appendCart").html(response.view);
                     $(".appendCartHeader").html(response.header);
 
-                    toastr.warning(response.warning, "Warning", {
+                    toastr.warning(response.warning, {
                         positionClass: "toast-top-right",
                         timeOut: 3e3,
                         closeButton: !0,
@@ -166,6 +172,10 @@
                     console.log(error);
                 }
             });
+            }
+            else{
+                return false;
+            }
 
         });
 
@@ -199,6 +209,7 @@
 
 
         });
+        
     });
 </script>
 

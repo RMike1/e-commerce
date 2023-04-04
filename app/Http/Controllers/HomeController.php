@@ -213,14 +213,17 @@ public function Remove_Cart(Request $req)
         $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
         $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
 
-        $shipping_val=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->value;
+        $shipping_val=Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->value;
         $final_tot=$subtotcart+$shipping_val;
+        $shipping_method=Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->shipping_method;
+
 
         return response()->json([
             'status'=>200,
             'warning'=>'product has been removed from cart successfully!!',
             'view'=>(String)View::make('user.includes.cartItems',compact('carts','subtotcart','final_tot')),
             'header'=>(String)View::make('user.includes.cartheader',compact('carts','subtotcart','final_tot')),
+            'order_summary'=>(String)View::make('user.includes.order-summary',compact('carts','subtotcart','final_tot','shipping_method')),
         ]);
 
     }

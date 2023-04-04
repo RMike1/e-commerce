@@ -583,6 +583,8 @@ function productId2(caller2){
  $(document).ready(function(){
         $(document).on('click', '.remove-cart-btn', function(e){
             e.preventDefault();
+            if(confirm("remove this item?"))
+            {
             var cart_id=$(this).val();
             // alert(cart_id);
             $.ajaxSetup({
@@ -602,7 +604,7 @@ function productId2(caller2){
                     $(".appendCart").html(response.view);
                     $(".appendCartHeader").html(response.header);
 
-                    toastr.warning(response.warning, "Warning", {
+                    toastr.warning(response.warning, {
                         positionClass: "toast-top-right",
                         timeOut: 3e3,
                         closeButton: !0,
@@ -628,8 +630,12 @@ function productId2(caller2){
                     console.log(error);
                 }
             });
-
+            }
+            else{
+                return false;
+            }
         });
+        
 
     });
 

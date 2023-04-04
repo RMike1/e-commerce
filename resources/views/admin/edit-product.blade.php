@@ -2,7 +2,6 @@
 @section('title','Admin Dashboard')
 @extends('admin.layouts.master')
 @section('styles')
-
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="light-style">
@@ -10,7 +9,6 @@
     <link href="{{asset('admin/assets/css/vendor/quill.core.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/css/vendor/quill.snow.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/css/vendor/simplemde.min.css')}}" rel="stylesheet" type="text/css" />
-
 @endsection
 @section('content')
 
@@ -114,7 +112,7 @@
 
                                         <div class="mb-3">
                                             <div class="form-check form-checkbox-secondary mb-2">
-                                                <label class="form-check-label" for="customCheck">Publish?</label>
+                                                <label class="form-check-label" for="customCheck">Active?</label>
                                                 <input type="checkbox" name="product_publish" id="customCheck" class="form-check-input @error('product_publish')  is-invalid @enderror" {{$product->product_publish=='1' ? 'checked' : ''}}  >
                                             </div>
                                             @error('product_publish')
@@ -127,7 +125,7 @@
 
                                         <div class="col-xl-6">
                                             <div class="mb-3 mt-3 mt-xl-0">
-                                                <label for="projectname" class="mb-1">Post Image</label><br>
+                                                <label for="projectname" class="mb-1">Product Image</label><br>
                                                 <img src="{{asset($product->product_image)}}" id="PreviewImg" class="border p-1" width="20%" alt="" style="border-color: 3 #505050 solid; margin:4px; border-radius:4%;">
                                                 <input type="file" name="product_image" id="PreviewInput" class="form-control @error('product_image')  is-invalid @enderror" multiple='multiple'>
                                                 @error('product_image')
@@ -197,7 +195,7 @@
 
 
                                         <div class="mb-3">
-                                            <label for="product_description" class="form-label">Body</label>
+                                            <label for="product_description" class="form-label">Description</label>
                                             <textarea class="ckeditor @error('product_description') is-invalid @enderror" id="product_description" name="product_description" required>{{$product->product_description}}</textarea>
                                             @error('product_description')
                                             <span class="invalid-feedback">
@@ -206,7 +204,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-secondary"><span class="mdi mdi-content-save"></span> Save</button>
+                                    <button type="submit" class="btn btn-secondary"><span class="mdi mdi-content-save"></span> Update</button>
                                 </form>
                         <!-- end row -->
                     </div> <!-- end card-body -->

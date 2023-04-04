@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCurrenciesTable extends Migration
+    class CreateCurrenciesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,15 +15,18 @@ class CreateCurrenciesTable extends Migration
     {
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->comment('currency-code');
+            $table->string('name');
+            $table->string('symbol')->nullable()->comment('currency-symbol');
+            $table->string('normal_val')->nullable()->comment('value according to Frw');
+            $table->string('us_value')->comment('value according to US Dollar');
+            $table->string('status')->comment('1 for active 0 for inactive');
+            $table->string('fr_use_status')->comment('1 set to active 0 for inactive');
             $table->timestamps();
         });
     }
+    
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('currencies');

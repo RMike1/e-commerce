@@ -47,7 +47,7 @@ class="page-content">
                                 <td class="total-col" id="tot_amount_data">
                                     ${{number_format($cart->tot_amount,2)}}
                                 </td>
-                                <td class="remove-col"><button class="btn-remove" onclick="return confirm('remove this item from cart?')" value="{{$cart->id}}" id="cart-remove-btn"><i class="icon-close"></i></button></td>
+                                <td class="remove-col"><button class="btn-remove" value="{{$cart->id}}" id="cart-remove-btn"><i class="icon-close"></i></button></td>
                             </tr>
                             </form>
                             @empty

@@ -3,11 +3,14 @@
         <div class="container">
             <div class="header-left">
                 <div class="header-dropdown">
-                    <a href="#">Usd</a>
+                    <a href="#">GBP</a>
                     <div class="header-menu">
                         <ul>
-                            <li><a href="#">Eur</a></li>
-                            <li><a href="#">Usd</a></li>
+                            @foreach (App\Models\Currency::where('status','1')->get() as $currency)
+                            {{-- <li><a href="#" class="currency_v" type="button" onclick="document.getElementById('currency_btn').value();event.preventDefault()" >{{$currency->code}}</a></li> --}}
+                            <li><button type="button" value="{{$currency->normal_val}}" class="bg-transparent border-0 text-muted" id="currency_btn">{{$currency->code}}</button></li>
+                            @endforeach
+                            
                         </ul>
                     </div><!-- End .header-menu -->
                 </div><!-- End .header-dropdown -->

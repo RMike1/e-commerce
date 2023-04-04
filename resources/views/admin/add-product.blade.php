@@ -106,7 +106,7 @@
 
                                         <div class="mb-3">
                                             <div class="form-check form-checkbox-secondary mb-2">
-                                                <label class="form-check-label" for="customCheck">Publish?</label>
+                                                <label class="form-check-label" for="customCheck">Active?</label>
                                                 <input type="checkbox" name="product_publish" id="customCheck" class="form-check-input @error('product_publish')  is-invalid @enderror">
                                             </div>
                                             @error('product_publish')
@@ -118,7 +118,7 @@
                                         </div>
                                         <div class="col-xl-6">
                                             <div class="mb-3 mt-3 mt-xl-0">
-                                                <label for="projectname" class="mb-1">Post Image</label><br>
+                                                <label for="projectname" class="mb-1">Product Image</label><br>
                                                 <img src="" id="PreviewImg" width="20%" class="border p-1" alt="" style="border-color: 3 #505050 solid; margin:4px; border-radius:4%">
                                                 <input type="file" name="product_image" id="PreviewInput" class="form-control @error('product_image')  is-invalid @enderror" required>
                                                 @error('product_image')
@@ -165,7 +165,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="product_description" class="form-label">Body</label>
+                                            <label for="product_description" class="form-label">Description</label>
                                             <textarea class="ckeditor @error('product_description') is-invalid @enderror" id="product_description" name="product_description" required>{{old('product_description')}}</textarea>
                                             @error('product_description')
                                             <span class="invalid-feedback">
