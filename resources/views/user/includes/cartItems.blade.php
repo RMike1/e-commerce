@@ -36,7 +36,15 @@ class="page-content">
                                         </h3><!-- End .product-title -->
                                     </div><!-- End .product -->
                                 </td>
-                                <td class="price-col">${{number_format($cart->product->product_price,2)}}</td>
+                                <td class="price-col" style="width:20%">
+                                    @php
+                                    $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
+                                    @endphp
+                                    @if ($currency_value->code=='RWF')
+                                    <span>{{number_format($cart->product->product_price/$currency_value->normal_val)}} Frw</span>
+                                    @else
+                                    {{$currency_value->symbol}}{{number_format($cart->product->product_price/$currency_value->normal_val)}}
+                                    @endif
                                 <td class="quantity-col">
                                     <div class="cart-product-quantity">
                                         <input type="hidden" class="form-control" id="cart_id" name="cart_id" value="{{$cart->id}}">
@@ -44,8 +52,12 @@ class="page-content">
                                         <input type="number" class="form-control" id="cart_quantity_data" onchange="cartId(this);event.preventDefault()"  data-CartQty="{{$cart->quantity}}" name="quantity_cart" data-CartId="{{$cart->id}}" value="{{$cart->quantity}}" min="1"  step="1" data-decimals="0" required>
                                     </div><!-- End .cart-product-quantity -->
                                 </td>
-                                <td class="total-col" id="tot_amount_data">
-                                    ${{number_format($cart->tot_amount,2)}}
+                                <td class="total-col" id="tot_amount_data" style="width:20%">
+                                    @if ($currency_value->code=='RWF')
+                                    <span>{{number_format($cart->tot_amount/$currency_value->normal_val,2)}} Frw</span>
+                                    @else
+                                    {{$currency_value->symbol}}{{number_format($cart->tot_amount/$currency_value->normal_val,2)}}
+                                    @endif
                                 </td>
                                 <td class="remove-col"><button class="btn-remove" value="{{$cart->id}}" id="cart-remove-btn"><i class="icon-close"></i></button></td>
                             </tr>
@@ -84,7 +96,15 @@ class="page-content">
                             <tbody>
                                 <tr class="summary-subtotal">
                                     <td>Subtotal:</td>
-                                    <td>${{number_format($subtotcart,2)}}</td>
+                                    @if ($currency_value->code=='RWF')
+                                    <td>
+                                        <span>{{number_format($subtotcart/$currency_value->normal_val,2)}}Frw </span>
+                                    </td>
+                                    @else
+                                    <td>
+                                        {{$currency_value->symbol}}{{number_format($subtotcart/$currency_value->normal_val,2)}}
+                                    </td>
+                                    @endif
                                 </tr><!-- End .summary-subtotal -->
                                 <tr class="summary-shipping">
                                     <td>Shipping:</td>
@@ -107,7 +127,15 @@ class="page-content">
                                             <label class="custom-control-label" for="free-shipping">Free Shipping</label>
                                         </div><!-- End .custom-control -->
                                     </td>
-                                    <td>${{number_format($free_shipping->value,2)}}</td>
+                                    @if ($currency_value->code=='RWF')
+                                    <td>
+                                        <span>{{number_format($free_shipping->value/$currency_value->normal_val,2)}} Frw </span>
+                                    </td>
+                                    @else
+                                    <td>
+                                        {{$currency_value->symbol}}{{number_format($free_shipping->value/$currency_value->normal_val,2)}}
+                                    </td>
+                                    @endif
                                 </tr><!-- End .summary-shipping-row -->
 
                                 <tr class="summary-shipping-row">
@@ -121,7 +149,15 @@ class="page-content">
                                             <label class="custom-control-label" for="standart-shipping">Standard:</label>
                                         </div><!-- End .custom-control -->
                                     </td>
-                                    <td>${{number_format($standard_shipping->value,2)}}</td>
+                                    @if ($currency_value->code=='RWF')
+                                    <td>
+                                        {{number_format($standard_shipping->value/$currency_value->normal_val,2)}} Frw
+                                    </td>
+                                    @else
+                                    <td>
+                                        {{$currency_value->symbol}}{{number_format($standard_shipping->value/$currency_value->normal_val,2)}}
+                                    </td>
+                                    @endif
                                 </tr><!-- End .summary-shipping-row -->
 
                                 <tr class="summary-shipping-estimate">
@@ -131,7 +167,15 @@ class="page-content">
 
                                 <tr class="summary-total">
                                     <td>Grand Total:</td>
-                                    <td>$<span class="final_tot">{{number_format(($final_tot),2)}}</span></td>
+                                    @if ($currency_value->code=='RWF')
+                                    <td>
+                                        <span class="final_tot">{{number_format(($final_tot/$currency_value->normal_val),2)}}Frw</span><span class="currency_v"></span>
+                                    </td>
+                                    @else
+                                    <td>
+                                        {{$currency_value->symbol}}<span class="final_tot">{{number_format(($final_tot/$currency_value->normal_val),2)}}</span>
+                                    </td>
+                                    @endif
                                 </tr><!-- End .summary-total -->
                             </tbody>
                         </table><!-- End .table table-summary -->

@@ -36,6 +36,10 @@ Route::post('order_by_cash',[HomeController::class,'Order_by_Cash'])->name('orde
 
 Route::get('sortby',[HomeController::class,'Sortby'])->name('sortby');
 
+Route::get('change/currency',[HomeController::class,'Change_Currency'])->name('change.currency');
+
+Route::get('change/currency_h',[HomeController::class,'Change_Currency_h'])->name('change.currency_h');
+
 Route::get('stripe',[StripeController::class,'Stripe'])->name('stripe');
 
 //====

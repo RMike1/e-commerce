@@ -330,12 +330,8 @@
             e.preventDefault();
             var product_id=$(this).val();
             var quantity=1;
-            $(this).find('.btn-product-info').text('adding..').append(`<div class="spinner-grow" role="status">
-  <span class="visually-hidden"></span>
-</div>`);
+            $(this).find('.btn-product-info').text('adding..').append(`<div class="spinner-grow" role="status"><span class="visually-hidden"></span></div>`);
             $('.login-auth').html("");
-
-
             $.ajaxSetup({
                 headers:{
                     "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
@@ -432,6 +428,33 @@
                     $('.load-icon').text("");
                     $('.append-load').text("Load more products");
                 },
+            });
+        });
+
+          //========================Changing Currency===============================
+
+          $(document).on('click', '#currency_btn', function(e){
+            e.preventDefault();
+            var currency_val=$(this).val();
+
+            $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+            }
+            });
+            $.ajax({
+                data:{currency_va:currency_val},
+                url:"{{route('change.currency_h')}}",
+                type:"get",
+                dataType:"json",
+                success:function(response){
+                    // console.log(response);
+                    $('.appendIndex-Load-more').html(response.view);
+                    $(".appendCartHeader").html(response.header);
+                },
+                error:function(error){
+                    console.log(error);
+                }
             });
         });
     })

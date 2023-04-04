@@ -14,6 +14,7 @@ use App\Models\ProductImage;
 use App\Models\Category;
 use App\Models\Shipping;
 use App\Models\Order;
+use App\Models\Currency;
 
 class HomeController extends Controller
 {
@@ -66,7 +67,6 @@ class HomeController extends Controller
         if($product)
         {
             $imageproduct=ProductImage::latest()->take(3)->get();
-        // dd($imageproduct);
             return view('user.single-product',compact('product','related_products_data','imageproduct'));
         }
         else
@@ -140,8 +140,8 @@ class HomeController extends Controller
     public function Add_Cart(Request $req)
     {
 
-if(Auth::check())
-{
+    if(Auth::check())
+    {
     $req->validate([
         'quantity'=>'required'
     ]);
@@ -317,13 +317,25 @@ public function Remove_Cart(Request $req)
             $rest_ids->status='0';
             $rest_ids->save();
 
-
             $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-            $final_tot=$subtotcart+$shipping_value;
+            $currency_value=Currency::where('fr_use_status','1')->first();
+            $final_tot_a=$subtotcart+$shipping_value;
             $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
-            return response()->json([
-                'final_tot'=>number_format($final_tot,2),
-            ],200);
+            
+            if($currency_value->code=='RWF')
+            {
+                $final_tot=$final_tot_a/$currency_value->normal_val;
+                return response()->json([
+                    'final_tot'=>number_format($final_tot,2),
+                    'currency_val'=>'Frw'
+                ],200);
+            }
+            else{
+                $final_tot=$final_tot_a/$currency_value->normal_val;
+                return response()->json([
+                    'final_tot'=>number_format($final_tot,2),
+                ],200);
+            }
 
         }
         else
@@ -341,16 +353,28 @@ public function Remove_Cart(Request $req)
             $rest_ids->status='0';
             $rest_ids->save();
 
-            $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-            $final_tot=$subtotcart+$shipping_value;
             $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
-            return response()->json([
-                'final_tot'=>number_format($final_tot,2),
-            ],200);
-
+            $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+            $currency_value=Currency::where('fr_use_status','1')->first();
+            $final_tot_a=$subtotcart+$shipping_value;
+            
+            if($currency_value->code=='RWF')
+            {
+                $final_tot=$final_tot_a/$currency_value->normal_val;
+                return response()->json([
+                    'final_tot'=>number_format($final_tot,2),
+                    'currency_val'=>'Frw'
+                ],200);
+            }
+            else{
+                $final_tot=$final_tot_a/$currency_value->normal_val;
+                return response()->json([
+                    'final_tot'=>number_format($final_tot,2),
+                ],200);
+            }
         }
     }
-
+    
       //=====================Order By Cash======================
 
       public function Order_by_Cash(Request $req)
@@ -481,5 +505,50 @@ public function Remove_Cart(Request $req)
         return view('user.stripe');
       }
 
+      public function Change_Currency(Request $req)
+      {
+
+        $currency_d=$req->currency_va;
+        Currency::where('fr_use_status',1)->update(['fr_use_status'=>'0']);
+        Currency::where('id',$currency_d)->update(['fr_use_status'=>'1']);
+
+        
+        $shipping_val=Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->value;
+        $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+        $final_tot=$subtotcart+$shipping_val;
+        $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
+        $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
+        
+        $shipping_method=Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->shipping_method;
+      
+        return response()->json([
+            'status'=>'currency changed successfully!!',
+            'view'=>(String)View::make('user.includes.sort-category',compact('products')),
+            'view_cart'=>(String)View::make('user.includes.cartItems',compact('carts','subtotcart','final_tot')),
+            'header'=>(String)View::make('user.includes.cartheader',compact('carts','subtotcart','final_tot')),
+            'order_summary'=>(String)View::make('user.includes.order-summary',compact('carts','subtotcart','final_tot','shipping_method')),
+        ]);
+      }
+      public function Change_Currency_h(Request $req)
+      {
+
+        $currency_d=$req->currency_va;
+        Currency::where('fr_use_status',1)->update(['fr_use_status'=>'0']);
+        Currency::where('id',$currency_d)->update(['fr_use_status'=>'1']);
+        
+        $categories=Category::latest()->where('category_status','1')->take(3)->get();
+        $slide_products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
+        $products=Product::where('product_publish','1')->with('ProductImage')->latest()->take(3)->get();
+        $shipping_val=Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->value;
+        $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+        $final_tot=$subtotcart+$shipping_val;
+        $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
+      
+        return response()->json([
+            'status'=>'currency changed successfully!!',
+            'header'=>(String)View::make('user.includes.cartheader',compact('carts','subtotcart','final_tot')),
+            'view'=>(String)View::make('user.includes.load-more',compact('slide_products','categories','products'))
+        ]);
+      }
 
 }

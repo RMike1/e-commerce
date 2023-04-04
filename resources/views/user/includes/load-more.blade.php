@@ -47,7 +47,14 @@
                         <div class="product-body">
                             <h3 class="product-title"><a href="{{route('user.product',$product->id)}}">{{$product->product_name}}</a></h3><!-- End .product-title -->
                             <div class="product-price">
-                                ${{number_format($product->product_price,2)}}
+                                @php
+                                    $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
+                                @endphp
+                                @if ($currency_value->code=='RWF')
+                                {{number_format($product->product_price/$currency_value->normal_val,2)}} Frw
+                                @else
+                                {{$currency_value->symbol}}{{number_format($product->product_price/$currency_value->normal_val,2)}}
+                                @endif
                             </div><!-- End .product-price -->
                         </div><!-- End .product-body -->
                         <div class="product-action">
@@ -94,7 +101,14 @@
                         <div class="product-body">
                             <h3 class="product-title"><a href="product.html">{{$product->product_name}}</a></h3><!-- End .product-title -->
                             <div class="product-price">
-                                ${{number_format($product->product_price,2)}}
+                            @php
+                            $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
+                            @endphp
+                            @if ($currency_value->code=='RWF')
+                            {{number_format($product->product_price/$currency_value->normal_val,2)}} Frw
+                            @else
+                            {{$currency_value->symbol}}{{number_format($product->product_price/$currency_value->normal_val,2)}}
+                            @endif
                             </div><!-- End .product-price -->
                         </div><!-- End .product-body -->
                         <div class="product-action">

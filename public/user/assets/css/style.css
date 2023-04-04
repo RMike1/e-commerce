@@ -16038,14 +16038,17 @@ button:focus {
 
 .table td {
     padding-top: 3rem;
-    padding-bottom: 3rem
+    padding-bottom: 3rem;
+    
+
 }
 
 .table .price-col {
-    width: 180px;
+    width: 120px;
     color: #333;
     font-weight: 400;
-    font-size: 1.6rem
+    font-size: 1.6rem;
+    background-color: red;
 }
 
 .table .stock-col {
@@ -16092,12 +16095,15 @@ button:focus {
     margin-right: -.7rem
 }
 
+
 .product-col .product {
     display: flex;
     align-items: center;
     margin: 0;
-    padding-right: 2rem;
-    box-shadow: none
+    padding-right: 1rem;
+    box-shadow: none;
+    background-color: red;
+
 }
 
 .product-col .product-media {
@@ -16114,7 +16120,8 @@ button:focus {
     font-weight: 400;
     font-size: 1.6rem;
     line-height: 1.25;
-    margin: 0
+    margin: 0;
+    background-color: red;
 }
 
 .product-col .product-title a {

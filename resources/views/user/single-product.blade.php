@@ -65,9 +65,15 @@
                                 </div><!-- End .rating-container -->
 
                                 <div class="product-price">
-                                    ${{number_format($product->product_price,2)}}
+                                    @php
+                                    $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
+                                    @endphp
+                                    @if ($currency_value->code=='RWF')
+                                    {{number_format($product->product_price/$currency_value->normal_val,2)}} Frw
+                                    @else
+                                    {{$currency_value->symbol}}{{number_format($product->product_price/$currency_value->normal_val,2)}}
+                                    @endif
                                 </div><!-- End .product-price -->
-
                                 <div class="product-content">
                                     <p>{!!Str::limit($product->product_description,120)!!}</p>
                                 </div><!-- End .product-content -->
@@ -247,7 +253,7 @@
 
                 <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
 
-              <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+              <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow append_related_product" data-toggle="owl"
                 data-owl-options='{
                 "nav": false,
                 "dots": true,
@@ -274,53 +280,7 @@
                 }
                 }'
                 >
-                @foreach ($related_products_data as $related_products)
-                <div class="product product-7 text-center">
-                    <figure class="product-media">
-                        @if ($related_products->product_status=='0')
-                        <span class="product-label label-out">Out of Stock</span>
-                        @elseif ($related_products->product_status=='1')
-                        <span class="product-label label-new">New</span>
-                        @elseif ($related_products->product_status=='2')
-                        <span class="product-label label-top">Top</span>
-                        @else
-                        @endif
-                        <a href="{{route('user.product',$related_products->id)}}">
-                            <img src="{{asset($related_products->product_image)}}" alt="Product image" class="product-image">
-                        </a>
-
-                        <div class="product-action-vertical">
-                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                            <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                            <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                        </div><!-- End .product-action-vertical -->
-                        <div class="product-action">
-                            <button type="button" value="{{$related_products->id}}" class="btn-product btn-cart btn-product-data border-0"><span class="btn-product-info">add to cart</span></button>
-                        </div><!-- End .product-action -->
-                    </figure><!-- End .product-media -->
-                    <div class="product-body">
-                        <div class="product-cat">
-                            <span>{{$related_products->category->name}}</span>
-                        </div><!-- End .product-cat -->
-                        <h3 class="product-title"><a href="{{route('user.product',$related_products->id)}}">{{$related_products->product_name}}</a></h3><!-- End .product-title -->
-                        <div class="product-price">
-                            ${{number_format($related_products->product_price,2)}}
-                        </div><!-- End .product-price -->
-                        <div class="ratings-container">
-                            <div class="ratings">
-                                <div class="ratings-val" style="width: 50%;"></div><!-- End .ratings-val -->
-                            </div><!-- End .ratings -->
-                            <span class="ratings-text">( 2 Reviews )</span>
-                        </div><!-- End .rating-container -->
-                        <div class="product-nav product-nav-thumbs ">
-                            <a href="#" class="d-none">
-                                <img src="assets/images/products/product-4-thumb.jpg" alt="product desc">
-                            </a>
-                        </div><!-- End .product-nav -->
-                    </div><!-- End .product-body -->
-                </div><!-- End .product -->
-
-                @endforeach
+                @include('user.includes.related_products');
                 </div><!-- End .owl-carousel -->
 
             </div><!-- End .container -->
@@ -342,7 +302,14 @@
 
             <div class="col-6 justify-content-end">
                 <div class="product-price">
-                    ${{number_format($product->product_price,2)}}
+                    @php
+                    $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
+                    @endphp
+                    @if ($currency_value->code=='RWF')
+                    {{number_format($product->product_price/$currency_value->normal_val,2)}} Frw
+                    @else
+                    {{$currency_value->symbol}}{{number_format($product->product_price/$currency_value->normal_val,2)}}
+                    @endif
                 </div><!-- End .product-price -->
                 <div class="product-details-quantity">
 
@@ -454,11 +421,8 @@ function productId(caller){
 
             var product_id=document.getElementById('prod_id_btn').value=$(caller).attr('data-ProductQty');
             var quantity=$('#product_qty').val();
-            // alert(quantity);
 
-            $('.btn-product-info').text('adding..').append(`<div class="spinner-grow" role="status">
-  <span class="visually-hidden"></span>
-</div>`);
+            $('.btn-product-info').text('adding..').append(`<div class="spinner-grow" role="status"><span class="visually-hidden"></span></div>`);
             $('.login-auth').html("");
 
         $.ajaxSetup({
@@ -520,9 +484,7 @@ function productId2(caller2){
         var quantity=$('#product_qty2').val();
         // alert(quantity);
 
-        $('.btn-product-info2').text('adding..').append(`<div class="spinner-grow" role="status">
-  <span class="visually-hidden"></span>
-</div>`);
+        $('.btn-product-info2').text('adding..').append(`<div class="spinner-grow" role="status"><span class="visually-hidden"></span></div>`);
         $('.login-auth').html("");
 
      $.ajaxSetup({
@@ -636,6 +598,30 @@ function productId2(caller2){
             }
         });
         
+          //========================Changing Currency===============================
+
+          $(document).on('click', '#currency_btn', function(e){
+            e.preventDefault();
+            var currency_val=$(this).val();
+
+            $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+            }
+            });
+            $.ajax({
+                data:{currency_va:currency_val},
+                url:"{{route('change.currency')}}",
+                type:"get",
+                dataType:"json",
+                success:function(response){
+
+                    $(".appendCart").html(response.view);
+                    $(".append_related_product").html(response.view);
+                    $(".appendCartHeader").html(response.header);
+                }
+            });
+        });
 
     });
 

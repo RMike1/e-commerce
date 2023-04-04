@@ -1,6 +1,7 @@
 @section('title','E-shop Cart')
 @extends('user.layouts.master')
 @section('styles')
+<link rel="stylesheet" href="{{asset('user/assets/css/style.css')}}">
 <link rel="stylesheet" href="{{asset('user/assets/vendor/css/toastr.css')}}">
 @endsection
 @section('content')
@@ -198,6 +199,8 @@
                     success:function(response)
                     {
                         $('.final_tot').text(response.final_tot);
+                        $('.currency_v').text(response.currency_val);
+
                         // $(".appendCart").html(response.view);
                         // $(".appendCartHeader").html(response.header);
                     },
@@ -209,6 +212,31 @@
 
 
         });
+
+    //========================Changing Currency===============================
+
+        $(document).on('click', '#currency_btn', function(e){
+            e.preventDefault();
+            var currency_val=$(this).val();
+
+            $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+            }
+            });
+            $.ajax({
+                data:{currency_va:currency_val},
+                url:"{{route('change.currency')}}",
+                type:"get",
+                dataType:"json",
+                success:function(response){
+
+                    $(".appendCart").html(response.view_cart);
+                    $(".appendCartHeader").html(response.header);
+                }
+            });
+        });
+
         
     });
 </script>

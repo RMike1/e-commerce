@@ -13,12 +13,31 @@
             @foreach ($carts as $cart)
             <tr>
                 <td><a href="{{route('user.product',$cart->product->id)}}">{{$cart->product->product_name}}</a></td>
-                <td>${{number_format($cart->tot_amount,2)}}</td>
+                @php
+                $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
+                @endphp
+                @if ($currency_value->code=='RWF')
+                <td>
+                    {{number_format($cart->tot_amount/$currency_value->normal_val,2)}} Frw
+                </td>
+                @else
+                <td>
+                    {{$currency_value->symbol}}{{number_format($cart->tot_amount/$currency_value->normal_val,2)}}
+                </td>
+                @endif
             </tr>
             @endforeach
             <tr class="summary-subtotal">
                 <td>Subtotal:</td>
-                <td>${{number_format($subtotcart,2)}}</td>
+                @if ($currency_value->code=='RWF')
+                <td>
+                    {{number_format($subtotcart/$currency_value->normal_val,2)}} Frw
+                </td>
+                @else
+                <td>
+                    {{$currency_value->symbol}}{{number_format($subtotcart/$currency_value->normal_val,2)}} 
+                </td>
+                @endif
             </tr><!-- End .summary-subtotal -->
             <tr>
                 <td>Shipping:</td>
@@ -27,7 +46,15 @@
             </tr>
             <tr class="summary-total">
                 <td>Total:</td>
-                <td>${{number_format($final_tot,2)}}</td>
+                @if ($currency_value->code=='RWF')
+                <td>
+                    {{number_format($final_tot/$currency_value->normal_val,2)}} Frw
+                </td>
+               @else
+               <td>
+                    {{$currency_value->symbol}}{{number_format($final_tot/$currency_value->normal_val,2)}}
+                </td>
+                @endif
             </tr><!-- End .summary-total -->
         </tbody>
     </table><!-- End .table table-summary -->

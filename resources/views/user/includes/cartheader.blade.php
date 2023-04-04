@@ -14,9 +14,17 @@
                     <h4 class="product-title">
                         <a href="{{route('user.product',$cart->product->id)}}">{{$cart->product->product_name}}</a>
                     </h4>
+                        @php
+                        $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
+                        @endphp
                     <span class="cart-product-info">
                         <span class="cart-product-qty">{{$cart->quantity}}</span>
-                        x ${{number_format($cart->product->product_price)}}
+                        x 
+                        @if ($currency_value->code=='RWF')
+                        {{number_format($cart->product->product_price/$currency_value->normal_val,2)}} Frw
+                        @else
+                        {{$currency_value->symbol}}{{number_format($cart->product->product_price/$currency_value->normal_val,2)}}
+                        @endif
                     </span>
                 </div><!-- End .product-cart-details -->
 
@@ -46,7 +54,13 @@
         $shipping_val=App\Models\Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->value;
         $final_tot=$subtotcart+$shipping_val;
         @endphp
-      <span class="cart-total-price">$<span class="final_tot">{{number_format(($final_tot),2)}}</span></span>
+
+      @if ($currency_value->code=='RWF')
+      <span class="cart-total-price"><span class="final_tot">{{number_format(($final_tot/$currency_value->normal_val),2)}} Frw</span></span>
+      @else
+      <span class="cart-total-price">{{$currency_value->symbol}}<span class="final_tot">{{number_format(($final_tot/$currency_value->normal_val),2)}}</span></span>
+      @endif
+
     </div><!-- End .dropdown-cart-total -->
     @endauth
     <div class="dropdown-cart-action">

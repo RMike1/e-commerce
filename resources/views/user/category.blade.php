@@ -46,9 +46,6 @@
     $(document).ready(function(){
         $(document).on('click', '.btn-product-data',function(e){
             e.preventDefault();
-           
-            
-          
             var product_id=$(this).val();
             var quantity=1;
             $(this).find('.btn-product-info').text("adding..").append(`<div class="spinner-grow" role="status"><span class="visually-hidden"></span></div>`);
@@ -171,13 +168,8 @@
             }
 
         });
-
-        $(document).on('click', '#currency_btn', function(e){
-            e.preventDefault();
-            var currency_val=$(this).val();
-            alert(currency_val);
-            // alert('hello');
-        });
+        
+        
 
     //========================sort items by categories===============================
 
@@ -281,6 +273,32 @@
         });
 
 
+        //========================Changing Currency===============================
+
+        $(document).on('click', '#currency_btn', function(e){
+            e.preventDefault();
+            var currency_val=$(this).val();
+
+            $.ajaxSetup({
+            headers:{
+                "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+            }
+            });
+            $.ajax({
+                data:{currency_va:currency_val},
+                url:"{{route('change.currency')}}",
+                type:"get",
+                dataType:"json",
+                success:function(response){
+                    // console.log(response);
+                    $(".append-sort-category-product").html(response.view);
+                    $(".appendCartHeader").html(response.header);
+                },
+                error:function(error){
+                    console.log(error);
+                }
+            });
+        });
 });
 
 </script>
