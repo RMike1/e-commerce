@@ -195,16 +195,15 @@
                         $(".append-sort-category-product").html(response.view);
                     },
                     error:function(error)
-                {
-                    console.log(error);
-                    $('#signin-modal').modal('show');
-                    $('.btn-product-info').text("add to cart");
-                    $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true"><i class="icon-close"></i></span>
-                                </button>
-                            </div>`);
-                }
+                    {
+                        $('#signin-modal').modal('show');
+                        $('.btn-product-info').text("add to cart");
+                        $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true"><i class="icon-close"></i></span>
+                                    </button>
+                                </div>`);
+                    }
             });
 
             }
@@ -291,12 +290,40 @@
                 dataType:"json",
                 success:function(response){
                     // console.log(response);
-                    $(".append-sort-category-product").html(response.view);
-                    $(".appendCartHeader").html(response.header);
-                },
-                error:function(error){
-                    console.log(error);
-                }
+                    if(response.status=='200')
+                    {
+                        $(".append-sort-category-product").html(response.view);
+                        $(".appendCartHeader").html(response.header);
+                        $("#currency").text(response.new_currency);
+
+                        toastr.success(response.message + response.new_currency, {
+                        positionClass: "toast-top-right",
+                        timeOut: 3e3,
+                        closeButton: !0,
+                        debug: !1,
+                        newestOnTop: !0,
+                        progressBar: !0,
+                        preventDuplicates: !0,
+                        onclick: null,
+                        showDuration: "300",
+                        hideDuration: "1000",
+                        extendedTimeOut: "1000",
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                        tapToDismiss: !1
+                    })
+                    }
+                    else{
+                        $('#signin-modal').modal('show');
+                        $('.login-auth').append(`<div class="alert alert-warning text-center">`+response.message+`
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="icon-close"></i></span>
+                            </button>
+                        </div>`);
+                    }
+                    }
             });
         });
 });

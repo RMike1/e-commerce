@@ -3,12 +3,15 @@
         <div class="container">
             <div class="header-left">
                 <div class="header-dropdown">
-                    <a href="#">GBP</a>
+                    @php
+                        $currency=App\Models\Currency::where('fr_use_status','1')->first()->code;
+                    @endphp
+                    <a href="#" id="currency">{{$currency}}</a>
                     <div class="header-menu">
                         <ul>
                             @foreach (App\Models\Currency::where('status','1')->get() as $currency)
                             {{-- <li><a href="#" class="currency_v" type="button" onclick="document.getElementById('currency_btn').value();event.preventDefault()" >{{$currency->code}}</a></li> --}}
-                            <li><button type="button" value="{{$currency->id}}" class="bg-transparent border-0 text-muted" id="currency_btn">{{$currency->code}}</button></li>
+                            <li class="convert-currency-header"><button type="button" value="{{$currency->id}}" class="bg-transparent border-0 text-muted curre" id="currency_btn">{{$currency->code}}</button></li>
                             @endforeach
                             
                         </ul>
@@ -88,11 +91,11 @@
 
                 <nav class="main-nav">
                     <ul class="menu sf-arrows">
-                        <li class="megamenu-container active">
+                        <li class="megamenu-container {{Request::routeIs('home') ? 'active' : ''}}">
                             <a href="{{route('home')}}" class="">Home</a>
                         </li>
-                        <li>
-                            <a href="{{url('products')}}" class="sf-with-ul">Product</a>
+                        <li class="megamenu-container {{Request::routeIs('product.category') ? 'active' : ''}}">
+                            <a href="{{route('user.products')}}" class="sf-with-ul">Product</a>
 
                             <div class="megamenu megamenu-sm">
                                 <div class="row no-gutters">
@@ -134,10 +137,10 @@
                                 </div><!-- End .row -->
                             </div><!-- End .megamenu megamenu-sm -->
                         </li>
-                        <li>
+                        <li class="{{Request::routeIs('cart') ? 'active' : ''}}">
                             <a href="{{route('cart')}}">Cart</a>
                         </li>
-                        <li>
+                        <li class="{{Request::routeIs('checkout') ? 'active' : ''}}">
                             <a href="{{route('checkout')}}">Checkout</a>
                         </li>
                     </ul><!-- End .menu -->

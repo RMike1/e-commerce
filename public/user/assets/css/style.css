@@ -16036,6 +16036,12 @@ button:focus {
     }
 }
 
+.convert-currency-header .curre:hover,
+.convert-currency-header .curre:focus
+{
+    color: #c96 !important
+}
+
 .table td {
     padding-top: 3rem;
     padding-bottom: 3rem;
@@ -16048,7 +16054,6 @@ button:focus {
     color: #333;
     font-weight: 400;
     font-size: 1.6rem;
-    background-color: red;
 }
 
 .table .stock-col {
@@ -16100,10 +16105,8 @@ button:focus {
     display: flex;
     align-items: center;
     margin: 0;
-    padding-right: 1rem;
-    box-shadow: none;
-    background-color: red;
-
+    padding-right: 2rem;
+    box-shadow: none
 }
 
 .product-col .product-media {
@@ -16121,7 +16124,6 @@ button:focus {
     font-size: 1.6rem;
     line-height: 1.25;
     margin: 0;
-    background-color: red;
 }
 
 .product-col .product-title a {

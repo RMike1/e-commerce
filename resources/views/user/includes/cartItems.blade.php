@@ -43,7 +43,7 @@ class="page-content">
                                     @if ($currency_value->code=='RWF')
                                     <span>{{number_format($cart->product->product_price/$currency_value->normal_val)}} Frw</span>
                                     @else
-                                    {{$currency_value->symbol}}{{number_format($cart->product->product_price/$currency_value->normal_val)}}
+                                    {{$currency_value->symbol}}{{number_format($cart->product->product_price/$currency_value->normal_val,2)}}
                                     @endif
                                 <td class="quantity-col">
                                     <div class="cart-product-quantity">

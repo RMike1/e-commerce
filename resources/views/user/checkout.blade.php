@@ -179,34 +179,30 @@
                 dataType:"json",
                 success:function(response)
                 {
-                    $(".append-order-summary").html(response.order_summary);
-                    $(".appendCartHeader").html(response.header);
-
-                    toastr.warning(response.warning, {
-                        positionClass: "toast-top-right",
-                        timeOut: 3e3,
-                        closeButton: !0,
-                        debug: !1,
-                        newestOnTop: !0,
-                        progressBar: !0,
-                        preventDuplicates: !0,
-                        onclick: null,
-                        showDuration: "300",
-                        hideDuration: "1000",
-                        extendedTimeOut: "1000",
-                        showEasing: "swing",
-                        hideEasing: "linear",
-                        showMethod: "fadeIn",
-                        hideMethod: "fadeOut",
-                        tapToDismiss: !1
-                    })
+                    
+                        $(".append-order-summary").html(response.order_summary);
+                        $(".appendCartHeader").html(response.header);
+    
+                        toastr.warning(response.warning, {
+                            positionClass: "toast-top-right",
+                            timeOut: 3e3,
+                            closeButton: !0,
+                            debug: !1,
+                            newestOnTop: !0,
+                            progressBar: !0,
+                            preventDuplicates: !0,
+                            onclick: null,
+                            showDuration: "300",
+                            hideDuration: "1000",
+                            extendedTimeOut: "1000",
+                            showEasing: "swing",
+                            hideEasing: "linear",
+                            showMethod: "fadeIn",
+                            hideMethod: "fadeOut",
+                            tapToDismiss: !1
+                        })
 
                 },
-                error:function(error)
-                {
-                    // alert('oops!!')
-                    console.log(error);
-                }
             });
         }
             else{
@@ -233,9 +229,38 @@
                 dataType:"json",
                 success:function(response){
 
-                    console.log(response);
+                    if(response.status=='200'){
+
                     $(".append-order-summary").html(response.order_summary);
+                    $("#currency").text(response.new_currency);
                     $(".appendCartHeader").html(response.header);
+                    toastr.success(response.message + response.new_currency, {
+                        positionClass: "toast-top-right",
+                        timeOut: 3e3,
+                        closeButton: !0,
+                        debug: !1,
+                        newestOnTop: !0,
+                        progressBar: !0,
+                        preventDuplicates: !0,
+                        onclick: null,
+                        showDuration: "300",
+                        hideDuration: "1000",
+                        extendedTimeOut: "1000",
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                        tapToDismiss: !1
+                    })
+                    }
+                    else{
+                        $('#signin-modal').modal('show');
+                        $('.login-auth').append(`<div class="alert alert-warning text-center">`+response.message+`
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i class="icon-close"></i></span>
+                            </button>
+                        </div>`);
+                    }
                 }
             });
         });

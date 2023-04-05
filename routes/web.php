@@ -16,7 +16,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::post('products', [HomeController::class, 'Product_Category'])->name('product.category');
 
-Route::get('products', [HomeController::class, 'Product_Category']);
+Route::get('products', [HomeController::class, 'Product_Category'])->name('user.products');
 
 Route::get('product/{id}', [HomeController::class, 'Check_Product'])->name('user.product');
 
