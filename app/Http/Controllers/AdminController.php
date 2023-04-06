@@ -16,6 +16,7 @@ use App\Models\Order;
 use App\Models\Shipping;
 use App\Models\Cart;
 use App\Models\Supplier;
+use App\Models\Currency;
 use Notification;
 use App\Notifications\MK_Shop;
 use Barryvdh\DomPDF\Facade\PDF;
@@ -797,6 +798,64 @@ class AdminController extends Controller
 
                 return redirect()->back()->with('warning', 'supplier deleted successfully!');
 
+            }
+            public function Currency()
+            {
+                $currencies=Currency::latest()->get();
+                return view('admin.currency',compact('currencies'));
+            }
+
+            public function Store_Currency(Request $req)
+            {
+
+                $currency=new Currency;
+                $currency->name=$req->name;
+                $currency->code=$req->code;
+                $currency->symbol=$req->symbol;
+                $currency->normal_val=$req->normal_val;
+                $currency->us_value=$req->us_value;
+                $currency->status=$req->status==true ? '1' : '0';
+                $currency->save();
+
+                return redirect()->back()->with('success', 'currency added successfully!!');
+
+            }
+
+
+            public function Edit_Currency(Request $req){
+
+                $currency_id=$req->currency_val;
+                $currency=Currency::find($currency_id);
+
+                return response()->json([
+                    'status'=>200,
+                    'currency'=>$currency,
+                ]);
+            }
+
+              public function Update_Currency(Request $req){
+
+                $currency_id=$req->id;
+                $currency=Currency::find($currency_id);
+                $currency->name=$req->name;
+                $currency->code=$req->code;
+                $currency->symbol=$req->symbol;
+                $currency->normal_val=$req->normal_val;
+                $currency->us_value=$req->us_value;
+                $currency->update();
+
+                return redirect()->back()->with('success', 'currency added successfully!!');
+            }
+              public function Update_Currency_Status(Request $req){
+
+                $currency_id=$req->currency_va;
+                $currency=Currency::find($currency_id);
+                $currency->status=$req->status==true ? '1' : '0';
+                $currency->update();
+                return response()->json([
+                    'status'=>200,
+                    'message'=>'currency updated successfully!!',
+                ]);
             }
 
 }

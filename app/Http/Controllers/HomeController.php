@@ -198,7 +198,6 @@ public function Remove_Cart(Request $req)
         $final_tot=$subtotcart+$shipping_val;
         $shipping_method=Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->shipping_method;
 
-
         return response()->json([
             'status'=>200,
             'warning'=>'product has been removed from cart successfully!!',
@@ -518,23 +517,19 @@ public function Remove_Cart(Request $req)
                 'status'=>400,
             ]);
         }
-
-
       }
 
-
-      //=========================View Single Product=========================
-
+    //=========================View Single Product=========================
 
     public function Check_Product($id)
     {
-        $related_products_data=Product::where('product_publish','1')->where('id','!=',$id)->latest()->take(3)->get();
 
         $product=Product::where('product_publish','1')->where('id',$id)->first();
 
-
         if($product)
         {
+            $category_id=Product::where('product_publish','1')->where('id',$id)->first()->category_id;
+            $related_products_data=Product::where('product_publish','1')->where('id','!=',$id)->where('category_id',$category_id)->latest()->take(3)->get();
             $imageproduct=ProductImage::latest()->take(3)->get();
             return view('user.single-product',compact('product','related_products_data','imageproduct'));
         }
@@ -597,7 +592,8 @@ public function Remove_Cart(Request $req)
 
             $product_id=$req->product_id;
             $product=Product::where('product_publish','1')->where('id',$product_id)->first();
-            $related_products_data=Product::where('product_publish','1')->where('id','!=',$product_id)->latest()->take(3)->get();
+            $category_id=Product::where('product_publish','1')->where('id',$product_id)->first()->category_id;
+            $related_products_data=Product::where('product_publish','1')->where('id','!=',$product_id)->where('category_id',$category_id)->latest()->take(3)->get();
             $imageproduct=ProductImage::latest()->take(3)->get();
             return response()->json([
                 'message'=>'currency changed to ',

@@ -48,6 +48,9 @@
                         <li>
                             <a href="{{route('view.supplier')}}">Supplier</a>
                         </li>
+                        <li>
+                            <a href="{{route('currency')}}">Currency</a>
+                        </li>
                     </ul>
                 </div>
             </li>

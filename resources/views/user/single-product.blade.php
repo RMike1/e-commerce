@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{{asset('user/assets/css/bootstrap.min.css')}}">
 <link rel="stylesheet" href="{{asset('user/assets/css/plugins/owl-carousel/owl.carousel.css')}}">
 <link rel="stylesheet" href="{{asset('user/assets/css/plugins/magnific-popup/magnific-popup.css')}}">
+<link rel="stylesheet" href="{{asset('user/assets/css/plugins/jquery.countdown.css')}}">
 <!-- Main CSS File -->
 
 <link rel="stylesheet" href="{{asset('user/assets/css/style.css')}}">
@@ -285,7 +286,9 @@
 
 @endsection
 @section('scripts')
+
 <!-- Plugins JS File -->
+<script src="{{asset('user/assets/js/jquery.min.js')}}"></script>
 <script src="{{asset('user/assets/js/jquery.hoverIntent.min.js')}}"></script>
 <script src="{{asset('user/assets/js/jquery.waypoints.min.js')}}"></script>
 <script src="{{asset('user/assets/js/superfish.min.js')}}"></script>
@@ -295,6 +298,9 @@
 <script src="{{asset('user/assets/js/jquery.magnific-popup.min.js')}}"></script>
 <script src="{{asset('user/assets/js/toastr-plugin.js')}}"></script>
 <script src="{{asset('user/assets/vendor/js/toastr.js')}}"></script>
+
+<script src="{{asset('user/assets/js/jquery.plugin.min.js')}}"></script>
+
 
 
 
@@ -595,7 +601,9 @@ function productId2(caller2){
             });
         });
 
+
     });
 
 </script>
+
 @endsection

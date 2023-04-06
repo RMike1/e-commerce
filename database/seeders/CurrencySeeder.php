@@ -14,14 +14,14 @@ class CurrencySeeder extends Seeder
      */
     public function run()
     {
-     
+
         DB::table('currencies')->insert([
             [
                 'code'=>'USD',
                 'name'=>'US Dollar',
                 'symbol'=>'$',
                 'normal_val'=>'1105.00',
-                'us_value'=>'1105.00',
+                'us_value'=>'1',
                 'status'=>'1',
                 'fr_use_status'=>'0'
             ],
@@ -30,7 +30,7 @@ class CurrencySeeder extends Seeder
                 'name'=>'EURO',
                 'symbol'=>'€',
                 'normal_val'=>'1204.07',
-                'us_value'=>'0.92',
+                'us_value'=>'1.09',
                 'status'=>'1',
                 'fr_use_status'=>'0'
             ],
@@ -39,7 +39,7 @@ class CurrencySeeder extends Seeder
                 'name'=>'Pound Sterling',
                 'symbol'=>'£',
                 'normal_val'=>'1371.05',
-                'us_value'=>'0.81',
+                'us_value'=>'1.25',
                 'status'=>'1',
                 'fr_use_status'=>'0'
             ],
@@ -48,7 +48,7 @@ class CurrencySeeder extends Seeder
                 'name'=>'Rwanda Franc',
                 'symbol'=>'₣',
                 'normal_val'=>'1',
-                'us_value'=>'1105.00',
+                'us_value'=>'0.00090',
                 'status'=>'1',
                 'fr_use_status'=>'1'
             ],

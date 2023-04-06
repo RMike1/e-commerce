@@ -20,12 +20,12 @@ use Illuminate\Support\Facades\Schema;
             $table->string('symbol')->nullable()->comment('currency-symbol');
             $table->string('normal_val')->nullable()->comment('value according to Frw');
             $table->string('us_value')->comment('value according to US Dollar');
-            $table->string('status')->comment('1 for active 0 for inactive');
-            $table->string('fr_use_status')->comment('1 set to active 0 for inactive');
+            $table->string('status')->default('1')->comment('1 for active 0 for inactive');
+            $table->string('fr_use_status')->default('0')->comment('1 set to active 0 for inactive');
             $table->timestamps();
         });
     }
-    
+
 
     public function down()
     {

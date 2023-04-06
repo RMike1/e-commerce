@@ -149,6 +149,16 @@ Route::post('update/supplier', [AdminController::class, 'Update_Supplier'])->nam
 
 Route::get('delete/supplier/{id}', [AdminController::class, 'Delete_Supplier'])->name('delete.supplier');
 
+Route::get('currency', [AdminController::class, 'Currency'])->name('currency');
+
+Route::post('store/currency', [AdminController::class, 'Store_Currency'])->name('store.currency');
+
+Route::get('edit/currency', [AdminController::class, 'Edit_Currency'])->name('edit.currency');
+
+Route::post('update/currency', [AdminController::class, 'Update_Currency'])->name('update.currency');
+
+Route::post('update/currency_status', [AdminController::class, 'Update_Currency_Status'])->name('update.currency_status');
+
 
 });
 
