@@ -29,6 +29,9 @@
             @endforeach
             <tr class="summary-subtotal">
                 <td>Subtotal:</td>
+                @php
+                $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
+                @endphp
                 @if ($currency_value->code=='RWF')
                 <td>
                     {{number_format($subtotcart/$currency_value->normal_val,2)}} Frw

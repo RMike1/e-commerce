@@ -10,8 +10,9 @@
                     <div class="header-menu">
                         <ul>
                             @foreach (App\Models\Currency::where('status','1')->get() as $currency)
-                            {{-- <li><a href="#" class="currency_v" type="button" onclick="document.getElementById('currency_btn').value();event.preventDefault()" >{{$currency->code}}</a></li> --}}
-                            <li class="convert-currency-header"><button type="button" value="{{$currency->id}}" class="bg-transparent border-0 text-muted curre" id="currency_btn">{{$currency->code}}</button></li>
+                            <li class="convert-currency-header">
+                                <button type="button" value="{{$currency->id}}" class="bg-transparent border-0 text-muted curre" id="currency_btn">{{$currency->code}}</button>
+                            </li>
                             @endforeach
                             
                         </ul>

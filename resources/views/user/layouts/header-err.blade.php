@@ -3,11 +3,18 @@
         <div class="container">
             <div class="header-left">
                 <div class="header-dropdown">
-                    <a href="#">Usd</a>
+                    @php
+                        $currency=App\Models\Currency::where('fr_use_status','1')->first()->code;
+                    @endphp
+                    <a href="#" id="currency">{{$currency}}</a>
                     <div class="header-menu">
                         <ul>
-                            <li><a href="#">Eur</a></li>
-                            <li><a href="#">Usd</a></li>
+                            @foreach (App\Models\Currency::where('status','1')->get() as $currency)
+                            <li class="convert-currency-header">
+                                <button type="button" value="{{$currency->id}}" class="bg-transparent border-0 text-muted curre" id="currency_btn">{{$currency->code}}</button>
+                            </li>
+                            @endforeach
+
                         </ul>
                     </div><!-- End .header-menu -->
                 </div><!-- End .header-dropdown -->

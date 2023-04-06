@@ -131,7 +131,7 @@
             {
 
             var cart_id=$(this).val();
-            
+
             $.ajaxSetup({
             headers:{
                 "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
@@ -264,11 +264,14 @@
                         </div>`);
                     }
 
+                },
+                error:function(error){
+                    console.log(error);
                 }
             });
         });
 
-        
+
     });
 </script>
 

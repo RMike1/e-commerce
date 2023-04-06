@@ -40,6 +40,8 @@ Route::get('change/currency',[HomeController::class,'Change_Currency'])->name('c
 
 Route::get('change/currency_h',[HomeController::class,'Change_Currency_h'])->name('change.currency_h');
 
+Route::get('change/currency_s',[HomeController::class,'Change_Currency_s'])->name('change.currency_s');
+
 Route::get('stripe',[StripeController::class,'Stripe'])->name('stripe');
 
 //====

@@ -64,32 +64,13 @@
                                     <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
                                 </div><!-- End .rating-container -->
 
-                                <div class="product-price">
-                                    @php
-                                    $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
-                                    @endphp
-                                    @if ($currency_value->code=='RWF')
-                                    {{number_format($product->product_price/$currency_value->normal_val,2)}} Frw
-                                    @else
-                                    {{$currency_value->symbol}}{{number_format($product->product_price/$currency_value->normal_val,2)}}
-                                    @endif
-                                </div><!-- End .product-price -->
+                               <div class="product-price-details">
+                                @include('user.includes.product-details-price')
+                               </div>
                                 <div class="product-content">
                                     <p>{!!Str::limit($product->product_description,120)!!}</p>
                                 </div><!-- End .product-content -->
 
-                                <div class="details-filter-row details-row-size">
-                                    <label>Color:</label>
-
-                                    <div class="product-nav product-nav-thumbs">
-                                        <a href="#" class="active">
-                                            <img src="{{asset('user/assets/images/products/single/1-thumb.jpg')}}" alt="product desc">
-                                        </a>
-                                        <a href="#">
-                                            <img src="{{asset('user/assets/images/products/single/2-thumb.jpg')}}" alt="product desc">
-                                        </a>
-                                    </div><!-- End .product-nav -->
-                                </div><!-- End .details-filter-row -->
 
                                 <div class="details-filter-row details-row-size">
                                     <label for="size">Size:</label>
@@ -253,36 +234,15 @@
 
                 <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
 
-              <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow append_related_product" data-toggle="owl"
-                data-owl-options='{
-                "nav": false,
-                "dots": true,
-                "margin": 20,
-                "loop": false,
-                "responsive": {
-                    "0": {
-                        "items":1
-                    },
-                    "480": {
-                        "items":2
-                    },
-                    "768": {
-                        "items":3
-                    },
-                    "992": {
-                        "items":4
-                    },
-                    "1200": {
-                        "items":4,
-                        "nav": true,
-                        "dots": false
-                    }
-                }
-                }'
-                >
-                @include('user.includes.related_products');
-                </div><!-- End .owl-carousel -->
+                <div class="products mb-3">
+                    <div class="row justify-content-center append_related_product">
 
+                        @include('user.includes.related_products')
+
+                    </div><!-- End .row -->
+                </div><!-- End .products -->
+                    </div>
+                </div><!-- End .owl-carousel -->
             </div><!-- End .container -->
         </div><!-- End .page-content -->
     </main><!-- End .main -->
@@ -301,16 +261,9 @@
             </div><!-- End .col-6 -->
 
             <div class="col-6 justify-content-end">
-                <div class="product-price">
-                    @php
-                    $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
-                    @endphp
-                    @if ($currency_value->code=='RWF')
-                    {{number_format($product->product_price/$currency_value->normal_val,2)}} Frw
-                    @else
-                    {{$currency_value->symbol}}{{number_format($product->product_price/$currency_value->normal_val,2)}}
-                    @endif
-                </div><!-- End .product-price -->
+                <div class="product-price-details-stick">
+                    @include('user.includes.product-details-price-stick')
+                </div>
                 <div class="product-details-quantity">
 
                     <input type="number" name="quantity_product" id="product_qty2" class="form-control" value="1" min="1" step="1" data-decimals="0" required>
@@ -353,12 +306,8 @@
             var product_id=$(this).val();
             // alert(product_id)
             var quantity=1;
-            $(this).find('.btn-product-info').text('adding..').append(`<div class="spinner-grow" role="status">
-  <span class="visually-hidden"></span>
-</div>`);
+            $(this).find('.btn-product-info').text('adding..').append(`<div class="spinner-grow" role="status"><span class="visually-hidden"></span></div>`);
             $('.login-auth').html("");
-
-
             $.ajaxSetup({
                 headers:{
                     "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
@@ -561,8 +510,6 @@ function productId2(caller2){
                 dataType:"json",
                 success:function(response)
                 {
-                    // console.log(response);
-                    // alert('success!!')
                     $(".appendCart").html(response.view);
                     $(".appendCartHeader").html(response.header);
 
@@ -597,12 +544,13 @@ function productId2(caller2){
                 return false;
             }
         });
-        
+
           //========================Changing Currency===============================
 
           $(document).on('click', '#currency_btn', function(e){
             e.preventDefault();
             var currency_val=$(this).val();
+            var product_id=$('#prod_id_btn').val();
 
             $.ajaxSetup({
             headers:{
@@ -610,21 +558,44 @@ function productId2(caller2){
             }
             });
             $.ajax({
-                data:{currency_va:currency_val},
-                url:"{{route('change.currency')}}",
+                data:{currency_va:currency_val, product_id:product_id },
+                url:"{{route('change.currency_s')}}",
                 type:"get",
                 dataType:"json",
                 success:function(response){
 
-                    $(".appendCart").html(response.view);
-                    $(".append_related_product").html(response.view);
+                    $(".append_related_product").html(response.product_details);
+                    $(".product-price-details").html(response.product_price_details);
+                    $(".product-price-details-stick").html(response.product_price_details_stick);
                     $(".appendCartHeader").html(response.header);
+                    $("#currency").text(response.new_currency);
+
+                    toastr.success(response.message + response.new_currency, {
+                        positionClass: "toast-top-right",
+                        timeOut: 3e3,
+                        closeButton: !0,
+                        debug: !1,
+                        newestOnTop: !0,
+                        progressBar: !0,
+                        preventDuplicates: !0,
+                        onclick: null,
+                        showDuration: "300",
+                        hideDuration: "1000",
+                        extendedTimeOut: "1000",
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                        tapToDismiss: !1
+                    });
+                },
+                error:function(error){
+                    console.log(error);
                 }
             });
         });
 
     });
-
 
 </script>
 @endsection
