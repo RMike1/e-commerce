@@ -159,6 +159,8 @@ Route::post('update/currency', [AdminController::class, 'Update_Currency'])->nam
 
 Route::post('update/currency_status', [AdminController::class, 'Update_Currency_Status'])->name('update.currency_status');
 
+Route::get('delete/currency/{id}', [AdminController::class, 'Delete_Currency'])->name('delete.currency');
+
 
 });
 

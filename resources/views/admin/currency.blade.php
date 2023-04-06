@@ -128,7 +128,7 @@
                                     @endif
                                     <td>
                                         <button value="{{$currency->id}}" type="button" id="edit-currency" class="action-icon bg-transparent" style="border: none"> <i class="mdi mdi-square-edit-outline"></i></button>
-                                        <a href="{{route('delete.supplier',$currency->id)}}" class="action-icon" onclick="return confirm('are u sure to delete this supplier?')"> <i class="mdi mdi-delete"></i></a>
+                                        <a href="{{route('delete.currency',$currency->id)}}" class="action-icon" onclick="return confirm('are u sure to delete this supplier?')"> <i class="mdi mdi-delete"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -145,6 +145,8 @@
 
     </div>
 </div> <!-- container -->
+
+ <!------------------add currency modal------------------->
 
 <div id="add-currency-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -208,7 +210,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
- <!------------------edit category modal------------------->
+ <!------------------edit currency modal------------------->
 
 
  <div id="edit-currency-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
@@ -318,27 +320,53 @@
             $(document).on('change','.change-currency', function(e){
                 e.preventDefault();
                 var currency_chk=$(this).val();
-                var curr_id= $('.change-currency');
-                $('.currency-status').html("");
-                $.ajaxSetup({
-                    headers:{
-                        "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+                if($(this).is(':checked')){
+                    var status=1;
+                    $('.currency-status').html("");
+                    $.ajaxSetup({
+                        headers:{
+                            "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
 
-                $.ajax({
-                    data:{currency_va:currency_chk,status:curr_id},
-                    url:"{{route('update.currency_status')}}",
-                    type:"post",
-                    dataType:"json",
-                    success:function(response){
-                        $('.currency-status').append(`
-                            <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                `+response.message+`
-                            </div>`)
-                    }
-                });
+                    $.ajax({
+                        data:{currency_va:currency_chk, status:status},
+                        url:"{{route('update.currency_status')}}",
+                        type:"post",
+                        dataType:"json",
+                        success:function(response){
+                            $('.currency-status').append(`
+                                <div class="alert alert-`+response.alert+` alert-dismissible fade show mb-3" role="alert">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    `+response.message+`
+                                </div>`)
+                        }
+                    });
+
+                }
+                else{
+                    var status=0;
+                    $('.currency-status').html("");
+                    $.ajaxSetup({
+                        headers:{
+                            "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+
+                    $.ajax({
+                        data:{currency_va:currency_chk, status:status},
+                        url:"{{route('update.currency_status')}}",
+                        type:"post",
+                        dataType:"json",
+                        success:function(response){
+                            $('.currency-status').append(`
+                                <div class="alert alert-`+response.alert+` alert-dismissible fade show mb-3" role="alert">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    `+response.message+`
+                                </div>`)
+                        }
+                    });
+                }
 
             });
         })

@@ -833,6 +833,7 @@ class AdminController extends Controller
                 ]);
             }
 
+
               public function Update_Currency(Request $req){
 
                 $currency_id=$req->id;
@@ -846,16 +847,42 @@ class AdminController extends Controller
 
                 return redirect()->back()->with('success', 'currency added successfully!!');
             }
+
               public function Update_Currency_Status(Request $req){
 
                 $currency_id=$req->currency_va;
+                if($req->status=='0'){
                 $currency=Currency::find($currency_id);
-                $currency->status=$req->status==true ? '1' : '0';
+                $currency->status=$req->status;
                 $currency->update();
-                return response()->json([
-                    'status'=>200,
-                    'message'=>'currency updated successfully!!',
-                ]);
+                    return response()->json([
+                        'status'=>200,
+                        'alert'=>'warning',
+                        'message'=>'currency deactivated successfully!!',
+                    ]);
+                }
+                else{
+                    $currency=Currency::find($currency_id);
+                    $currency->status=$req->status;
+                    $currency->update();
+                    return response()->json([
+                        'status'=>200,
+                        'alert'=>'success',
+                        'message'=>'currency activated successfully!',
+                    ]);
+                }
+
             }
+
+            public function Delete_Currency($id){
+
+                $currency=Currency::find($id);
+                $currency->delete();
+
+                return redirect()->back()->with('warning', 'currency deleted successfully!!');
+
+            }
+
+
 
 }

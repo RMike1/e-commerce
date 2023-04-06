@@ -20,7 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('product_quantity')->nullable();
             $table->text('product_description')->nullable();
             $table->string('product_image')->nullable();
-            $table->string('product_publish')->default('0')->comment('0 means product is not published and 1 means published');
+            $table->string('product_publish')->default('0')->comment('0 means product is not active and 1 means inactive');
             $table->string('product_status')->default('3')->comment('0 means product is out of stock , 1 means new , 2 means top and 3 means available');
             $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreignId('supplier_id')->nullable()->references('id')->on('categories')->onDelete('restrict');

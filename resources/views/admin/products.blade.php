@@ -102,7 +102,7 @@
                                             <th>Quantity</th>
                                             <th>Supplier Name</th>
                                             <th>Status</th>
-                                            <th>Publish Status</th>
+                                            <th>Active?</th>
                                             <th style="width: 85px;">Action</th>
                                         </tr>
                                     </thead>
@@ -169,11 +169,11 @@
                                             @endif
                                             @if ($product->product_publish=='1')
                                             <td>
-                                                <span class="badge badge-success-lighten">Published</span>
+                                                <span class="badge badge-success-lighten">Active</span>
                                             </td>
                                             @else
                                             <td>
-                                                <span class="badge badge-warning-lighten">Pending..</span>
+                                                <span class="badge badge-warning-lighten">Inactive</span>
                                             </td>
                                             @endif
 
@@ -220,14 +220,15 @@
                     <div class="modal-body">
                         <div class="mb-3">
                                 <label for="category-title">Category Name*</label>
-                                <input type="text" class="form-control form-control-light" value="{{old('name')}}" name="name" id="category-title" placeholder="Enter name">
+                                <input type="text" class="form-control form-control-light" value="{{old('name')}}" name="name" placeholder="Enter name">
                             </div>
                         <div class="mb-3">
-                                <label for="category-image">Category Image</label>
-                                <input type="file" class="form-control form-control-light" name="category_image" id="category-image">
+                                <label for="category-image">Category Image</label><br>
+                                <img src="" id="ImgPreview" width="30%" alt="">
+                                <input type="file" class="form-control form-control-light" name="category_image" id="ImgInputPreview">
                             </div>
 
-                        <div class="mb-3">
+                            <div class="mb-3">
                             <label for="category-pos">Category Postion for Homepage</label>
                             <select type="text" id="category-pos" name="category_position" class="form-control form-control-light">
                                 <option value="" selected disabled>--select--</option>
@@ -238,7 +239,7 @@
                             </select>
                             </div>
                         <div class="mb-3 form-check form-checkbox-secondary">
-                                <label class="form-check-label" for="category-status">Publish?</label>
+                                <label class="form-check-label" for="category-status">Active?</label>
                                 <input type="checkbox" class="form-check-input" name="category_status" id="category-status">
                             </div>
                         </div>
@@ -273,6 +274,14 @@
 <!-- Datatable Init js -->
 <script src="{{asset('admin/assets/js/pages/demo.datatable-init.js')}}"></script>
 
+<script>
+    ImgInputPreview.onchange=evt=>{
+        const[file]=ImgInputPreview.files
+        if(file){
+            ImgPreview.src=URL.createObjectURL(file)
+        }
+    }
+</script>
   <script>
       $(document).ready(function(){"use strict";
       $(".products-datatable").DataTable({keys:!0,language:{paginate:{previous:"<i class='mdi mdi-chevron-left'>",next:"<i class='mdi mdi-chevron-right'>"}},drawCallback:function(){$(".dataTables_paginate > .pagination").addClass("pagination-rounded")}});var a=$("#datatable-buttons").DataTable({lengthChange:!1,buttons:["copy","print"],language:{paginate:{previous:"<i class='mdi mdi-chevron-left'>",next:"<i class='mdi mdi-chevron-right'>"}},drawCallback:function(){$(".dataTables_paginate > .pagination").addClass("pagination-rounded")}});});
