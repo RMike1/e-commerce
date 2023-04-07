@@ -17,6 +17,7 @@ use App\Models\Shipping;
 use App\Models\Cart;
 use App\Models\Supplier;
 use App\Models\Currency;
+use App\Http\Requests\CurrencyRequest;
 use Notification;
 use App\Notifications\MK_Shop;
 use Barryvdh\DomPDF\Facade\PDF;
@@ -735,16 +736,24 @@ class AdminController extends Controller
 
       }
 
+    //=================View Supplier====================
+
+
       public function View_Supplier()
         {
             $suppliers=Supplier::latest()->get();
             return view('admin.supplier',compact('suppliers'));
         }
 
+    //=================Add Supplier====================
+
+
       public function Add_Supplier()
         {
             return view('admin.add-supplier');
         }
+
+    //=================Store Supplier====================
 
       public function Store_Supplier(Request $req)
         {
@@ -763,6 +772,8 @@ class AdminController extends Controller
             return redirect()->back()->with('success', 'supplier saved successfully!');
         }
 
+    //=================Edit Supplier====================
+
         public function Edit_Supplier(Request $req)
         {
             $supplier_id=$req->supplier_id;
@@ -772,6 +783,8 @@ class AdminController extends Controller
                     'supplier'=>$supplier,
             ]);
         }
+
+    //=================Update Supplier====================
 
         public function Update_Supplier(Request $req)
           {
@@ -791,22 +804,36 @@ class AdminController extends Controller
               return redirect()->back()->with('success', 'supplier updated successfully!');
             }
 
+    //=================Delete Supplier====================
+
             public function Delete_Supplier($id)
             {
                 $supplier=Supplier::find($id);
                 $supplier->delete();
 
                 return redirect()->back()->with('warning', 'supplier deleted successfully!');
-
             }
+
+    //=================Currency Page====================
+
             public function Currency()
             {
                 $currencies=Currency::latest()->get();
                 return view('admin.currency',compact('currencies'));
             }
 
+    //=================Store Currency====================
+
             public function Store_Currency(Request $req)
             {
+
+                $req->validate([
+                    'name'=>'required',
+                    'code'=>'required',
+                    'symbol'=>'required',
+                    'normal_val'=>'required',
+                    'us_value'=>'required',
+                ]);
 
                 $currency=new Currency;
                 $currency->name=$req->name;
@@ -821,6 +848,8 @@ class AdminController extends Controller
 
             }
 
+    //=================Edit Currency====================
+
 
             public function Edit_Currency(Request $req){
 
@@ -833,8 +862,11 @@ class AdminController extends Controller
                 ]);
             }
 
+    //=================Update Currency====================
 
               public function Update_Currency(Request $req){
+
+
 
                 $currency_id=$req->id;
                 $currency=Currency::find($currency_id);
@@ -848,8 +880,9 @@ class AdminController extends Controller
                 return redirect()->back()->with('success', 'currency added successfully!!');
             }
 
-              public function Update_Currency_Status(Request $req){
+    //=================Update Currency_Status====================
 
+            public function Update_Currency_Status(Request $req){
                 $currency_id=$req->currency_va;
                 if($req->status=='0'){
                 $currency=Currency::find($currency_id);
@@ -871,18 +904,18 @@ class AdminController extends Controller
                         'message'=>'currency activated successfully!',
                     ]);
                 }
-
             }
+
+    //================= Delete Currency====================
 
             public function Delete_Currency($id){
 
                 $currency=Currency::find($id);
                 $currency->delete();
 
+                $currency_d=Currency::where('id','!=',$id)->first()->id;
+                Currency::where('id',$currency_d)->update(['fr_use_status'=>'1']);
+
                 return redirect()->back()->with('warning', 'currency deleted successfully!!');
-
             }
-
-
-
 }

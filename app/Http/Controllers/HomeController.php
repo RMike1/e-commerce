@@ -431,14 +431,12 @@ public function Remove_Cart(Request $req)
                     $shipping_rest_id=Shipping::find($shipp_rest_id);
                     $shipping_rest_id->status='1';
                     $shipping_rest_id->save();
-
                 }
-
               }
               return redirect()->back()->with('success','your order has been created successfully!');
 
             }
-            return redirect()->back()->with('warning','first add products in cart to proceed your order!');
+            return redirect()->back()->with('warning','your cart is empty! please add products in cart to proceed your order!!');
 
       }
 

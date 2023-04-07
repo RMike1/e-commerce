@@ -27,9 +27,7 @@
             </div>
         </div>
     </div>
-
     <div class="currency-status"></div>
-
 
     <!-- end page title -->
     @if (Session::has('success'))
@@ -104,16 +102,16 @@
                                        {{$count++}}
                                     </td>
                                     <td>
-                                        {{$currency->name}}
+                                        {{$currency->name ?? ''}}
                                     </td>
                                     <td>
-                                        {{$currency->code}}
+                                        {{$currency->code ?? ''}}
                                     </td>
                                     <td>
-                                        {{$currency->normal_val}}
+                                        {{$currency->normal_val ?? ''}}
                                     </td>
                                     <td>
-                                        {{$currency->us_value}}
+                                        {{$currency->us_value ?? ''}}
                                     </td>
                                     @if ($currency->status=='1')
                                     <td>
@@ -128,11 +126,10 @@
                                     @endif
                                     <td>
                                         <button value="{{$currency->id}}" type="button" id="edit-currency" class="action-icon bg-transparent" style="border: none"> <i class="mdi mdi-square-edit-outline"></i></button>
-                                        <a href="{{route('delete.currency',$currency->id)}}" class="action-icon" onclick="return confirm('are u sure to delete this supplier?')"> <i class="mdi mdi-delete"></i></a>
+                                        <a href="{{route('delete.currency',$currency->id)}}" class="action-icon" onclick="return confirm('delete this currency?')"> <i class="mdi mdi-delete"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                 </div> <!-- end card-body-->

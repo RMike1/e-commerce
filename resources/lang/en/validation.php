@@ -148,6 +148,7 @@ return [
         'category_id' => [
             'required' => 'category field is required',
         ],
+
     ],
 
     /*
