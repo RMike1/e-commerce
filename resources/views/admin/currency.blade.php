@@ -20,10 +20,10 @@
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">MK</a></li>
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Data</a></li>
-                        <li class="breadcrumb-item active">Supplier</li>
+                        <li class="breadcrumb-item active">Currencies</li>
                     </ol>
                 </div>
-                <h4 class="page-title">Suppliers</h4>
+                <h4 class="page-title">Currencies</h4>
             </div>
         </div>
     </div>
