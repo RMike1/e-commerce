@@ -102,16 +102,16 @@
                                        {{$count++}}
                                     </td>
                                     <td>
-                                        {{$currency->name ?? ''}}
+                                        {{$currency->name}}
                                     </td>
                                     <td>
-                                        {{$currency->code ?? ''}}
+                                        {{$currency->code}}
                                     </td>
                                     <td>
-                                        {{$currency->normal_val ?? ''}}
+                                        {{$currency->normal_val}}
                                     </td>
                                     <td>
-                                        {{$currency->us_value ?? ''}}
+                                        {{$currency->us_value}}
                                     </td>
                                     @if ($currency->status=='1')
                                     <td>
@@ -308,9 +308,6 @@
                         $('#currency_val_rwf').val(response.currency.normal_val);
                         $('#currency_val_us').val(response.currency.us_value);
                     },
-                    error: function(error){
-                        console.log(error);
-                    }
                 });
             })
 
@@ -332,11 +329,14 @@
                         type:"post",
                         dataType:"json",
                         success:function(response){
-                            $('.currency-status').append(`
-                                <div class="alert alert-`+response.alert+` alert-dismissible fade show mb-3" role="alert">
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                    `+response.message+`
-                                </div>`)
+
+                                $('.currency-status').append(`
+                                    <div class="alert alert-`+response.alert+` alert-dismissible fade show mb-3" role="alert">
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        `+response.message+`
+                                    </div>`)
+                            
+
                         }
                     });
 

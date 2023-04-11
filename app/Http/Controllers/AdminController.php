@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use App\Models\Category;
@@ -824,16 +825,23 @@ class AdminController extends Controller
 
     //=================Store Currency====================
 
-            public function Store_Currency(Request $req)
+            public function Store_Currency(Request $request)
             {
 
-                $req->validate([
+                $validator=Validator::make($request->all(),[
                     'name'=>'required',
                     'code'=>'required',
-                    'symbol'=>'required',
-                    'normal_val'=>'required',
-                    'us_value'=>'required',
+                    'symbol'=>'required|max:1|string',
+                    'normal_val'=>'required|numeric',
+                    'us_value'=>'required|numeric',
+                ],[
+                    'normal_val.required'=>'Currency Value(According to RWF) field is required.',
+                    'normal_val.numeric'=>'RWF value must be a number.',
+                    'us_value.required'=>'Currency Value(According to US Dollar) field is required.',
+                    'us_value.numeric'=>'US Dollar value must be a number.',
                 ]);
+
+                $req=$validator->validated();
 
                 $currency=new Currency;
                 $currency->name=$req->name;
@@ -853,28 +861,45 @@ class AdminController extends Controller
 
             public function Edit_Currency(Request $req){
 
-                $currency_id=$req->currency_val;
-                $currency=Currency::find($currency_id);
+               
+    
+                    $currency_id=$req->currency_val;
+                    $currency=Currency::find($currency_id);
+    
+                    return response()->json([
+                        'status'=>200,
+                        'currency'=>$currency,
+                    ]);
+                
 
-                return response()->json([
-                    'status'=>200,
-                    'currency'=>$currency,
-                ]);
             }
 
     //=================Update Currency====================
 
-              public function Update_Currency(Request $req){
+              public function Update_Currency(Request $request){
 
+                $validator=Validator::make($request->all(),[
+                    'name'=>'required',
+                    'code'=>'required',
+                    'symbol'=>'required|max:1|string',
+                    'normal_val'=>'required|numeric',
+                    'us_value'=>'required|numeric',
+                ],[
+                    'normal_val.required'=>'Currency Value(According to RWF) field is required.',
+                    'normal_val.numeric'=>'RWF value must be a number.',
+                    'us_value.required'=>'Currency Value(According to US Dollar) field is required.',
+                    'us_value.numeric'=>'US Dollar value must be a number.',
+                ]);
 
+                $req=$validator->validated();
 
-                $currency_id=$req->id;
+                $currency_id=$request->id;
                 $currency=Currency::find($currency_id);
-                $currency->name=$req->name;
-                $currency->code=$req->code;
-                $currency->symbol=$req->symbol;
-                $currency->normal_val=$req->normal_val;
-                $currency->us_value=$req->us_value;
+                $currency->name=$request->name;
+                $currency->code=$request->code;
+                $currency->symbol=$request->symbol;
+                $currency->normal_val=$request->normal_val;
+                $currency->us_value=$request->us_value;
                 $currency->update();
 
                 return redirect()->back()->with('success', 'currency added successfully!!');
