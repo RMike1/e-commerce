@@ -42,7 +42,7 @@ Route::get('change/currency_h',[HomeController::class,'Change_Currency_h'])->nam
 
 Route::get('change/currency_s',[HomeController::class,'Change_Currency_s'])->name('change.currency_s');
 
-Route::get('stripe',[StripeController::class,'Stripe'])->name('stripe');
+// Route::get('stripe',[StripeController::class,'Stripe'])->name('stripe');
 
 //====
 
