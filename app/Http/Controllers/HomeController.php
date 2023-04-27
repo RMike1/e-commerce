@@ -274,13 +274,12 @@ public function Remove_Cart(Request $req)
         return view('user.category',compact('products'));
     }
 
-
     //=====================Shipping======================
 
     public function Shipping(Request $req)
     {
-    $shipping_id=Shipping::where('shipping_method',$req->shipping_val)->first()->id;
-    $shipping_rest_id=Shipping::where('shipping_method','!=',$req->shipping_val)->first()->id;
+    $shipping_id=Shipping::where('shipping_method',$req->shipping_val)->where('user_id',Auth::user()->id)->first()->id;
+    $shipping_rest_id=Shipping::where('shipping_method','!=',$req->shipping_val)->where('user_id',Auth::user()->id)->first()->id;
 
         if($req->shipping_val=='Free Shipping')
         {

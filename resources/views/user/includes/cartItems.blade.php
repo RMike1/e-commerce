@@ -114,9 +114,8 @@ class="page-content">
                                     <td>&nbsp;</td>
                                 </tr>
                                 @php
-                                    $free_shipping=App\Models\Shipping::where('shipping_method','Free Shipping')->first();
-                                    $standard_shipping=App\Models\Shipping::where('shipping_method','Standard')->first();
-                                    $express_shipping=App\Models\Shipping::where('shipping_method','Express')->first();
+                                    $free_shipping=App\Models\Shipping::where('shipping_method','Free Shipping')->where('user_id',Auth::user()->id)->first();
+                                    $standard_shipping=App\Models\Shipping::where('shipping_method','Standard')->where('user_id',Auth::user()->id)->first();
                                 @endphp
 
                                 <tr class="summary-shipping-row">
@@ -127,7 +126,7 @@ class="page-content">
                                             @else
                                             <input type="radio" id="free-shipping" value="{{$free_shipping->shipping_method}}" name="shipping" class="custom-control-input shipping_val">
                                             @endif
-                                            <label class="custom-control-label" for="free-shipping">Free Shipping</label>
+                                            <label class="custom-control-label" for="free-shipping">Free Shipping:</label>
                                         </div><!-- End .custom-control -->
                                     </td>
                                     @if ($currency_value->code=='RWF')
@@ -144,7 +143,7 @@ class="page-content">
                                 <tr class="summary-shipping-row">
                                     <td>
                                         <div class="custom-control custom-radio">
-                                            @if ($standard_shipping->status=='1')
+                                            @if ($standard_shipping->status=='1' )
                                             <input type="radio" id="standart-shipping" value="{{$standard_shipping->shipping_method}}" name="shipping" class="custom-control-input shipping_val" checked>
                                             @else
                                             <input type="radio" id="standart-shipping" value="{{$standard_shipping->shipping_method}}" name="shipping" class="custom-control-input shipping_val">

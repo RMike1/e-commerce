@@ -7,6 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Shipping extends Model
 {
     use HasFactory;
+
+    protected $table='shippings';
+
+    protected $fillable=[
+        'shipping_method',
+        'value',
+        'status',
+        'user_id',
+        'address',
+    ];
+
+    // public $timeStamps=true;
+
     public function cart()
     {
         return $this->belongsTo(Cart::class);

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Shipping;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -64,10 +66,26 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user= User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        DB::table('shippings')->insert([
+            [
+                'shipping_method'=>'Free Shipping',
+                'value'=>'0',
+                'status'=>'1',
+                'user_id'=>$user->id,
+            ],
+            [
+                'shipping_method'=>'Standard',
+                'value'=>'10',
+                'status'=>'0',
+                'user_id'=>$user->id,
+            ]
+        ]);
+        return $user;
     }
 }
