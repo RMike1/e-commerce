@@ -297,7 +297,7 @@ public function Remove_Cart(Request $req)
             $rest_ids->save();
 
             $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-            $currency_value=Currency::where('fr_use_status','1')->first();
+            $currency_value=Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
             $final_tot_a=$subtotcart+$shipping_value;
             $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
 
@@ -334,7 +334,7 @@ public function Remove_Cart(Request $req)
 
             $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
             $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-            $currency_value=Currency::where('fr_use_status','1')->first();
+            $currency_value=Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
             $final_tot_a=$subtotcart+$shipping_value;
 
             if($currency_value->code=='RWF')
@@ -488,9 +488,9 @@ public function Remove_Cart(Request $req)
       {
         if(Auth::check()){
             $currency_d=$req->currency_va;
-            Currency::where('fr_use_status',1)->update(['fr_use_status'=>'0']);
-            Currency::where('id',$currency_d)->update(['fr_use_status'=>'1']);
-            $new_currency=Currency::where('id',$currency_d)->first()->code;
+            Currency::where('fr_use_status',1)->where('user_id',Auth::user()->id)->update(['fr_use_status'=>'0']);
+            Currency::where('id',$currency_d)->where('user_id',Auth::user()->id)->update(['fr_use_status'=>'1']);
+            $new_currency=Currency::where('id',$currency_d)->where('user_id',Auth::user()->id)->first()->code;
 
             $categories=Category::latest()->where('category_status','1')->take(3)->get();
             $slide_products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
@@ -541,9 +541,9 @@ public function Remove_Cart(Request $req)
 
         if(Auth::check()){
             $currency_d=$req->currency_va;
-            Currency::where('fr_use_status',1)->update(['fr_use_status'=>'0']);
-            Currency::where('id',$currency_d)->update(['fr_use_status'=>'1']);
-            $new_currency=Currency::where('id',$currency_d)->first()->code;
+            Currency::where('fr_use_status',1)->where('user_id',Auth::user()->id)->update(['fr_use_status'=>'0']);
+            Currency::where('id',$currency_d)->where('user_id',Auth::user()->id)->update(['fr_use_status'=>'1']);
+            $new_currency=Currency::where('id',$currency_d)->where('user_id',Auth::user()->id)->first()->code;
 
             $shipping_val=Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->value;
             $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
@@ -575,9 +575,9 @@ public function Remove_Cart(Request $req)
 
         if(Auth::check()){
             $currency_d=$req->currency_va;
-            Currency::where('fr_use_status',1)->update(['fr_use_status'=>'0']);
-            Currency::where('id',$currency_d)->update(['fr_use_status'=>'1']);
-            $new_currency=Currency::where('id',$currency_d)->first()->code;
+            Currency::where('fr_use_status',1)->where('user_id',Auth::user()->id)->update(['fr_use_status'=>'0']);
+            Currency::where('id',$currency_d)->where('user_id',Auth::user()->id)->update(['fr_use_status'=>'1']);
+            $new_currency=Currency::where('id',$currency_d)->where('user_id',Auth::user()->id)->first()->code;
 
             $shipping_val=Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->value;
             $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');

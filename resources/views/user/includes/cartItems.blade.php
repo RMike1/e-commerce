@@ -38,7 +38,7 @@ class="page-content">
                                 </td>
                                 <td class="price-col" style="width:20%">
                                     @php
-                                    $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
+                                    $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
                                     @endphp
                                     @if ($currency_value->code=='RWF')
                                     <span>{{number_format($cart->product->product_price/$currency_value->normal_val)}} Frw</span>
@@ -97,7 +97,7 @@ class="page-content">
                                 <tr class="summary-subtotal">
                                     <td>Subtotal:</td>
                                     @php
-                                    $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
+                                    $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
                                     @endphp
                                     @if ($currency_value->code=='RWF')
                                     <td>

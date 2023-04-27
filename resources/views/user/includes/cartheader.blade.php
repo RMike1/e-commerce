@@ -15,7 +15,7 @@
                         <a href="{{route('user.product',$cart->product->id)}}">{{$cart->product->product_name}}</a>
                     </h4>
                         @php
-                        $currency_value=App\Models\Currency::where('fr_use_status','1')->firstOrfail();
+                        $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->firstOrfail();
                         @endphp
                     <span class="cart-product-info">
                         <span class="cart-product-qty">{{$cart->quantity}}</span>
@@ -53,7 +53,7 @@
         $subtotcart=App\Models\Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
         $shipping_val=App\Models\Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->value;
         $final_tot=$subtotcart+$shipping_val;
-        $currency_value=App\Models\Currency::where('fr_use_status','1')->firstOrfail();
+        $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->firstOrfail();
         @endphp
       @if ($currency_value->code=='RWF')
       <span class="cart-total-price"><span class="final_tot">{{number_format(($final_tot/$currency_value->normal_val),2)}} Frw</span></span>

@@ -23,6 +23,7 @@ class CurrencySeeder extends Seeder
                 'normal_val'=>'1105.00',
                 'us_value'=>'1',
                 'status'=>'1',
+                'user_id'=>'1',
                 'fr_use_status'=>'0'
             ],
             [
@@ -32,6 +33,7 @@ class CurrencySeeder extends Seeder
                 'normal_val'=>'1204.07',
                 'us_value'=>'1.09',
                 'status'=>'1',
+                'user_id'=>'1',
                 'fr_use_status'=>'0'
             ],
             [
@@ -41,6 +43,7 @@ class CurrencySeeder extends Seeder
                 'normal_val'=>'1371.05',
                 'us_value'=>'1.25',
                 'status'=>'1',
+                'user_id'=>'1',
                 'fr_use_status'=>'0'
             ],
             [
@@ -50,6 +53,7 @@ class CurrencySeeder extends Seeder
                 'normal_val'=>'1',
                 'us_value'=>'0.00090',
                 'status'=>'1',
+                'user_id'=>'1',
                 'fr_use_status'=>'1'
             ],
         ]);

@@ -9,7 +9,7 @@
                     <a href="#" id="currency">{{$currency}}</a>
                     <div class="header-menu">
                         <ul>
-                            @foreach (App\Models\Currency::where('status','1')->get() as $currency)
+                            @foreach (App\Models\Currency::where('status','1')->oldest()->take(4)->get() as $currency)
                             <li class="convert-currency-header">
                                 <button type="button" value="{{$currency->id}}" class="bg-transparent border-0 text-muted curre" id="currency_btn">{{$currency->code}}</button>
                             </li>

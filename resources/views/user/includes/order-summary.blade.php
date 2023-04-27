@@ -14,7 +14,7 @@
             <tr>
                 <td><a href="{{route('user.product',$cart->product->id)}}">{{$cart->product->product_name}}</a></td>
                 @php
-                $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
+                $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
                 @endphp
                 @if ($currency_value->code=='RWF')
                 <td>
@@ -30,7 +30,7 @@
             <tr class="summary-subtotal">
                 <td>Subtotal:</td>
                 @php
-                $currency_value=App\Models\Currency::where('fr_use_status','1')->first();
+                $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
                 @endphp
                 @if ($currency_value->code=='RWF')
                 <td>

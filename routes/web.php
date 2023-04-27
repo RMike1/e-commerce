@@ -6,7 +6,6 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StripeController;
 
-
 // Auth::routes(['verify' => true]);
 Auth::routes();
 
@@ -161,10 +160,8 @@ Route::post('update/currency_status', [AdminController::class, 'Update_Currency_
 
 Route::get('delete/currency/{id}', [AdminController::class, 'Delete_Currency'])->name('delete.currency');
 
-
 });
 
-
-
-Route::get('stripe', [StripeController::class, 'stripe']);
 Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
+Route::get('stripe', [StripeController::class, 'stripe']);
+

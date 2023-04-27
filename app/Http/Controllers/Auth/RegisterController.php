@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Shipping;
+use App\Models\Currency;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -86,6 +87,20 @@ class RegisterController extends Controller
                 'user_id'=>$user->id,
             ]
         ]);
+        
+        $Currencies=Currency::oldest()->take(4)->get();
+        foreach ($Currencies as $currency) {
+                Currency::create([
+                    'code'=>$currency->code,
+                    'name'=>$currency->name,
+                    'symbol'=>$currency->symbol,
+                    'normal_val'=>$currency->normal_val,
+                    'us_value'=>$currency->us_value,
+                    'status'=>$currency->status,
+                    'user_id'=>$user->id,
+                    'fr_use_status'=>$currency->fr_use_status,
+                ]);
+        }
         return $user;
     }
 }
