@@ -118,7 +118,6 @@ class HomeController extends Controller
 
 //=========================Add to Cart =========================
 
-
     public function Add_Cart(Request $req)
     {
         if(Auth::check())
@@ -126,7 +125,6 @@ class HomeController extends Controller
                     $req->validate([
                         'quantity'=>'required'
                     ]);
-
                     $product_id=$req->product_id;
                     $product_data=Product::find($product_id);
                     $user_id=Auth::user()->id;
@@ -139,11 +137,9 @@ class HomeController extends Controller
                         $tot=$cart->tot_amount;
                         $cart->tot_amount=$tot+($req->quantity*$product_data->product_price);
                         $cart->save();
-
                         $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
                         $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
                         $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-
                         return response()->json([
                             'status'=>200,
                             'message'=>'already added in your cart!!',
@@ -158,11 +154,9 @@ class HomeController extends Controller
                         $cart_data->quantity=$req->quantity;
                         $cart_data->tot_amount=$req->quantity*$product_data->product_price;
                         $cart_data->save();
-
                         $products=Product::where('product_publish','1')->with('ProductImage')->latest()->get();
                         $carts=Cart::where('user_id',Auth::user()->id)->latest()->get();
                         $subtotcart=Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-
                         return response()->json([
                             'status'=>200,
                             'message'=>'product has been added to cart!!',
@@ -171,13 +165,13 @@ class HomeController extends Controller
                         ]);
                     }
             return response()->json([
-                'status'=>200,
+                'status_message'=>200,
             ]);
         }
         else{
             return response()->json([
-                'status'=>400,
-                'message'=>'first login to continue!!',
+                'status_message'=>400,
+                'warning_message'=>'first login to add items in your cart!!',
             ]);
         }
 }
@@ -315,7 +309,6 @@ public function Remove_Cart(Request $req)
                     'final_tot'=>number_format($final_tot,2),
                 ],200);
             }
-
         }
         else
         {
@@ -604,7 +597,7 @@ public function Remove_Cart(Request $req)
         }
         else{
             return response()->json([
-                'message'=>'first login',
+                'error'=>'Oops first login to change currency',
                 'status'=>400,
             ]);
         }

@@ -1,3 +1,4 @@
+@auth
 <div class="product-price">
     @php
     $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
@@ -8,3 +9,12 @@
     {{$currency_value->symbol}}{{number_format($product->product_price/$currency_value->normal_val,2)}}
     @endif
 </div><!-- End .product-price -->
+@endauth
+@guest
+<div class="product-price">
+    @php
+    $currency_value=App\Models\Currency::where('code','RWF')->first();
+    @endphp
+    {{number_format($product->product_price/$currency_value->normal_val,2)}} Frw
+</div><!-- End .product-price -->
+@endguest

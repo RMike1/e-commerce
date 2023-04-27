@@ -46,6 +46,7 @@
 
                         <div class="product-body">
                             <h3 class="product-title"><a href="{{route('user.product',$product->id)}}">{{$product->product_name}}</a></h3><!-- End .product-title -->
+                            @auth
                             <div class="product-price">
                                 @php
                                     $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
@@ -56,6 +57,15 @@
                                 {{$currency_value->symbol}}{{number_format($product->product_price/$currency_value->normal_val,2)}}
                                 @endif
                             </div><!-- End .product-price -->
+                            @endauth
+                            @guest
+                            <div class="product-price">
+                                @php
+                                    $currency_value=App\Models\Currency::where('code','RWF')->first();
+                                @endphp
+                                {{number_format($product->product_price/$currency_value->normal_val,2)}} Frw
+                            </div><!-- End .product-price -->
+                            @endguest
                         </div><!-- End .product-body -->
                         <div class="product-action">
                             <button href="#" value="{{$product->id}}" class="btn-product btn-cart add-cart-btn"><span class="btn-product-info">add to cart</span></button>
@@ -97,9 +107,9 @@
                                 <a href="#" class="btn-product-icon btn-wishlist "><span>add to wishlist</span></a>
                             </div><!-- End .product-action-vertical -->
                         </figure><!-- End .product-media -->
-
                         <div class="product-body">
                             <h3 class="product-title"><a href="product.html">{{$product->product_name}}</a></h3><!-- End .product-title -->
+                            @auth
                             <div class="product-price">
                             @php
                             $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
@@ -110,6 +120,15 @@
                             {{$currency_value->symbol}}{{number_format($product->product_price/$currency_value->normal_val,2)}}
                             @endif
                             </div><!-- End .product-price -->
+                            @endauth
+                            @guest
+                            <div class="product-price">
+                                @php
+                                    $currency_value=App\Models\Currency::where('code','RWF')->first();
+                                @endphp
+                                {{number_format($product->product_price/$currency_value->normal_val,2)}} Frw
+                            </div><!-- End .product-price -->
+                            @endguest
                         </div><!-- End .product-body -->
                         <div class="product-action">
                             <button href="#" value="{{$product->id}}" class="btn-product btn-cart add-cart-btn"><span class="btn-product-info">add to cart</span></button>

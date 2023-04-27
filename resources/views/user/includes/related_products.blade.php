@@ -32,16 +32,26 @@
                         <span>{{$related_products->category->name}}</span>
                     </div><!-- End .product-cat -->
                     <h3 class="product-title"><a href="{{route('user.product',$related_products->id)}}">{{$related_products->product_name}}</a></h3><!-- End .product-title -->
-                    <div class="product-price">
-                        @php
-                        $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
-                        @endphp
-                        @if ($currency_value->code=='RWF')
-                        {{number_format($related_products->product_price/$currency_value->normal_val,2)}} Frw
-                        @else
-                        {{$currency_value->symbol}}{{number_format($related_products->product_price/$currency_value->normal_val,2)}}
-                        @endif
+                        @auth
+                        <div class="product-price">
+                            @php
+                            $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
+                            @endphp
+                            @if ($currency_value->code=='RWF')
+                            {{number_format($related_products->product_price/$currency_value->normal_val,2)}} Frw
+                            @else
+                            {{$currency_value->symbol}}{{number_format($related_products->product_price/$currency_value->normal_val,2)}}
+                            @endif
                         </div><!-- End .product-price -->
+                        @endauth
+                        @guest
+                        <div class="product-price">
+                            @php
+                            $currency_value=App\Models\Currency::where('code','RWF')->first();
+                            @endphp
+                            {{number_format($product->product_price/$currency_value->normal_val,2)}} Frw
+                        </div><!-- End .product-price --> 
+                        @endguest
                     <div class="ratings-container">
                         <div class="ratings">
                             <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->

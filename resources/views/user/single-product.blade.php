@@ -326,8 +326,7 @@
             dataType:"json",
             success:function(response)
             {
-                // console.log(response);
-                // alert('success!!')
+                if(response.status_message=='200'){
                 $(".append-category-data").html(response.view);
                 $(".appendCartHeader").html(response.header);
                 $('.btn-product-info').text('add to cart')
@@ -350,19 +349,30 @@
                     hideMethod: "fadeOut",
                     tapToDismiss: !1
                 })
+            }
+            else{
+                $('.btn-product-info').text('add to cart')
+                toastr.warning(response.warning_message, {
+                    positionClass: "toast-top-right",
+                    timeOut: 3e3,
+                    closeButton: !0,
+                    debug: !1,
+                    newestOnTop: !0,
+                    progressBar: !0,
+                    preventDuplicates: !0,
+                    onclick: null,
+                    showDuration: "300",
+                    hideDuration: "1000",
+                    extendedTimeOut: "1000",
+                    showEasing: "swing",
+                    hideEasing: "linear",
+                    showMethod: "fadeIn",
+                    hideMethod: "fadeOut",
+                    tapToDismiss: !1
+                })
+            }
 
             },
-            error:function(error)
-            {
-
-                $('#signin-modal').modal('show');
-                $('.btn-product-info').text("add to cart");
-                $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true"><i class="icon-close"></i></span>
-                            </button>
-                        </div>`);
-            }
         });
     });
     })
@@ -392,8 +402,7 @@ function productId(caller){
             dataType:"json",
             success:function(response)
             {
-                // console.log(response);
-                // alert('success!!')
+                if(response.status_message=='200'){
                 $(".append-category-data").html(response.view);
                 $(".appendCartHeader").html(response.header);
                 $('.btn-product-info').text('add to cart')
@@ -417,21 +426,33 @@ function productId(caller){
                     hideMethod: "fadeOut",
                     tapToDismiss: !1
                 })
-            },
-            error:function(error)
-            {
-                $('#signin-modal').modal('show');
-                $('.btn-product-info').text("add to cart");
-                $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true"><i class="icon-close"></i></span>
-                    </button>
-                </div>`);
             }
+            else{
+                $('.btn-product-info').text('add to cart')
+                toastr.warning(response.warning_message, {
+                    positionClass: "toast-top-right",
+                    timeOut: 3e3,
+                    closeButton: !0,
+                    debug: !1,
+                    newestOnTop: !0,
+                    progressBar: !0,
+                    preventDuplicates: !0,
+                    onclick: null,
+                    showDuration: "300",
+                    hideDuration: "1000",
+                    extendedTimeOut: "1000",
+                    showEasing: "swing",
+                    hideEasing: "linear",
+                    showMethod: "fadeIn",
+                    hideMethod: "fadeOut",
+                    tapToDismiss: !1
+                })
+            }
+            },
         });
     }
 
- //========================adding item to cart on stick formr===============================
+ //========================adding item to cart on stick form===============================
 
 function productId2(caller2){
 
@@ -454,43 +475,53 @@ function productId2(caller2){
         dataType:"json",
         success:function(response)
         {
-            // console.log(response);
-            // alert('success!!')
-            $(".append-category-data").html(response.view);
-            $(".appendCartHeader").html(response.header);
-            $('.btn-product-info2').text('add to cart')
-            $('#product_qty2').val(1)
-
-            toastr.success(response.message, "Success", {
-                positionClass: "toast-top-right",
-                timeOut: 3e3,
-                closeButton: !0,
-                debug: !1,
-                newestOnTop: !0,
-                progressBar: !0,
-                preventDuplicates: !0,
-                onclick: null,
-                showDuration: "300",
-                hideDuration: "1000",
-                extendedTimeOut: "1000",
-                showEasing: "swing",
-                hideEasing: "linear",
-                showMethod: "fadeIn",
-                hideMethod: "fadeOut",
-                tapToDismiss: !1
-            })
-
+            if(response.status_message=='200'){
+                $(".append-category-data").html(response.view);
+                $(".appendCartHeader").html(response.header);
+                $('.btn-product-info2').text('add to cart')
+                $('#product_qty2').val(1)
+    
+                toastr.success(response.message, "Success", {
+                    positionClass: "toast-top-right",
+                    timeOut: 3e3,
+                    closeButton: !0,
+                    debug: !1,
+                    newestOnTop: !0,
+                    progressBar: !0,
+                    preventDuplicates: !0,
+                    onclick: null,
+                    showDuration: "300",
+                    hideDuration: "1000",
+                    extendedTimeOut: "1000",
+                    showEasing: "swing",
+                    hideEasing: "linear",
+                    showMethod: "fadeIn",
+                    hideMethod: "fadeOut",
+                    tapToDismiss: !1
+                })
+            }
+            else{
+                $('.btn-product-info2').text('add to cart');
+                toastr.warning(response.warning_message, {
+                    positionClass: "toast-top-right",
+                    timeOut: 3e3,
+                    closeButton: !0,
+                    debug: !1,
+                    newestOnTop: !0,
+                    progressBar: !0,
+                    preventDuplicates: !0,
+                    onclick: null,
+                    showDuration: "300",
+                    hideDuration: "1000",
+                    extendedTimeOut: "1000",
+                    showEasing: "swing",
+                    hideEasing: "linear",
+                    showMethod: "fadeIn",
+                    hideMethod: "fadeOut",
+                    tapToDismiss: !1
+                })
+            }
         },
-        error:function(error)
-        {
-            $('#signin-modal').modal('show');
-            $('.btn-product-info').text("add to cart");
-            $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true"><i class="icon-close"></i></span>
-                        </button>
-                    </div>`);
-        }
     });
 }
 
@@ -569,7 +600,7 @@ function productId2(caller2){
                 type:"get",
                 dataType:"json",
                 success:function(response){
-
+                    if(response.status=='200'){
                     $(".append_related_product").html(response.product_details);
                     $(".product-price-details").html(response.product_price_details);
                     $(".product-price-details-stick").html(response.product_price_details_stick);
@@ -593,13 +624,32 @@ function productId2(caller2){
                         showMethod: "fadeIn",
                         hideMethod: "fadeOut",
                         tapToDismiss: !1
-                    });
-                },
-                error:function(error){
-                    console.log(error);
+                    })
                 }
+                    else{
+
+                        toastr.warning(response.error, {
+                        positionClass: "toast-top-right",
+                        timeOut: 3e3,
+                        closeButton: !0,
+                        debug: !1,
+                        newestOnTop: !0,
+                        progressBar: !0,
+                        preventDuplicates: !0,
+                        onclick: null,
+                        showDuration: "300",
+                        hideDuration: "1000",
+                        extendedTimeOut: "1000",
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut",
+                        tapToDismiss: !1
+                    })
+                    }
+                },
             });
-        });
+          });
 
 
     });

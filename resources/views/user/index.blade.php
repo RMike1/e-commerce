@@ -369,22 +369,14 @@
                     })
                 }
                 else{
+                    $('.btn-product-info').text('add to cart');
                     $('#signin-modal').modal('show');
-                        $('.login-auth').append(`<div class="alert alert-warning text-center">`+response.message+`
+                        $('.login-auth').append(`<div class="alert alert-warning text-center">`+response.warning_message+`
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true"><i class="icon-close"></i></span>
                             </button>
                         </div>`);
                 }
-            },
-            error:function(auth){
-                $('#signin-modal').modal('show');
-                        $('.btn-product-info').text("add to cart");
-                        $('.login-auth').append(`<div class="alert alert-warning text-center">First Login To Continue
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="icon-close"></i></span>
-                                    </button>
-                                </div>`);
             }
             });
         });

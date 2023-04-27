@@ -3,18 +3,34 @@
         <div class="container">
             <div class="header-left">
                 <div class="header-dropdown">
+                    @auth
                     @php
                         $currency=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first()->code;
                     @endphp
                     <a href="#" id="currency">{{$currency}}</a>
+                    @endauth
+                    @guest
+                    @php
+                        $currency=App\Models\Currency::where('code','RWF')->first()->code;
+                    @endphp
+                    <a href="#" id="currency">{{$currency}}</a>
+                    @endguest
                     <div class="header-menu">
                         <ul>
+                            @auth
                             @foreach (App\Models\Currency::where('status','1')->where('user_id',Auth::user()->id)->oldest()->take(4)->get() as $currency)
                             <li class="convert-currency-header">
                                 <button type="button" value="{{$currency->id}}" class="bg-transparent border-0 text-muted curre" id="currency_btn">{{$currency->code}}</button>
                             </li>
                             @endforeach
-                            
+                            @endauth
+                            @guest
+                            @foreach (App\Models\Currency::where('status','1')->oldest()->take(4)->get() as $currency)
+                            <li class="convert-currency-header">
+                                <button type="button" value="{{$currency->id}}" class="bg-transparent border-0 text-muted curre" id="currency_btn">{{$currency->code}}</button>
+                            </li>
+                            @endforeach
+                            @endguest
                         </ul>
                     </div><!-- End .header-menu -->
                 </div><!-- End .header-dropdown -->
