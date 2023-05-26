@@ -20,21 +20,27 @@ class UserSeeder extends Seeder
             'name'=>'sam',
             'email'=>'sam@gmail.com',
             'password'=>hash::make('1234'),
-            'usertype'=>'0'
+            'usertype'=>'0',
+            'currency_id'=>'1',
+            'shipping_id'=>'1'
             ],
             [
             'name'=>'agent',
             'email'=>'agent@gmail.com',
             'password'=>hash::make('1234'),
-            'usertype'=>'1'
+            'usertype'=>'1',
+            'currency_id'=>'1',
+            'shipping_id'=>'1'
             ],
             [
             'name'=>'admin',
             'email'=>'admin@gmail.com',
             'password'=>hash::make('1234'),
-            'usertype'=>'2'
+            'usertype'=>'2',
+            'currency_id'=>'1',
+            'shipping_id'=>'1'
             ],
-            
+
         ]);
     }
 }

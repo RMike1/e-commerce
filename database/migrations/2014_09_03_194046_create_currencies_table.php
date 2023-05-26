@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Schema;
             $table->string('us_value')->comment('value according to US Dollar');
             $table->string('status')->default('1')->comment('1 for active 0 for inactive');
             $table->string('fr_use_status')->default('0')->comment('1 set to active 0 for inactive');
-            $table->integer('user_id');
             $table->timestamps();
         });
     }

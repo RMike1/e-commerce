@@ -37,14 +37,6 @@
                         <a href="#">Links</a>
                         <ul>
                             <li><a href="tel:#"><i class="icon-phone"></i>Call: +(250) 788 888 888</a></li>
-                            <li><a href="{{route('cart')}}"><i class="icon-shopping-cart"></i>My Cart
-                                @auth
-                                <span>({{App\Models\Cart::where('user_id',Auth::user()->id)->count()}})</span>
-                                @endauth
-                                @guest
-                                <span>(0)</span>
-                                @endguest
-                            </a></li>
                             <li><a href="#">About Us</a></li>
                             <li><a href="#">Contact Us</a></li>
                         </ul>

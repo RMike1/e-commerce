@@ -14,7 +14,8 @@
             <tr>
                 <td><a href="{{route('user.product',$cart->product->id)}}">{{$cart->product->product_name}}</a></td>
                 @php
-                $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
+                $user_currency=App\Models\User::where('id',Auth::user()->id)->first()->currency_id;
+                $currency_value=App\Models\User::where('currency_id',$user_currency)->first()->currency()->first();
                 @endphp
                 @if ($currency_value->code=='RWF')
                 <td>
@@ -30,7 +31,8 @@
             <tr class="summary-subtotal">
                 <td>Subtotal:</td>
                 @php
-                $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
+                $user_currency=App\Models\User::where('id',Auth::user()->id)->first()->currency_id;
+                $currency_value=App\Models\User::where('currency_id',$user_currency)->first()->currency()->first();
                 @endphp
                 @if ($currency_value->code=='RWF')
                 <td>
@@ -241,21 +243,11 @@
                                             </div>
 
                                         </div>
-
-
-
                                     </form>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
-
-
                 </div>
             </div><!-- End .collapse -->
         </div><!-- End .card -->

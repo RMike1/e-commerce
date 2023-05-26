@@ -326,7 +326,7 @@
             dataType:"json",
             success:function(response)
             {
-                if(response.status_message=='200'){
+                if(response.status=='200'){
                 $(".append-category-data").html(response.view);
                 $(".appendCartHeader").html(response.header);
                 $('.btn-product-info').text('add to cart')
@@ -402,7 +402,7 @@ function productId(caller){
             dataType:"json",
             success:function(response)
             {
-                if(response.status_message=='200'){
+                if(response.status=='200'){
                 $(".append-category-data").html(response.view);
                 $(".appendCartHeader").html(response.header);
                 $('.btn-product-info').text('add to cart')
@@ -448,7 +448,7 @@ function productId(caller){
                     tapToDismiss: !1
                 })
             }
-            },
+            }
         });
     }
 
@@ -458,7 +458,6 @@ function productId2(caller2){
 
         var product_id=document.getElementById('prod_id_btn2').value=$(caller2).attr('data-ProductQty2');
         var quantity=$('#product_qty2').val();
-        // alert(quantity);
 
         $('.btn-product-info2').text('adding..').append(`<div class="spinner-grow" role="status"><span class="visually-hidden"></span></div>`);
         $('.login-auth').html("");
@@ -475,12 +474,12 @@ function productId2(caller2){
         dataType:"json",
         success:function(response)
         {
-            if(response.status_message=='200'){
+            if(response.status=='200'){
                 $(".append-category-data").html(response.view);
                 $(".appendCartHeader").html(response.header);
                 $('.btn-product-info2').text('add to cart')
                 $('#product_qty2').val(1)
-    
+
                 toastr.success(response.message, "Success", {
                     positionClass: "toast-top-right",
                     timeOut: 3e3,
@@ -647,7 +646,7 @@ function productId2(caller2){
                         tapToDismiss: !1
                     })
                     }
-                },
+                }
             });
           });
 

@@ -67,40 +67,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $user= User::create([
+        return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
 
-        DB::table('shippings')->insert([
-            [
-                'shipping_method'=>'Free Shipping',
-                'value'=>'0',
-                'status'=>'1',
-                'user_id'=>$user->id,
-            ],
-            [
-                'shipping_method'=>'Standard',
-                'value'=>'10',
-                'status'=>'0',
-                'user_id'=>$user->id,
-            ]
-        ]);
-        
-        $Currencies=Currency::oldest()->take(4)->get();
-        foreach ($Currencies as $currency) {
-                Currency::create([
-                    'code'=>$currency->code,
-                    'name'=>$currency->name,
-                    'symbol'=>$currency->symbol,
-                    'normal_val'=>$currency->normal_val,
-                    'us_value'=>$currency->us_value,
-                    'status'=>$currency->status,
-                    'user_id'=>$user->id,
-                    'fr_use_status'=>$currency->fr_use_status,
-                ]);
-        }
-        return $user;
     }
 }

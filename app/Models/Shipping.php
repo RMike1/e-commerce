@@ -14,7 +14,6 @@ class Shipping extends Model
         'shipping_method',
         'value',
         'status',
-        'user_id',
         'address',
     ];
 
@@ -24,7 +23,7 @@ class Shipping extends Model
     }
     public function user()
         {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
     }
 
 }

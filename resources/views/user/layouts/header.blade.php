@@ -4,10 +4,11 @@
             <div class="header-left">
                 <div class="header-dropdown">
                     @auth
-                    @php
-                        $currency=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first()->code;
-                    @endphp
-                    <a href="#" id="currency">{{$currency}}</a>
+                        @php
+                            $user_currency=App\Models\User::where('id',Auth::user()->id)->first()->currency_id;
+                            $currency=App\Models\User::where('currency_id',$user_currency)->first()->currency()->first();
+                        @endphp
+                    <a href="#" id="currency">{{$currency->code}}</a>
                     @endauth
                     @guest
                     @php
@@ -17,20 +18,11 @@
                     @endguest
                     <div class="header-menu">
                         <ul>
-                            @auth
-                            @foreach (App\Models\Currency::where('status','1')->where('user_id',Auth::user()->id)->oldest()->take(4)->get() as $currency)
+                            @foreach (App\Models\Currency::where('status','1')->latest()->get() as $currency)
                             <li class="convert-currency-header">
                                 <button type="button" value="{{$currency->id}}" class="bg-transparent border-0 text-muted curre" id="currency_btn">{{$currency->code}}</button>
                             </li>
                             @endforeach
-                            @endauth
-                            @guest
-                            @foreach (App\Models\Currency::where('status','1')->oldest()->take(4)->get() as $currency)
-                            <li class="convert-currency-header">
-                                <button type="button" value="{{$currency->id}}" class="bg-transparent border-0 text-muted curre" id="currency_btn">{{$currency->code}}</button>
-                            </li>
-                            @endforeach
-                            @endguest
                         </ul>
                     </div><!-- End .header-menu -->
                 </div><!-- End .header-dropdown -->
@@ -53,14 +45,6 @@
                         <a href="#">Links</a>
                         <ul>
                             <li><a href="tel:#"><i class="icon-phone"></i>Call: +(250) 788 888 888</a></li>
-                            <li><a href="{{route('cart')}}"><i class="icon-shopping-cart"></i>My Cart
-                                @auth
-                                <span>({{App\Models\Cart::where('user_id',Auth::user()->id)->count()}})</span>
-                                @endauth
-                                @guest
-                                <span>(0)</span>
-                                @endguest
-                            </a></li>
                             <li><a href="#">About Us</a></li>
                             <li><a href="#">Contact Us</a></li>
                             @guest

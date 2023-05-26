@@ -14,7 +14,6 @@ class CreateShippingsTable extends Migration
             $table->string('shipping_method');
             $table->string('value');
             $table->string('status')->default('0');
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

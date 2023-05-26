@@ -25,6 +25,7 @@ use Barryvdh\DomPDF\Facade\PDF;
 
 class AdminController extends Controller
 {
+
     //=========================Index =========================
 
     public function index()
@@ -316,7 +317,7 @@ class AdminController extends Controller
     public function Update_Product(Request $req)
     {
         $req->validate([
-            'product_name'=>'required|min:3|max:60',
+            'product_name'=>'required|max:60',
             'product_price'=>'required|integer',
             'product_quantity'=>'required|integer',
             'product_description'=>'required|max:355|min:3',
@@ -858,10 +859,7 @@ class AdminController extends Controller
 
     //=================Edit Currency====================
 
-
             public function Edit_Currency(Request $req){
-
-               
     
                     $currency_id=$req->currency_val;
                     $currency=Currency::find($currency_id);
@@ -870,7 +868,6 @@ class AdminController extends Controller
                         'status'=>200,
                         'currency'=>$currency,
                     ]);
-                
 
             }
 

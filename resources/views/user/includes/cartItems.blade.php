@@ -38,7 +38,8 @@ class="page-content">
                                 </td>
                                 <td class="price-col" style="width:20%">
                                     @php
-                                    $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
+                                    $user_currency=App\Models\User::where('id',Auth::user()->id)->first()->currency_id;
+                                    $currency_value=App\Models\User::where('currency_id',$user_currency)->first()->currency()->first();
                                     @endphp
                                     @if ($currency_value->code=='RWF')
                                     <span>{{number_format($cart->product->product_price/$currency_value->normal_val)}} Frw</span>
@@ -97,7 +98,8 @@ class="page-content">
                                 <tr class="summary-subtotal">
                                     <td>Subtotal:</td>
                                     @php
-                                    $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->first();
+                                    $user_currency=App\Models\User::where('id',Auth::user()->id)->first()->currency_id;
+                                    $currency_value=App\Models\User::where('currency_id',$user_currency)->first()->currency()->first();
                                     @endphp
                                     @if ($currency_value->code=='RWF')
                                     <td>
@@ -114,53 +116,39 @@ class="page-content">
                                     <td>&nbsp;</td>
                                 </tr>
                                 @php
-                                    $free_shipping=App\Models\Shipping::where('shipping_method','Free Shipping')->where('user_id',Auth::user()->id)->first();
-                                    $standard_shipping=App\Models\Shipping::where('shipping_method','Standard')->where('user_id',Auth::user()->id)->first();
+
+                                $shipping_methodss=App\Models\Shipping::all();
+
+                                $user_shipping=App\Models\User::where('id',Auth::user()->id)->first()->shipping_id;
+                                $shipping_val=App\Models\User::where('shipping_id',$user_shipping)->first()->shipping()->first();
+
                                 @endphp
 
-                                <tr class="summary-shipping-row">
-                                    <td>
-                                        <div class="custom-control custom-radio">
-                                            @if ($free_shipping->status=='1')
-                                            <input type="radio" id="free-shipping" value="{{$free_shipping->shipping_method}}" name="shipping" class="custom-control-input shipping_val" checked>
-                                            @else
-                                            <input type="radio" id="free-shipping" value="{{$free_shipping->shipping_method}}" name="shipping" class="custom-control-input shipping_val">
-                                            @endif
-                                            <label class="custom-control-label" for="free-shipping">Free Shipping:</label>
-                                        </div><!-- End .custom-control -->
-                                    </td>
-                                    @if ($currency_value->code=='RWF')
-                                    <td>
-                                        <span>{{number_format($free_shipping->value/$currency_value->normal_val,2)}} Frw </span>
-                                    </td>
-                                    @else
-                                    <td>
-                                        {{$currency_value->symbol}}{{number_format($free_shipping->value/$currency_value->normal_val,2)}}
-                                    </td>
-                                    @endif
-                                </tr><!-- End .summary-shipping-row -->
+                                @foreach ($shipping_methodss as $shipping_methodss)
+                                    <tr class="summary-shipping-row">
+                                        <td>
+                                            <div class="custom-control custom-radio">
+                                                @if ($shipping_methodss->id==$user_shipping)
+                                                <input type="radio" id="{{$shipping_methodss->shipping_method}}" value="{{$shipping_methodss->id}}" name="shipping" class="custom-control-input shipping_val" checked>
+                                                <label class="custom-control-label" for="{{$shipping_methodss->shipping_method}}">{{$shipping_methodss->shipping_method}}:</label>
+                                                @else
+                                                <input type="radio" id="{{$shipping_methodss->shipping_method}}" value="{{$shipping_methodss->id}}" name="shipping" class="custom-control-input shipping_val">
+                                                <label class="custom-control-label" for="{{$shipping_methodss->shipping_method}}">{{$shipping_methodss->shipping_method}}:</label>
+                                                @endif
+                                            </div><!-- End .custom-control -->
+                                        </td>
+                                        @if ($currency_value->code=='RWF')
+                                        <td>
+                                            <span>{{number_format($shipping_methodss->value/$currency_value->normal_val,2)}} Frw </span>
+                                        </td>
+                                        @else
+                                        <td>
+                                            {{$currency_value->symbol}}{{number_format($shipping_methodss->value/$currency_value->normal_val,2)}}
+                                        </td>
+                                        @endif
+                                    </tr><!-- End .summary-shipping-row -->
 
-                                <tr class="summary-shipping-row">
-                                    <td>
-                                        <div class="custom-control custom-radio">
-                                            @if ($standard_shipping->status=='1' )
-                                            <input type="radio" id="standart-shipping" value="{{$standard_shipping->shipping_method}}" name="shipping" class="custom-control-input shipping_val" checked>
-                                            @else
-                                            <input type="radio" id="standart-shipping" value="{{$standard_shipping->shipping_method}}" name="shipping" class="custom-control-input shipping_val">
-                                            @endif
-                                            <label class="custom-control-label" for="standart-shipping">Standard:</label>
-                                        </div><!-- End .custom-control -->
-                                    </td>
-                                    @if ($currency_value->code=='RWF')
-                                    <td>
-                                        {{number_format($standard_shipping->value/$currency_value->normal_val,2)}} Frw
-                                    </td>
-                                    @else
-                                    <td>
-                                        {{$currency_value->symbol}}{{number_format($standard_shipping->value/$currency_value->normal_val,2)}}
-                                    </td>
-                                    @endif
-                                </tr><!-- End .summary-shipping-row -->
+                                @endforeach
 
                                 <tr class="summary-shipping-estimate">
                                     <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>

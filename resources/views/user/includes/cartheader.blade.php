@@ -7,64 +7,67 @@
     </a>
 <div class="dropdown-menu dropdown-menu-right">
     <div class="dropdown-cart-products">
-   @auth
-        @forelse (App\Models\Cart::where('user_id',Auth::user()->id)->latest()->take(3)->get() as $cart)
-            <div class="product">
-                <div class="product-cart-details">
-                    <h4 class="product-title">
-                        <a href="{{route('user.product',$cart->product->id)}}">{{$cart->product->product_name}}</a>
-                    </h4>
-                        @php
-                        $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->firstOrfail();
-                        @endphp
-                    <span class="cart-product-info">
-                        <span class="cart-product-qty">{{$cart->quantity}}</span>
-                        x 
-                        @if ($currency_value->code=='RWF')
-                        {{number_format($cart->product->product_price/$currency_value->normal_val,2)}} Frw
-                        @else
-                        {{$currency_value->symbol}}{{number_format($cart->product->product_price/$currency_value->normal_val,2)}}
-                        @endif
-                    </span>
-                </div><!-- End .product-cart-details -->
-
-                <figure class="product-image-container">
-                    <a href="{{route('user.product',$cart->product->id)}}" class="product-image">
-                        <img src="{{asset($cart->product->product_image)}}" alt="product">
-                    </a>
-                </figure>
-                <button href="#" type="button" value="{{$cart->id}}" class="btn-remove remove-cart-btn" title="Remove Product"><i class="icon-close"></i></button>
-            </div><!-- End .product -->
-            @empty
-            <div class="product">
-                <div class="product-cart-details">
-                    <span class="cart-product-info">
-                            no pendings in your cart..
-                    </span>
-                </div><!-- End .product-cart-details -->
-            </div><!-- End .product -->
-        @endforelse
-    @endauth
-    </div><!-- End .cart-product -->
     @auth
-    <div class="dropdown-cart-total">
-        <span>Total</span>
-        @php
-        $subtotcart=App\Models\Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
-        $shipping_val=App\Models\Shipping::where('status','1')->where('user_id',Auth::user()->id)->firstOrfail()->value;
-        $final_tot=$subtotcart+$shipping_val;
-        $currency_value=App\Models\Currency::where('fr_use_status','1')->where('user_id',Auth::user()->id)->firstOrfail();
-        @endphp
-      @if ($currency_value->code=='RWF')
-      <span class="cart-total-price"><span class="final_tot">{{number_format(($final_tot/$currency_value->normal_val),2)}} Frw</span></span>
-      @else
-      <span class="cart-total-price">{{$currency_value->symbol}}<span class="final_tot">{{number_format(($final_tot/$currency_value->normal_val),2)}}</span></span>
-      @endif
+            @forelse (App\Models\Cart::where('user_id',Auth::user()->id)->latest()->take(3)->get() as $cart)
+                <div class="product">
+                    <div class="product-cart-details">
+                        <h4 class="product-title">
+                            <a href="{{route('user.product',$cart->product->id)}}">{{$cart->product->product_name}}</a>
+                        </h4>
+                            @php
+                            $user_currency=App\Models\User::where('id',Auth::user()->id)->first()->currency_id;
+                            $currency_value=App\Models\User::where('currency_id',$user_currency)->first()->currency()->first();
+                            @endphp
+                        <span class="cart-product-info">
+                            <span class="cart-product-qty">{{$cart->quantity}}</span>
+                            x
+                            @if ($currency_value->code=='RWF')
+                            {{number_format($cart->product->product_price/$currency_value->normal_val,2)}} Frw
+                            @else
+                            {{$currency_value->symbol}}{{number_format($cart->product->product_price/$currency_value->normal_val,2)}}
+                            @endif
+                        </span>
+                    </div><!-- End .product-cart-details -->
 
-    </div><!-- End .dropdown-cart-total -->
-    @endauth
-    <div class="dropdown-cart-action">
-        <a href="{{route('cart')}}" class="btn btn-primary">View Cart</a>
-        <a href="{{route('checkout')}}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
-    </div><!-- End .dropdown-cart-total -->
+                    <figure class="product-image-container">
+                        <a href="{{route('user.product',$cart->product->id)}}" class="product-image">
+                            <img src="{{asset($cart->product->product_image)}}" alt="product">
+                        </a>
+                    </figure>
+                    <button href="#" type="button" value="{{$cart->id}}" class="btn-remove remove-cart-btn" title="Remove Product"><i class="icon-close"></i></button>
+                </div><!-- End .product -->
+                @empty
+                <div class="product">
+                    <div class="product-cart-details">
+                        <span class="cart-product-info">
+                                no pendings in your cart..
+                        </span>
+                    </div><!-- End .product-cart-details -->
+                </div><!-- End .product -->
+            @endforelse
+        @endauth
+        </div><!-- End .cart-product -->
+        @auth
+        <div class="dropdown-cart-total">
+            <span>Total</span>
+            @php
+                $subtotcart=App\Models\Cart::where('user_id',Auth::user()->id)->sum('tot_amount');
+                $user_shipping=App\Models\User::where('id',Auth::user()->id)->first()->shipping_id;
+                $shipping_val=App\Models\User::where('shipping_id',$user_shipping)->first()->shipping()->first();
+                $final_tot=$subtotcart+$shipping_val->value;
+                $user_currency=App\Models\User::where('id',Auth::user()->id)->first()->currency_id;
+                $currency_value=App\Models\User::where('currency_id',$user_currency)->first()->currency()->first();
+            @endphp
+        @if ($currency_value->code=='RWF')
+        <span class="cart-total-price"><span class="final_tot">{{number_format(($final_tot/$currency_value->normal_val),2)}} Frw</span><span class="currency_v"></span></span>
+        @else
+        <span class="cart-total-price">{{$currency_value->symbol}}<span class="final_tot">{{number_format(($final_tot/$currency_value->normal_val),2)}}</span></span>
+        @endif
+
+        </div><!-- End .dropdown-cart-total -->
+        @endauth
+        <div class="dropdown-cart-action">
+            <a href="{{route('cart')}}" class="btn btn-primary">View Cart</a>
+            <a href="{{route('checkout')}}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+        </div><!-- End .dropdown-cart-total -->
 </div><!-- End .dropdown-menu -->

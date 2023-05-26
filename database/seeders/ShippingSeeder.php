@@ -19,13 +19,11 @@ class ShippingSeeder extends Seeder
             'shipping_method'=>'Free Shipping',
             'value'=>'0',
             'status'=>'1',
-            'user_id'=>'1',
           ],
           [
             'shipping_method'=>'Standard',
             'value'=>'10',
             'status'=>'0',
-            'user_id'=>'1',
           ],
         ]);
     }

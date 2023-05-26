@@ -17,8 +17,12 @@ class Currency extends Model
         'us_value',
         'status',
         'fr_use_status',
-        'user_id'
     ];
 
     protected $table='currencies';
+
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
 }

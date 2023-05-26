@@ -40,7 +40,6 @@
     function cartId(cart_id){
         var cart_quantity=document.getElementById('cart_quantity').value=$(cart_id).val();
         var cart_id=document.getElementById('cart_id').value=$(cart_id).attr('data-CartId');
-        // alert(cart_id);
         $.ajaxSetup({
             headers:{
                 "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
@@ -58,10 +57,10 @@
                 $(".appendCartHeader").html(response.header);
             },
 
-            // error:function(error)
-            // {
-            //     console.log(error);
-            // }
+            error:function(error)
+            {
+                console.log(error);
+            }
         });
         }
 
@@ -86,7 +85,6 @@
                 dataType:"json",
                 success:function(response)
                 {
-
                     $(".appendCart").html(response.view);
                     $(".appendCartHeader").html(response.header);
 
@@ -185,7 +183,6 @@
         $(document).on('change', '.shipping_val', function(e){
             e.preventDefault();
             var shipping_val=$(this).val();
-            // alert(shipping_val);
                 $.ajaxSetup({
                 headers:{
                     "X-CSRF-TOKEN":$('meta[name="csrf-token"]').attr('content')
@@ -200,9 +197,6 @@
                     {
                         $('.final_tot').text(response.final_tot);
                         $('.currency_v').text(response.currency_val);
-
-                        // $(".appendCart").html(response.view);
-                        // $(".appendCartHeader").html(response.header);
                     },
                     error:function(error)
                     {

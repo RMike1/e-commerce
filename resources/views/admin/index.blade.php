@@ -321,7 +321,6 @@
         tooltip:{y:{formatter:function(e){return"$"+e+"k"}}}};
         new ApexCharts(document.querySelector("#high-performing-product"),r).render();e=["#727cf5","#0acf97","#fa5c7c","#ffbc00"];
         (t=o("#average-sales").data("colors"))&&(e=t.split(","));
-        // r={chart:{height:208,type:"donut"},legend:{show:!1},stroke:{colors:["#727cf5","#0acf97","#fa5c7c","#ffbc00"]},series:[<?php echo $tot?>],labels:[<?php echo $sales_tot ?>],
         r={chart:{height:208,type:"donut"},legend:{show:!1},stroke:{colors:["#727cf5","#0acf97","#fa5c7c","#ffbc00"]},series:[<?php echo $approved_no?>,<?php echo $pendings_no?>,<?php echo $rejected_no?>],labels:["Delivered","Pending","Rejected"],
         colors:e,responsive:[{breakpoint:480,options:{chart:{width:200},
         legend:{position:"bottom"}}}]};new ApexCharts(document.querySelector("#average-sales"),r).render()},

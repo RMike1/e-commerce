@@ -287,8 +287,6 @@
                 dataType:"json",
                 success:function(response)
                 {
-                    // console.log(response);
-                    // alert('success!!')
                     $(".appendCart").html(response.view);
                     $(".appendCartHeader").html(response.header);
 
@@ -311,11 +309,6 @@
                         tapToDismiss: !1
                     })
 
-                },
-                error:function(error)
-                {
-                    // alert('oops!!')
-                    console.log(error);
                 }
             });
             }
@@ -348,7 +341,7 @@
 
                     $(".appendCartHeader").html(response.header);
                     $('.btn-product-info').text('add to cart')
-    
+
                     toastr.success(response.message, "Success", {
                         positionClass: "toast-top-right",
                         timeOut: 3e3,
@@ -447,7 +440,7 @@
                 type:"get",
                 dataType:"json",
                 success:function(response){
-                    
+
                     if(response.status=='200'){
                         $('.appendIndex-Load-more').html(response.view);
                         $(".appendCartHeader").html(response.header);
@@ -481,7 +474,7 @@
                             </button>
                         </div>`);
 
-                        
+
 
                     }
                 },
