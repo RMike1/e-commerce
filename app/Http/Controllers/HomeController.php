@@ -173,6 +173,7 @@ class HomeController extends Controller
         }
 }
 
+
 //=========================Remove items from in Cart =========================
 
 public function Remove_Cart(Request $req)
@@ -305,8 +306,9 @@ public function Remove_Cart(Request $req)
         $is_cart=Cart::get('id')->first();
         if($is_cart!=null)
         {
-            $shipping_method=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->shipping_method;
-            $shipping_id=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->id;
+
+            $shipping_method=User::where('id',Auth::user()->id)->first()->shipping()->first()->shipping_method;
+            $shipping_id=User::where('id',Auth::user()->id)->first()->id;
 
             $carts=Cart::where('user_id',Auth::user()->id)->get();
             $tracking_no=Str::random(10);
@@ -327,8 +329,7 @@ public function Remove_Cart(Request $req)
                   'email'=>'required',
                   'note'=>'nullable',
               ]);
-              $shipp_id=Shipping::where('status','1')->where('user_id',Auth::user()->id)->first()->id;
-              $shipp_rest_id=Shipping::where('status','!=','1')->where('user_id',Auth::user()->id)->first()->id;
+              $shipp_id=User::where('id',Auth::user()->id)->first()->id;
 
                 $order_id=Str::random(8);
                 $order=new Order;
@@ -365,16 +366,8 @@ public function Remove_Cart(Request $req)
                     return redirect()->back();
                 }
 
-                $shipping=Shipping::find($shipp_id);
-                if($shipping->value!='0')
-                {
-                    $shipping->status='0';
-                    $shipping->save();
-
-                    $shipping_rest_id=Shipping::find($shipp_rest_id);
-                    $shipping_rest_id->status='1';
-                    $shipping_rest_id->save();
-                }
+                $free_shipping=Shipping::where('value','0')->first()->id;
+                User::where('id',Auth::user()->id)->update(['shipping_id'=>$free_shipping]);
               }
               return redirect()->back()->with('success','your order has been created successfully!');
 
