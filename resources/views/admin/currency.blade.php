@@ -126,7 +126,6 @@
                                     @endif
                                     <td>
                                         <button value="{{$currency->id}}" type="button" id="edit-currency" class="action-icon bg-transparent" style="border: none"> <i class="mdi mdi-square-edit-outline"></i></button>
-                                        <a href="{{route('delete.currency',$currency->id)}}" class="action-icon" onclick="return confirm('delete this currency?')"> <i class="mdi mdi-delete"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -335,7 +334,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                         `+response.message+`
                                     </div>`)
-                            
+
 
                         }
                     });

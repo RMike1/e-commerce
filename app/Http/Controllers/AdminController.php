@@ -450,13 +450,13 @@ class AdminController extends Controller
 
     public function Update_User(Request $req)
     {
+        $user_id=$req->use_val;
         $req->validate([
             'name'=>'required',
-            'email'=>'required|unique:users,email'.$req->id,
+            'email'=>'required|unique:users,email,'.$req->use_val,
             'usertype'=>'required',
         ]);
 
-        $user_id=$req->use_val;
         $user=User::find($user_id);
         $user->name=$req->name;
         $user->email=$req->email;
@@ -860,10 +860,10 @@ class AdminController extends Controller
     //=================Edit Currency====================
 
             public function Edit_Currency(Request $req){
-    
+
                     $currency_id=$req->currency_val;
                     $currency=Currency::find($currency_id);
-    
+
                     return response()->json([
                         'status'=>200,
                         'currency'=>$currency,
@@ -930,26 +930,26 @@ class AdminController extends Controller
 
     //================= Delete Currency====================
 
-            public function Delete_Currency($id){
+            // public function Delete_Currency($id){
 
-                $currency_counter=Currency::count();
-                if($currency_counter<=1){
-                    return redirect()->back()->with('warning', 'Oops!! currency can\'t be empty! must be at least one currency! please add other currency and delete this after!!');
-                }else{
-                    $currency=Currency::find($id);
-                    if($currency){
-                        $currency->delete();
-                    }
-                    else{
-                        return redirect()->back()->with('warning', 'currency not found!');
-                    }
+            //     $currency_counter=Currency::count();
+            //     if($currency_counter<=1){
+            //         return redirect()->back()->with('warning', 'Oops!! currency can\'t be empty! must be at least one currency! please add other currency and delete this after!!');
+            //     }else{
+            //         $currency=Currency::find($id);
+            //         if($currency){
+            //             $currency->delete();
+            //         }
+            //         else{
+            //             return redirect()->back()->with('warning', 'currency not found!');
+            //         }
 
-                    $currency_d=Currency::where('id','!=',$id)->first()->id;
-                    Currency::where('id',$currency_d)->update(['fr_use_status'=>'1']);
+            //         $currency_d=Currency::where('id','!=',$id)->first()->id;
+            //         Currency::where('id',$currency_d)->update(['fr_use_status'=>'1']);
 
-                    return redirect()->back()->with('warning', 'currency deleted successfully!!');
+            //         return redirect()->back()->with('warning', 'currency deleted successfully!!');
 
-                }
+            //     }
 
-            }
+            // }
 }

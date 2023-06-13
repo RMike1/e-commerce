@@ -59,11 +59,25 @@
         </div>
         @endif
 
+        @if($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            @foreach ($errors->all() as $error)
+                <ul>
+                    <li>
+                        {{$error}}
+                    </li>
+                </ul>
+            @endforeach
+        </div>
+        @endif
+
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{route('update.user')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('update.user')}}" method="post">
                             @csrf
                             <div class="modal-header">
                                 <a href="{{route('users')}}" type="submit" class="btn btn-secondary float-end">Back</a>
@@ -71,7 +85,7 @@
                             <div class="modal-body">
                                 <div class="mb-3">
                                         <label for="category-title">User Name</label>
-                                        <input type="hidden"name="use_val" id="user_name" value="{{$users->id}}">
+                                        <input type="hidden" name="use_val" id="user_name" value="{{$users->id}}">
                                         <input type="text" class="form-control form-control-light" name="name" id="user_name" value="{{$users->name}}">
                                         @error('name')
                                         <span class="invalid-feedback">
