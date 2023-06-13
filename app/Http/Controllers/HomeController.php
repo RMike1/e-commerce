@@ -303,10 +303,9 @@ public function Remove_Cart(Request $req)
 
       public function Order_by_Cash(Request $req)
       {
-        $is_cart=Cart::get('id')->first();
+        $is_cart=Cart::where('user_id',Auth::user()->id)->get('id')->first();
         if($is_cart!=null)
         {
-
             $shipping_method=User::where('id',Auth::user()->id)->first()->shipping()->first()->shipping_method;
             $shipping_id=User::where('id',Auth::user()->id)->first()->id;
 
@@ -365,12 +364,10 @@ public function Remove_Cart(Request $req)
                 else{
                     return redirect()->back();
                 }
-
                 $free_shipping=Shipping::where('value','0')->first()->id;
                 User::where('id',Auth::user()->id)->update(['shipping_id'=>$free_shipping]);
               }
               return redirect()->back()->with('success','your order has been created successfully!');
-
             }
             return redirect()->back()->with('warning','your cart is empty! please add products in cart to proceed your order!!');
       }
@@ -416,7 +413,6 @@ public function Remove_Cart(Request $req)
       {
         return view('user.stripe');
       }
-
 
        //=========================View Single Product=========================
 
@@ -552,7 +548,5 @@ public function Remove_Cart(Request $req)
             ]);
         }
       }
-
-
 
 }
