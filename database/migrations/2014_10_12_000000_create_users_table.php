@@ -20,10 +20,10 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('usertype')->default('0')->nullable();
-            $table->unsignedBigInteger('currency_id');
-            $table->unsignedBigInteger('shipping_id');
-            $table->foreign('currency_id')->default('1')->references('id')->on('currencies')->onDelete('restrict');
-            $table->foreign('shipping_id')->default('1')->references('id')->on('shippings')->onDelete('restrict');
+            // $table->unsignedBigInteger('currency_id');
+            // $table->unsignedBigInteger('shipping_id');
+            $table->foreignId('currency_id')->default('1')->references('id')->on('currencies')->onDelete('restrict');
+            $table->foreignId('shipping_id')->default('1')->references('id')->on('shippings')->onDelete('restrict');
             $table->rememberToken();
             $table->timestamps();
         });

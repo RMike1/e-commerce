@@ -899,7 +899,7 @@ class AdminController extends Controller
                 $currency->us_value=$request->us_value;
                 $currency->update();
 
-                return redirect()->back()->with('success', 'currency added successfully!!');
+                return redirect()->back()->with('success', 'currency updated successfully!!');
             }
 
     //=================Update Currency_Status====================
