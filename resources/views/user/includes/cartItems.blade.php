@@ -151,7 +151,7 @@ class="page-content">
                                 @endforeach
 
                                 <tr class="summary-shipping-estimate">
-                                    <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
+                                    <td>Estimate for Your Country<br> <a href="#">Change address</a></td>
                                     <td>&nbsp;</td>
                                 </tr><!-- End .summary-shipping-estimate -->
 
