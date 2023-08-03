@@ -87,7 +87,7 @@
                 </button>
 
                 <a href="{{route('home')}}" class="logo" >
-                    <h3 class="font-weight-bold text-muted h2" style="font-family:Arial, Helvetica, sans-serif">MK <span style="color:#c96;">Store</span></h3>
+                    <h3 class="font-weight-bold text-muted h2" style="font-family:Arial, Helvetica, sans-serif">eElectro<span style="color:#c96;">Hub</span></h3>
                 </a>
 
                 <nav class="main-nav">
