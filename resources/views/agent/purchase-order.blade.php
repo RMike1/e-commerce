@@ -82,32 +82,35 @@
                                     <th>
                                         #
                                     </th>
-                                    <th>Product Name</th>
-                                    <th>Qty</th>
-                                    <th>Tot Amount</th>
+                                    <th>PO Number</th>
+                                    <th>Date</th>
+                                    <th>Supplier Name</th>
+                                    <th>Details</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
                                     $count=1;
                                 @endphp
-                                {{-- @foreach ($category as $category) --}}
+                                @foreach ($Po as $Pos)
                                 <tr>
                                      <td>
                                        {{$count++}}
                                     </td>
                                     <td>
-                                        {{-- {{$category->name}} --}}
+                                        {{$Pos->invoice_no}}
                                     </td>
                                     <td>
-                                        {{-- <img src="{{asset($category->category_image)}}" style="width: 50px; height:auto" alt=""> --}}
+                                        {{$Pos->date}}
                                     </td>
                                     <td>
-                                        {{-- {{$category->product->count()}} --}}
+                                        {{$Pos->first_name}} {{$Pos->second_name}}
+                                    </td>
+                                    <td>
+                                        {{Str::limit($Pos->information,15)}}
                                     </td>
                                 </tr>
-                                {{-- @endforeach --}}
-
+                                @endforeach
                             </tbody>
                         </table>
                 </div> <!-- end card-body-->

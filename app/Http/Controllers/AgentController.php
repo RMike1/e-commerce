@@ -50,54 +50,57 @@ class AgentController extends Controller
      }
      public function Purchase_Order ()
      {
-        return view('agent.purchase-order');
+        // $Po=Purchase_Order::all();
+        $Po=DB::table('purchase__orders')->join('suppliers','suppliers.id','=','purchase__orders.supplier_id')->get();
+        // dd($Po);
+        return view('agent.purchase-order', compact('Po'));
      }
 
      public function Add_Purchase_Order ()
      {
         // $po_id=Purchase_Order::latest()->take(1)->first()->id;
-        
+
         $po_invoice_no= 'PO-'.rand();
         $suppliers=Supplier::where('status','1')->latest()->get();
         return view('agent.create-purchase-order', compact('suppliers','po_invoice_no'));
      }
-     
+
      public function Store_Purchase_Order (Request $req)
      {
         $req->validate([
-            // 'inputs[*]product_name'=>'required',
-            // 'inputs[*]product_price'=>'required',
-            // 'inputs[*]product_quantity'=>'required',
-            // 'inputs[*]product_total'=>'required',
-            // 'date'=>'required',
-            // 'invoice_no'=>'required',
-            // 'information'=>'required',
-            // 'supplier_name'=>'required',
+            'inputs[*]product_name'=>'required',
+            'inputs[*]product_price'=>'required',
+            'inputs[*]product_quantity'=>'required',
+            'inputs[*]product_total'=>'required',
+            'date'=>'required',
+            'invoice_no'=>'required',
+            'information'=>'required',
+            'supplier_name'=>'required',
         ]);
 
         $po=new Purchase_Order;
         $po->date=$req->date;
         $po->invoice_no=$req->invoice_no;
         $po->information=$req->information;
-        $po->supplier_name=$req->supplier_name;
+        $po->supplier_id=$req->supplier_name;
         $po->save();
-        
-        
-        $p_name=$req->product_name;
-        $p_price=$req->product_price;
-        $p_quantity=$req->product_quantity;
-        $p_total=$req->product_total;
+
+
+        // $p_name=$req->product_name;
+        // $p_price=$req->product_price;
+        // $p_quantity=$req->product_quantity;
+        // $p_total=$req->product_total;
 
         // dd($p_total);
 
 
-        foreach($req->inputs as $key=> $val)
+        foreach($req->inputs as $val)
         {
             $po_i=new Order_Product_Items;
-            $po_i->product_name=$req->product_name[$key];
-            $po_i->product_price=$req->product_price[$key];
-            $po_i->product_quantity=$req->product_quantity[$key];
-            $po_i->product_total=$req->product_total[$key];
+            $po_i->product_name=$val['product_name'];
+            $po_i->product_price=$val['product_price'];
+            $po_i->product_quantity=$val['product_quantity'];
+            $po_i->product_total=$val['product_total'];
             $po_i->purchase_orders_id=$po->id;
             $po_i->save();
             // ['purchase_orders_id'=>$po->id],

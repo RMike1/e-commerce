@@ -113,7 +113,7 @@ class HomeController extends Controller
         }
     }
 
-//=========================Add to Cart =========================
+//=========================Add to Cart ====== ===================
 
     public function Add_Cart(Request $req)
     {
@@ -332,8 +332,8 @@ public function Remove_Cart(Request $req)
 
                 $order_id=Str::random(8);
                 $order=new Order;
-                $order->order_id='MK-'.$order_id;
-                $order->tracking_no='MK-'.$tracking_no;
+                $order->order_id='  -'.$order_id;
+                $order->tracking_no='EL-'.$tracking_no;
                 $order->first_name=$req->first_name;
                 $order->second_name=$req->second_name;
                 $order->company=$req->company;

@@ -18,7 +18,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->string('date')->nullable();
             $table->string('invoice_no')->nullable();
             $table->string('information')->nullable();
-            $table->string('supplier_name')->nullable();
+            $table->foreignId('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -105,10 +105,10 @@
                                                 <th ></th>
                                             </tr>
                                             <tr>
-                                                <td><input class="form-control" name="inputs[0][product_name]" type="text" placeholder="name.."></td>
-                                                <td><input class="form-control" name="inputs[0][product_price]" type="text" placeholder="price.."></td>
-                                                <td><input class="form-control" name="inputs[0][product_quantity]" type="text" placeholder="quantity.."></td>
-                                                <td><input class="form-control" name="inputs[0][product_total]" type="text" placeholder="Tot amount.."></td>
+                                                <td><input class="form-control" name="inputs[0][product_name]" type="text" placeholder="name.." required></td>
+                                                <td><input class="form-control" name="inputs[0][product_price]" type="text" placeholder="price.." required></td>
+                                                <td><input class="form-control" name="inputs[0][product_quantity]" type="text" placeholder="quantity.." required></td>
+                                                <td><input class="form-control" name="inputs[0][product_total]" type="text" placeholder="Tot amount.." required></td>
                                                 <td><Button type="button" class="btn btn-secondary btn-sm float-end append_btn"><i class=" dripicons-plus"></i></Button></td>
                                             </tr>
                                     </table>
@@ -155,10 +155,10 @@
                 e.preventDefault();
                 i++
                 $('#append-data').append(`<tr>
-                                                <td><input class="form-control" name="inputs[`+i+`][product_name]" type="text" placeholder="name.."></td>
-                                                <td><input class="form-control" name="inputs[`+i+`][product_price]" type="text" placeholder="price.."></td>
-                                                <td><input class="form-control" name="inputs[`+i+`][product_quantity]" type="text" placeholder="quantity.."></td>
-                                                <td><input class="form-control" name="inputs[`+i+`][product_total]" type="text" placeholder="Tot amount.."></td>
+                                                <td><input class="form-control" name="inputs[`+i+`][product_name]" type="text" placeholder="name.." required></td>
+                                                <td><input class="form-control" name="inputs[`+i+`][product_price]" type="text" placeholder="price.." required></td>
+                                                <td><input class="form-control" name="inputs[`+i+`][product_quantity]" type="text" placeholder="quantity.." required></td>
+                                                <td><input class="form-control" name="inputs[`+i+`][product_total]" type="text" placeholder="Tot amount.." required></td>
                                                 <td><Button type="button" class="btn btn-danger btn-sm float-end remove_append_btn"><i class=" dripicons-minus"></i></Button></td>
                                             </tr>`)
             });

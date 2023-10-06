@@ -37,7 +37,7 @@
                 <label>Filters:</label>
                 <a href="#" class="sidebar-filter-clear">Clean All</a>
             </div><!-- End .widget widget-clean -->
-      
+
             <div class="widget widget-collapsible">
                 <h3 class="widget-title">
                     <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">
@@ -64,7 +64,7 @@
                                 </div><!-- End .custom-checkbox -->
                                 <span class="item-count">{{$category->product->count()}}</span>
                         </div><!-- End .filter-item -->
-                            
+
                             @endforeach
 
                         </div><!-- End .filter-items -->
@@ -190,7 +190,7 @@
                 </div><!-- End .collapse -->
             </div><!-- End .widget -->
 
-          
+
         </div><!-- End .sidebar sidebar-shop -->
     </aside><!-- End .col-lg-3 -->
 </div><!-- End .row -->

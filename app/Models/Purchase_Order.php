@@ -15,6 +15,9 @@ class Purchase_Order extends Model
         'date',
         'invoice_no',
         'information',
-        'supplier_name',
+        'supplier_id',
     ];
+    public function supplier_po(){
+       return $this->belongsTo(Supplier::class);
+    }
 }
