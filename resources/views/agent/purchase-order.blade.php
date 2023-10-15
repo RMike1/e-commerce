@@ -18,7 +18,7 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">MK</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('home')}}">E-shop</a></li>
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Data</a></li>
                         <li class="breadcrumb-item active">Purchase Order</li>
                     </ol>
