@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Supplier;
+use Illuminate\Http\Request;
 use App\Models\Purchase_Order;
+use Illuminate\Support\Facades\DB;
 use App\Models\Order_Product_Items;
-use DB;
 
 class AgentController extends Controller
 {
