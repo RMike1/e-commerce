@@ -166,3 +166,4 @@ Route::get('delete/currency/{id}', [AdminController::class, 'Delete_Currency'])-
 Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 Route::get('stripe', [StripeController::class, 'stripe']);
 
+ 

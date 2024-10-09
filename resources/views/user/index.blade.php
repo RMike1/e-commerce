@@ -28,7 +28,7 @@
                                         <figure class="slide-image">
                                             <picture>
                                                 <source media="(max-width: 480px)" srcset="{{asset($product->product_image)}}">
-                                                <img src="{{asset($product->product_image)}}" alt="Image Desc">
+                                                <img src="{{asset($product->product_image)}}" alt="Image2 Test">
                                             </picture>
                                         </figure><!-- End .slide-image -->
 
